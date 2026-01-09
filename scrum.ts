@@ -137,7 +137,70 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 1,
+    pbi_id: "PBI-001",
+    goal: "NoteType型定義と設定マップの実装により、5種類のノートタイプを識別可能にする",
+    status: "in_progress",
+    subtasks: [
+      {
+        test: "NoteType型が5種類のユニオン型として定義されていることを型レベルで検証",
+        implementation: "src/types/note-types.tsにNoteType型を定義（'fleeting' | 'literature' | 'permanent' | 'structure' | 'index'）",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "NoteTypeConfigインターフェースが必須フィールド（label, labelJa, description, icon, folder, template）を持つことを型レベルで検証",
+        implementation: "NoteTypeConfigインターフェースを定義し、各フィールドの型を指定",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "NOTE_TYPE_CONFIGが5種類すべてのNoteTypeキーを持ち、各値がNoteTypeConfigインターフェースに準拠することを型レベルで検証",
+        implementation: "NOTE_TYPE_CONFIG定数をRecord<NoteType, NoteTypeConfig>型で定義し、5種類の設定を実装",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "PROMOTION_PATHSがすべてのNoteTypeをキーとして持ち、昇格パス（fleeting→permanent, permanent→structure, structure→index, literature→空配列, index→空配列）が正しく定義されていることを型レベルで検証",
+        implementation: "PROMOTION_PATHS定数をRecord<NoteType, NoteType[]>型で定義し、仕様通りの昇格パスを実装",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "NoteMetadataインターフェースが必須フィールド（type, created, tags）とオプショナルフィールドを持つことを型レベルで検証",
+        implementation: "NoteMetadataインターフェースを定義し、仕様書4.1に従ったフィールドを実装",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "NoteStatus型が3種類のステータス（'draft' | 'reviewed' | 'mature'）を持つことを型レベルで検証",
+        implementation: "NoteStatus型を定義",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "pnpm buildが成功し、型エラーがないことを確認",
+        implementation: "src/types/index.tsでnote-types.tsから型をエクスポート",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
