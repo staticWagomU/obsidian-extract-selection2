@@ -31,7 +31,38 @@ const scrum: ScrumDashboard = {
     { id: "PBI-008", story: { role: "Zettelkasten実践者", capability: "孤立Permanent Note発見", benefit: "Structure接続漏れ防止" }, acceptance_criteria: [{ criterion: "OrphanDetector+View+接続ボタン", verification: "サイドバー表示確認" }], status: "draft" },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 7,
+    pbi_id: "PBI-007",
+    goal: "Permanent-Structure接続機能実装",
+    status: "in_progress",
+    subtasks: [
+      {
+        test: "ConnectionManager.linkPermanentToStructure（Permanentフロントマターにstructure_notes追加+Structureノート本文の「## 関連ノート」セクションにリンク追加）",
+        implementation: "src/services/connection-manager.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "LinkPermanentCommand（現在ノートがpermanent type確認→StructureSuggestModal表示→ConnectionManager呼び出し）",
+        implementation: "src/commands/link-permanent-command.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "StructureSuggestModal統合（SuggestionService提案表示+Skipオプション+選択時ConnectionManager経由接続）",
+        implementation: "src/ui/modals/structure-suggest-modal.ts,src/main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
