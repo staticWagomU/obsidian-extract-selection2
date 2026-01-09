@@ -23,20 +23,7 @@ const scrum: ScrumDashboard = {
     { id: "PBI-002", story: { role: "Zettelkasten実践者", capability: "フロントマターでメタデータ管理", benefit: "ノート間の関係性を自動追跡" }, acceptance_criteria: [{ criterion: "add/update/get/addStructureLink/updateTags", verification: "全メソッド実装" }], status: "done" },
     { id: "PBI-003", story: { role: "Obsidianモバイルユーザー", capability: "選択テキストから新規ノート作成", benefit: "デイリーノートから素早くアイデア切り出し" }, acceptance_criteria: [{ criterion: "NoteTypeModal+フロントマター+リンク置換+Structure提案", verification: "E2E動作確認" }], status: "done" },
     { id: "PBI-004", story: { role: "Obsidianモバイルユーザー", capability: "テンプレートでノート作成", benefit: "一貫したフォーマット管理" }, acceptance_criteria: [{ criterion: "getProcessedTemplate+変数展開+5テンプレート+フォールバック", verification: "Templates/*.md存在" }], status: "done" },
-    {
-      id: "PBI-005",
-      story: { role: "Obsidianモバイルユーザー", capability: "プラグイン設定をカスタマイズできる", benefit: "自分のワークフローに合わせて調整" },
-      acceptance_criteria: [
-        { criterion: "display()で3セクション見出し（フォルダ/動作/UI設定）", verification: "setHeading()で各見出し作成" },
-        { criterion: "7テキストフィールド（5ノートタイプ+テンプレート+デイリー）", verification: "addText()で入力欄作成、DEFAULT_SETTINGS初期値" },
-        { criterion: "フォルダパス変更→saveSettings()で永続化", verification: "プラグイン再読み込み後も保持" },
-        { criterion: "4トグル（insertLink/suggestStructure/moveOnPromotion/showEmoji）", verification: "addToggle()作成、状態表示" },
-        { criterion: "トグル変更→saveSettings()で永続化", verification: "プラグイン再読み込み後も保持" },
-        { criterion: "ファイル名プレフィックスdropdown（date/zettel-id/none）", verification: "addDropdown()で3オプション" },
-        { criterion: "dropdown変更→saveSettings()で永続化", verification: "プラグイン再読み込み後も保持" },
-      ],
-      status: "done",
-    },
+    { id: "PBI-005", story: { role: "Obsidianモバイルユーザー", capability: "プラグイン設定カスタマイズ", benefit: "ワークフロー調整" }, acceptance_criteria: [{ criterion: "3セクション+7テキスト+4トグル+dropdown+saveSettings永続化", verification: "設定変更が再読み込み後も保持" }], status: "done" },
     // Phase 2: 接続管理
     { id: "PBI-006", story: { role: "Zettelkasten実践者", capability: "ノート昇格（Fleeting→Permanent等）", benefit: "アイデアを段階的に成熟" }, acceptance_criteria: [{ criterion: "promoteNote+フロントマター更新+フォルダ移動", verification: "昇格実行確認" }], status: "draft" },
     { id: "PBI-007", story: { role: "Zettelkasten実践者", capability: "PermanentをStructureに接続", benefit: "知識ネットワーク構築" }, acceptance_criteria: [{ criterion: "ConnectionManager+SuggestionService+Modal", verification: "双方向リンク確認" }], status: "draft" },
@@ -59,35 +46,15 @@ const scrum: ScrumDashboard = {
     { number: 2, pbi_id: "PBI-002", goal: "FrontmatterService", status: "done", subtasks: [{ test: "5メソッド", implementation: "src/services/frontmatter-service.ts", type: "behavioral", status: "completed", commits: [{ hash: "0268c21", message: "feat: FrontmatterService", phase: "green" }], notes: [] }] },
     { number: 3, pbi_id: "PBI-003", goal: "選択テキスト→ノート", status: "done", subtasks: [{ test: "Command+Modal", implementation: "src/commands/,src/ui/modals/", type: "behavioral", status: "completed", commits: [{ hash: "527d854", message: "feat: ExtractSelection", phase: "green" }], notes: [] }] },
     { number: 4, pbi_id: "PBI-004", goal: "テンプレートノート作成", status: "done", subtasks: [{ test: "TemplateService+5templates", implementation: "src/services/template-service.ts,Templates/", type: "behavioral", status: "completed", commits: [{ hash: "275b08c", message: "feat: TemplateService", phase: "green" }, { hash: "7813d8b", message: "fix: TFile型ガード", phase: "green" }], notes: [] }] },
-    {
-      number: 5,
-      pbi_id: "PBI-005",
-      goal: "設定タブUIを実装し、ユーザーがフォルダパス・動作・UI設定を永続化可能にする",
-      status: "done",
-      subtasks: [
-        {
-          test: "DailyZettelSettingTab.display()で3セクション見出し+7テキストフィールド+4トグル+dropdown実装",
-          implementation: "src/settings.ts",
-          type: "behavioral",
-          status: "completed",
-          commits: [{ hash: "34e5338", message: "feat(PBI-005): settings tab UI", phase: "green" }],
-          notes: [
-            "setHeading()で3セクション（フォルダ/動作/UI設定）",
-            "addText()で7フィールド（5ノートタイプ+template+daily）",
-            "addToggle()で4設定（insertLink/suggestStructure/moveOnPromotion/showEmoji）",
-            "addDropdown()でfileNamePrefix（date/zettel-id/none）",
-            "全onChange内でsaveSettings()呼び出し→永続化",
-          ],
-        },
-      ],
-    },
+    { number: 5, pbi_id: "PBI-005", goal: "設定タブUI実装", status: "done", subtasks: [{ test: "SettingTab+永続化", implementation: "src/settings.ts", type: "behavioral", status: "completed", commits: [{ hash: "34e5338", message: "feat: SettingTab", phase: "green" }], notes: [] }] },
   ],
 
   retrospectives: [
     { sprint: 1, improvements: [{ action: "スプリント開始時DoD検証", timing: "sprint", status: "completed", outcome: "Sprint2適用" }, { action: "サンプルコード品質独立化", timing: "product", status: "active", outcome: null }] },
     { sprint: 2, improvements: [{ action: "サブタスク小分割", timing: "sprint", status: "completed", outcome: "Sprint3適用" }, { action: "AC振る舞い視点記述", timing: "sprint", status: "completed", outcome: "Sprint3適用" }] },
     { sprint: 3, improvements: [{ action: "サブタスク=コミット単位", timing: "sprint", status: "completed", outcome: "Sprint4で有効確認" }, { action: "複数ファイル=1サブタスク", timing: "sprint", status: "completed", outcome: "Sprint4で有効確認" }] },
-    { sprint: 4, improvements: [{ action: "ACファイル名と実装整合性確認", timing: "sprint", status: "active", outcome: null }, { action: "サブタスクnotesを事前計画に活用", timing: "sprint", status: "active", outcome: null }] },
+    { sprint: 4, improvements: [{ action: "ACファイル名と実装整合性確認", timing: "sprint", status: "completed", outcome: "Sprint5で整合性維持確認" }, { action: "サブタスクnotesを事前計画に活用", timing: "sprint", status: "abandoned", outcome: "AC詳細化の方が効果的と判明" }] },
+    { sprint: 5, improvements: [{ action: "AC粒度標準化（1AC=1論理グループ）", timing: "sprint", status: "active", outcome: null }, { action: "notes=実装時記録専用、計画はAC内記述", timing: "immediate", status: "completed", outcome: "Sprint5 Retro適用" }] },
   ],
 };
 
