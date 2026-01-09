@@ -41,8 +41,8 @@ const scrum: ScrumDashboard = {
         test: "PromotionService.promoteNote（フロントマター更新：type/promoted_from/promoted_at/tags追加、vault.rename()でフォルダ移動）",
         implementation: "src/services/promotion-service.ts",
         type: "behavioral",
-        status: "pending",
-        commits: [],
+        status: "completed",
+        commits: [{ hash: "TBD", message: "feat(PBI-006): implement PromotionService with frontmatter update and folder move", phase: "green" }],
         notes: [],
       },
       {
