@@ -73,11 +73,12 @@ const scrum: ScrumDashboard = {
         benefit: "一貫したフォーマットでノートを管理できる",
       },
       acceptance_criteria: [
-        { criterion: "TemplateServiceで変数展開", verification: "{{title}}等が置換される" },
-        { criterion: "5タイプ分のテンプレート", verification: "各テンプレートが存在" },
-        { criterion: "日付フォーマット対応", verification: "{{date:YYYY-MM-DD}}が展開" },
+        { criterion: "TemplateService.getProcessedTemplate()がテンプレートファイルを読み込み、変数を展開して返す", verification: "{{title}}が実際のタイトルに、{{content}}が本文に置換されたテンプレート文字列が返る" },
+        { criterion: "日付変数{{date:FORMAT}}が指定フォーマットで展開される", verification: "{{date:YYYY-MM-DD}}が2026-01-09形式に、{{date:YYYY}}が2026に置換される" },
+        { criterion: "5タイプ(fleeting/literature/permanent/structure/index)それぞれのテンプレートファイルが存在し、対応する構造を持つ", verification: "Templates/フォルダ内に各テンプレートファイルが存在し、タイプ固有のセクション(例: Literature=出典情報、Permanent=主張)を含む" },
+        { criterion: "テンプレートが存在しない場合、デフォルトでcontentを返す", verification: "テンプレートファイル欠損時にgetProcessedTemplate()がvariables.contentをフォールバック値として返す" },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-005",
