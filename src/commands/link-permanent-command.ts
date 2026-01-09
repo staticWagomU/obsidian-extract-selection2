@@ -17,7 +17,7 @@ export async function linkPermanent(plugin: DailyZettelPlugin): Promise<void> {
 	const currentType = await frontmatterService.getNoteType(file);
 
 	if (currentType !== "permanent") {
-		new Notice("⚠️ Permanent Note のみ接続できます");
+		new Notice("⚠️ permanent note のみ接続できます");
 		return;
 	}
 
