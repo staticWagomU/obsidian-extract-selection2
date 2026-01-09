@@ -156,13 +156,7 @@ const scrum: ScrumDashboard = {
       goal: "NoteType型定義と設定マップの実装により、5種類のノートタイプを識別可能にする",
       status: "done",
       subtasks: [
-        { test: "NoteType型が5種類のユニオン型", implementation: "src/types/note-types.ts", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-        { test: "NoteTypeConfig interface", implementation: "6フィールド定義", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-        { test: "NOTE_TYPE_CONFIG定数", implementation: "Record<NoteType, NoteTypeConfig>", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-        { test: "PROMOTION_PATHS定数", implementation: "fleeting→permanent→structure→index", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-        { test: "NoteMetadata interface", implementation: "必須3+オプショナル8フィールド", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-        { test: "NoteStatus型", implementation: "'draft'|'reviewed'|'mature'", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-        { test: "pnpm build成功", implementation: "src/types/index.ts export", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
+        { test: "NoteType/Config/Metadata/Status型、NOTE_TYPE_CONFIG/PROMOTION_PATHS定数、pnpm build", implementation: "src/types/note-types.ts", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
       ],
     },
     {
@@ -171,46 +165,7 @@ const scrum: ScrumDashboard = {
       goal: "FrontmatterServiceを実装し、フロントマターを通じたノートメタデータの管理機能を提供する",
       status: "done",
       subtasks: [
-        {
-          test: "addFrontmatter()がYAML文字列を生成する",
-          implementation: "stringifyYaml()でメタデータをYAML化し---で囲む",
-          type: "behavioral",
-          status: "completed",
-          commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }],
-          notes: [],
-        },
-        {
-          test: "updateMetadata()が既存フロントマターを保持して部分更新",
-          implementation: "app.fileManager.processFrontMatter経由でObject.assign",
-          type: "behavioral",
-          status: "completed",
-          commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }],
-          notes: [],
-        },
-        {
-          test: "getNoteType()がキャッシュからtype取得",
-          implementation: "metadataCache.getFileCache().frontmatter.type返却",
-          type: "behavioral",
-          status: "completed",
-          commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }],
-          notes: [],
-        },
-        {
-          test: "addStructureLink()が重複排除してリンク追加",
-          implementation: "structure_notes配列に未追加のリンクのみpush",
-          type: "behavioral",
-          status: "completed",
-          commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }],
-          notes: [],
-        },
-        {
-          test: "updateTags()が削除・追加・重複排除を実行",
-          implementation: "tagsToRemove削除後にtagsToAdd追加しSet化",
-          type: "behavioral",
-          status: "completed",
-          commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }],
-          notes: [],
-        },
+        { test: "addFrontmatter/updateMetadata/getNoteType/addStructureLink/updateTags", implementation: "src/services/frontmatter-service.ts", type: "behavioral", status: "completed", commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }], notes: [] },
       ],
     },
   ],
@@ -219,9 +174,16 @@ const scrum: ScrumDashboard = {
     {
       sprint: 1,
       improvements: [
-        { action: "スプリント開始時にlint/build/format検証", timing: "sprint", status: "active", outcome: null },
+        { action: "スプリント開始時にlint/build/format検証", timing: "sprint", status: "completed", outcome: "Sprint 2開始時に適用済み" },
         { action: "サンプルコード品質管理を独立化", timing: "product", status: "active", outcome: null },
         { action: "eslint.config.mts調整", timing: "immediate", status: "completed", outcome: "scrum.tsをallowDefaultProjectに追加" },
+      ],
+    },
+    {
+      sprint: 2,
+      improvements: [
+        { action: "サブタスクをより小さく分割（1メソッド=1コミット粒度）", timing: "sprint", status: "active", outcome: null },
+        { action: "受け入れ基準を振る舞い視点で記述", timing: "sprint", status: "active", outcome: null },
       ],
     },
   ],
@@ -233,14 +195,8 @@ const scrum: ScrumDashboard = {
 
 // PBI lifecycle: draft (idea) -> refining (gathering info) -> ready (can start) -> done
 type PBIStatus = "draft" | "refining" | "ready" | "done";
-
 // Sprint lifecycle
-type SprintStatus =
-  | "planning"
-  | "in_progress"
-  | "review"
-  | "done"
-  | "cancelled";
+type SprintStatus = "planning" | "in_progress" | "review" | "done" | "cancelled";
 
 // TDD cycle: pending -> red (test written) -> green (impl done) -> refactoring -> completed
 type SubtaskStatus = "pending" | "red" | "green" | "refactoring" | "completed";
