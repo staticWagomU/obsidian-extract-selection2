@@ -44,7 +44,75 @@ const scrum: ScrumDashboard = {
     { id: "PBI-008", story: { role: "Zettelkasten実践者", capability: "孤立Permanent Note発見", benefit: "Structure接続漏れ防止" }, acceptance_criteria: [{ criterion: "OrphanDetector+View+接続ボタン", verification: "サイドバー表示確認" }], status: "draft" },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 5,
+    pbi_id: "PBI-005",
+    goal: "設定タブUIを実装し、ユーザーがフォルダパス・動作・UI設定を永続化可能にする",
+    status: "planning",
+    subtasks: [
+      {
+        test: "DailyZettelSettingTab.display()で3セクション見出し作成",
+        implementation: "src/settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "既存src/settings.ts内のdisplay()を拡張",
+          "createEl('h2')でフォルダ設定/動作設定/UI設定の3見出し",
+        ],
+      },
+      {
+        test: "7テキストフィールド（5ノートタイプ+テンプレート+デイリー）でDEFAULT_SETTINGS初期値表示",
+        implementation: "src/settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "Setting.addText()でtypeFolders各フィールド（fleeting/literature/permanent/structure/index）",
+          "templateFolder/dailyNoteFolderフィールド追加",
+          "入力変更時にthis.plugin.settings更新+saveSettings()呼び出し",
+        ],
+      },
+      {
+        test: "4トグル（insertLink/suggestStructure/moveOnPromotion/showEmoji）でDEFAULT_SETTINGS初期値表示",
+        implementation: "src/settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "Setting.addToggle()でbehavior.insertLinkAfterExtract",
+          "behavior.suggestStructureOnPermanent",
+          "behavior.moveOnPromotion",
+          "ui.showEmojiInCommands（AC4記載のshowEmojiはui.showEmojiInCommandsに対応）",
+          "トグル変更時にthis.plugin.settings更新+saveSettings()呼び出し",
+        ],
+      },
+      {
+        test: "fileNamePrefixドロップダウン（date/zettel-id/none）でDEFAULT_SETTINGS初期値表示",
+        implementation: "src/settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "Setting.addDropdown()でbehavior.fileNamePrefix",
+          "addOption()で3値（date/zettel-id/none）",
+          "dropdown変更時にthis.plugin.settings更新+saveSettings()呼び出し",
+        ],
+      },
+      {
+        test: "設定変更後プラグイン再読み込みで全設定値が永続化されている",
+        implementation: "src/settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "各UI要素のonChange内でsaveSettings()が正しく呼ばれることを確認",
+          "プラグイン再読み込み（Cmd+R）後にloadSettings()でdata.json読み込み確認",
+          "手動E2E検証: フォルダパス変更→再読み込み→値保持",
+        ],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
