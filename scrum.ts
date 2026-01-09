@@ -31,7 +31,7 @@ const scrum: ScrumDashboard = {
         { criterion: "NOTE_TYPE_CONFIGが各タイプの設定を持つ", verification: "型チェック通過" },
         { criterion: "PROMOTION_PATHSで昇格パスが定義", verification: "fleeting→permanent→structure→indexの流れ" },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-002",
@@ -141,7 +141,7 @@ const scrum: ScrumDashboard = {
     number: 1,
     pbi_id: "PBI-001",
     goal: "NoteType型定義と設定マップの実装により、5種類のノートタイプを識別可能にする",
-    status: "review",
+    status: "done",
     subtasks: [
       {
         test: "NoteType型が5種類のユニオン型として定義されていることを型レベルで検証",
