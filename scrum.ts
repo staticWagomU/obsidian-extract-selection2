@@ -150,7 +150,7 @@ const scrum: ScrumDashboard = {
     number: 4,
     pbi_id: "PBI-004",
     goal: "テンプレートベースのノート作成機能実装",
-    status: "planning",
+    status: "in_progress",
     subtasks: [
       {
         test: "TemplateService.getProcessedTemplate()基本実装",
