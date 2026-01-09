@@ -26,43 +26,12 @@ const scrum: ScrumDashboard = {
     { id: "PBI-005", story: { role: "Obsidianモバイルユーザー", capability: "プラグイン設定カスタマイズ", benefit: "ワークフロー調整" }, acceptance_criteria: [{ criterion: "3セクション+7テキスト+4トグル+dropdown+saveSettings永続化", verification: "設定変更が再読み込み後も保持" }], status: "done" },
     // Phase 2: 接続管理
     { id: "PBI-006", story: { role: "Zettelkasten実践者", capability: "ノート昇格（Fleeting→Permanent等）", benefit: "アイデアを段階的に成熟" }, acceptance_criteria: [{ criterion: "PromoteNoteCommand（PROMOTION_PATHSバリデーション+NoteTypeModal選択）", verification: "コマンド登録・Modal表示確認" }, { criterion: "PromotionService.promoteNote（フロントマター更新：type/promoted_from/promoted_at/tags+フォルダ移動：vault.rename）", verification: "昇格後フロントマター・フォルダ検証" }, { criterion: "昇格不可（literature/index）はModal選択肢非表示、空PROMOTION_PATHSはNotice警告", verification: "バリデーションエラーハンドリング" }], status: "done" },
-    { id: "PBI-007", story: { role: "Zettelkasten実践者", capability: "PermanentをStructureに接続", benefit: "知識ネットワーク構築" }, acceptance_criteria: [{ criterion: "ConnectionManager.linkPermanentToStructure（Permanentフロントマターにstructure_notes追加+Structureノート本文の「## 関連ノート」セクションにリンク追加）", verification: "双方向リンク確認：frontmatter.structure_notes配列+本文リンク存在" }, { criterion: "LinkPermanentCommand（現在ノートがpermanent type確認→StructureSuggestModal表示→ConnectionManager呼び出し）", verification: "コマンド登録・Modal表示・接続完了Notice" }, { criterion: "StructureSuggestModal統合（SuggestionService提案表示+Skipオプション+選択時ConnectionManager経由接続）", verification: "Modal起動→提案リスト表示→選択で双方向リンク作成" }], status: "ready" },
+    { id: "PBI-007", story: { role: "Zettelkasten実践者", capability: "PermanentをStructureに接続", benefit: "知識ネットワーク構築" }, acceptance_criteria: [{ criterion: "ConnectionManager.linkPermanentToStructure（Permanentフロントマターにstructure_notes追加+Structureノート本文の「## 関連ノート」セクションにリンク追加）", verification: "双方向リンク確認：frontmatter.structure_notes配列+本文リンク存在" }, { criterion: "LinkPermanentCommand（現在ノートがpermanent type確認→StructureSuggestModal表示→ConnectionManager呼び出し）", verification: "コマンド登録・Modal表示・接続完了Notice" }, { criterion: "StructureSuggestModal統合（SuggestionService提案表示+Skipオプション+選択時ConnectionManager経由接続）", verification: "Modal起動→提案リスト表示→選択で双方向リンク作成" }], status: "done" },
     // Phase 3: 可視化
     { id: "PBI-008", story: { role: "Zettelkasten実践者", capability: "孤立Permanent Note発見", benefit: "Structure接続漏れ防止" }, acceptance_criteria: [{ criterion: "OrphanDetector+View+接続ボタン", verification: "サイドバー表示確認" }], status: "draft" },
   ],
 
-  sprint: {
-    number: 7,
-    pbi_id: "PBI-007",
-    goal: "Permanent-Structure接続機能実装",
-    status: "in_progress",
-    subtasks: [
-      {
-        test: "ConnectionManager.linkPermanentToStructure（Permanentフロントマターにstructure_notes追加+Structureノート本文の「## 関連ノート」セクションにリンク追加）",
-        implementation: "src/services/connection-manager.ts",
-        type: "behavioral",
-        status: "completed",
-        commits: [{ hash: "67af70b", message: "feat: StructureSuggestModal+ConnectionManager", phase: "green" }],
-        notes: ["ConnectionManager+StructureSuggestModal already implemented in Sprint 3"],
-      },
-      {
-        test: "LinkPermanentCommand（現在ノートがpermanent type確認→StructureSuggestModal表示→ConnectionManager呼び出し）",
-        implementation: "src/commands/link-permanent-command.ts",
-        type: "behavioral",
-        status: "completed",
-        commits: [{ hash: "fb76382", message: "feat(PBI-007): implement LinkPermanentCommand", phase: "green" }],
-        notes: [],
-      },
-      {
-        test: "StructureSuggestModal統合（SuggestionService提案表示+Skipオプション+選択時ConnectionManager経由接続）",
-        implementation: "src/ui/modals/structure-suggest-modal.ts,src/main.ts",
-        type: "behavioral",
-        status: "completed",
-        commits: [{ hash: "67af70b", message: "feat: StructureSuggestModal+ConnectionManager", phase: "green" }],
-        notes: ["StructureSuggestModal already integrated with SuggestionService"],
-      },
-    ],
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -79,6 +48,7 @@ const scrum: ScrumDashboard = {
     { number: 4, pbi_id: "PBI-004", goal: "テンプレートノート作成", status: "done", subtasks: [{ test: "TemplateService+5templates", implementation: "src/services/template-service.ts,Templates/", type: "behavioral", status: "completed", commits: [{ hash: "275b08c", message: "feat: TemplateService", phase: "green" }, { hash: "7813d8b", message: "fix: TFile型ガード", phase: "green" }], notes: [] }] },
     { number: 5, pbi_id: "PBI-005", goal: "設定タブUI実装", status: "done", subtasks: [{ test: "SettingTab+永続化", implementation: "src/settings.ts", type: "behavioral", status: "completed", commits: [{ hash: "34e5338", message: "feat: SettingTab", phase: "green" }], notes: [] }] },
     { number: 6, pbi_id: "PBI-006", goal: "ノート昇格機能実装", status: "done", subtasks: [{ test: "PromotionService.promoteNote（フロントマター更新：type/promoted_from/promoted_at/tags追加、vault.rename()でフォルダ移動）", implementation: "src/services/promotion-service.ts", type: "behavioral", status: "completed", commits: [{ hash: "ca4d202", message: "feat(PBI-006): implement PromotionService with frontmatter update and folder move", phase: "green" }], notes: [] }, { test: "PromoteNoteCommand（現在のノートtypeから昇格可能タイプ取得→NoteTypeModal表示→PromotionService呼び出し、空PROMOTION_PATHSはNotice警告）", implementation: "src/commands/promote-note-command.ts", type: "behavioral", status: "completed", commits: [{ hash: "7ee7498", message: "feat(PBI-006): implement PromoteNoteCommand with validation and modal", phase: "green" }], notes: [] }, { test: "main.ts統合（コマンド登録、昇格不可タイプ（literature/index）はModal選択肢から除外）", implementation: "src/main.ts,src/ui/modals/note-type-modal.ts", type: "behavioral", status: "completed", commits: [{ hash: "2386b15", message: "feat(PBI-006): integrate promote-note command into main.ts", phase: "green" }], notes: ["NoteTypeModalは既存のallowedTypesパラメータでModal選択肢を制御済み"] }] },
+    { number: 7, pbi_id: "PBI-007", goal: "Permanent-Structure接続機能実装", status: "done", subtasks: [{ test: "ConnectionManager.linkPermanentToStructure（Permanentフロントマターにstructure_notes追加+Structureノート本文の「## 関連ノート」セクションにリンク追加）", implementation: "src/core/connection-manager.ts", type: "behavioral", status: "completed", commits: [{ hash: "67af70b", message: "feat: StructureSuggestModal+ConnectionManager", phase: "green" }], notes: ["ConnectionManager+StructureSuggestModal already implemented in Sprint 3"] }, { test: "LinkPermanentCommand（現在ノートがpermanent type確認→StructureSuggestModal表示→ConnectionManager呼び出し）", implementation: "src/commands/link-permanent-command.ts", type: "behavioral", status: "completed", commits: [{ hash: "fb76382", message: "feat(PBI-007): implement LinkPermanentCommand", phase: "green" }, { hash: "5ef875b", message: "feat(PBI-007): register link-permanent command in main.ts", phase: "green" }], notes: [] }, { test: "StructureSuggestModal統合（SuggestionService提案表示+Skipオプション+選択時ConnectionManager経由接続）", implementation: "src/ui/modals/structure-suggest-modal.ts", type: "behavioral", status: "completed", commits: [{ hash: "67af70b", message: "feat: StructureSuggestModal+ConnectionManager", phase: "green" }], notes: ["StructureSuggestModal already integrated with SuggestionService"] }] },
   ],
 
   retrospectives: [
