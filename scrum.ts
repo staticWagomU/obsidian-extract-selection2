@@ -59,7 +59,8 @@ const scrum: ScrumDashboard = {
     { sprint: 4, improvements: [{ action: "ACファイル名と実装整合性確認", timing: "sprint", status: "completed", outcome: "Sprint5で整合性維持確認" }, { action: "サブタスクnotesを事前計画に活用", timing: "sprint", status: "abandoned", outcome: "AC詳細化の方が効果的と判明" }] },
     { sprint: 5, improvements: [{ action: "AC粒度標準化（1AC=1論理グループ）", timing: "sprint", status: "completed", outcome: "Sprint6で3AC=3サブタスク=3コミット達成" }, { action: "notes=実装時記録専用、計画はAC内記述", timing: "immediate", status: "completed", outcome: "Sprint5 Retro適用" }] },
     { sprint: 6, improvements: [{ action: "AC順序=実装依存関係順に統一（1st AC先頭に依存関係明記）", timing: "sprint", status: "completed", outcome: "Sprint7で3AC順次実装成功、依存関係明確化" }, { action: "AC詳細度基準：criterion=外部仕様(What)、verification=検証方法、notes=内部実装判断", timing: "sprint", status: "completed", outcome: "Sprint7でAC外部仕様記述維持確認" }] },
-    { sprint: 7, improvements: [{ action: "Sprint Planning時に既存実装検索必須化（Grep/Globで関連クラス名検索→再利用可能コード特定）", timing: "sprint", status: "active", outcome: null }, { action: "新PBI計画時にcompleted配列のsubtasks[].notes全検索（関連実装存在確認でPBI重複回避）", timing: "sprint", status: "active", outcome: null }] },
+    { sprint: 7, improvements: [{ action: "Sprint Planning時に既存実装検索必須化（Grep/Globで関連クラス名検索→再利用可能コード特定）", timing: "sprint", status: "completed", outcome: "Sprint8で既存OrphanDetectorService/StructureSuggestModal再利用確認成功" }, { action: "新PBI計画時にcompleted配列のsubtasks[].notes全検索（関連実装存在確認でPBI重複回避）", timing: "sprint", status: "completed", outcome: "Sprint8でcompleted配列参照により既存実装特定、重複回避達成" }] },
+    { sprint: 8, improvements: [{ action: "メンテナンスフェーズ用PBI候補リスト作成（E2Eテスト追加、エラーハンドリング強化、パフォーマンス最適化等）", timing: "product", status: "active", outcome: null }, { action: "既存実装パターン文書化（ConnectionManager双方向リンク、Modal再利用、Service層分離等）", timing: "product", status: "active", outcome: null }, { action: "Retrospectivesから有効なプラクティス抽出・標準化（AC粒度、実装検索、依存関係順等）", timing: "product", status: "active", outcome: null }] },
   ],
 };
 
