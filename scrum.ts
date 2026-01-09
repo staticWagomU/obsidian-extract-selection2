@@ -63,7 +63,7 @@ const scrum: ScrumDashboard = {
         { criterion: "insertLinkAfterExtract設定がONの場合、元ノートの選択範囲が[[新規ノート名]]リンクに置換される", verification: "元ノートのエディタで選択範囲がリンクになっていることを確認" },
         { criterion: "Permanentタイプ選択かつsuggestStructureOnPermanent設定がONの場合、ノート作成後にStructureSuggestModalが開く", verification: "Structure提案モーダルが表示され、スキップまたは選択が可能なことを確認" },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-004",
@@ -141,12 +141,41 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 3,
-    pbi_id: "PBI-003",
-    goal: "選択テキストから3タイプ(Fleeting/Literature/Permanent)のノートを作成し、リンク挿入とStructure提案の自動化により、デイリーノートからのアイデア切り出しワークフローを実現する",
-    status: "review",
-    subtasks: [
+  sprint: null,
+
+  definition_of_done: {
+    checks: [
+      { name: "Build passes", run: "pnpm build" },
+      { name: "Lint passes", run: "pnpm lint" },
+      { name: "Format check passes", run: "pnpm format:check" },
+    ],
+  },
+
+  completed: [
+    {
+      number: 1,
+      pbi_id: "PBI-001",
+      goal: "NoteType型定義と設定マップの実装により、5種類のノートタイプを識別可能にする",
+      status: "done",
+      subtasks: [
+        { test: "NoteType/Config/Metadata/Status型、NOTE_TYPE_CONFIG/PROMOTION_PATHS定数、pnpm build", implementation: "src/types/note-types.ts", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
+      ],
+    },
+    {
+      number: 2,
+      pbi_id: "PBI-002",
+      goal: "FrontmatterServiceを実装し、フロントマターを通じたノートメタデータの管理機能を提供する",
+      status: "done",
+      subtasks: [
+        { test: "addFrontmatter/updateMetadata/getNoteType/addStructureLink/updateTags", implementation: "src/services/frontmatter-service.ts", type: "behavioral", status: "completed", commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }], notes: [] },
+      ],
+    },
+    {
+      number: 3,
+      pbi_id: "PBI-003",
+      goal: "選択テキストから3タイプ(Fleeting/Literature/Permanent)のノートを作成し、リンク挿入とStructure提案の自動化により、デイリーノートからのアイデア切り出しワークフローを実現する",
+      status: "done",
+      subtasks: [
       // AC1: エラーハンドリング (テキスト選択なしで警告通知)
       {
         test: "ExtractSelectionCommand: 選択テキスト空でNotice表示",
@@ -303,36 +332,7 @@ const scrum: ScrumDashboard = {
         notes: [],
       },
     ],
-  },
-
-  definition_of_done: {
-    checks: [
-      { name: "Build passes", run: "pnpm build" },
-      { name: "Lint passes", run: "pnpm lint" },
-      { name: "Format check passes", run: "pnpm format:check" },
-    ],
-  },
-
-  completed: [
-    {
-      number: 1,
-      pbi_id: "PBI-001",
-      goal: "NoteType型定義と設定マップの実装により、5種類のノートタイプを識別可能にする",
-      status: "done",
-      subtasks: [
-        { test: "NoteType/Config/Metadata/Status型、NOTE_TYPE_CONFIG/PROMOTION_PATHS定数、pnpm build", implementation: "src/types/note-types.ts", type: "behavioral", status: "completed", commits: [{ hash: "1eb7e33", message: "feat: implement NoteType type system", phase: "green" }], notes: [] },
-      ],
-    },
-    {
-      number: 2,
-      pbi_id: "PBI-002",
-      goal: "FrontmatterServiceを実装し、フロントマターを通じたノートメタデータの管理機能を提供する",
-      status: "done",
-      subtasks: [
-        { test: "addFrontmatter/updateMetadata/getNoteType/addStructureLink/updateTags", implementation: "src/services/frontmatter-service.ts", type: "behavioral", status: "completed", commits: [{ hash: "0268c21", message: "feat: implement FrontmatterService with all 5 methods", phase: "green" }], notes: [] },
-      ],
-    },
-  ],
+  }],
 
   retrospectives: [
     {
