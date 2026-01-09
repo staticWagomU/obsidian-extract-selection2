@@ -31,7 +31,38 @@ const scrum: ScrumDashboard = {
     { id: "PBI-008", story: { role: "Zettelkasten実践者", capability: "孤立Permanent Note発見", benefit: "Structure接続漏れ防止" }, acceptance_criteria: [{ criterion: "OrphanDetector+View+接続ボタン", verification: "サイドバー表示確認" }], status: "draft" },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 6,
+    pbi_id: "PBI-006",
+    goal: "ノート昇格機能実装",
+    status: "in_progress",
+    subtasks: [
+      {
+        test: "PromotionService.promoteNote（フロントマター更新：type/promoted_from/promoted_at/tags追加、vault.rename()でフォルダ移動）",
+        implementation: "src/services/promotion-service.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "PromoteNoteCommand（現在のノートtypeから昇格可能タイプ取得→NoteTypeModal表示→PromotionService呼び出し、空PROMOTION_PATHSはNotice警告）",
+        implementation: "src/commands/promote-note-command.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "main.ts統合（コマンド登録、昇格不可タイプ（literature/index）はModal選択肢から除外）",
+        implementation: "src/main.ts,src/ui/modals/note-type-modal.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
