@@ -93,10 +93,13 @@ export default class DailyZettelPlugin extends Plugin {
 			this.app.workspace.on("editor-menu", (menu, editor, _info) => {
 				if (!this.settings.ui.showContextMenuItems) return;
 
+				menu.addSeparator();
+
 				// 選択テキストがある場合のみ表示
 				if (editor.getSelection()) {
 					menu.addItem((item) =>
 						item
+							.setSection("page-zettel")
 							.setTitle(
 								this.settings.ui.showEmojiInCommands
 									? "📝 選択範囲から新規ノート"
@@ -115,6 +118,7 @@ export default class DailyZettelPlugin extends Plugin {
 				// 常時表示
 				menu.addItem((item) =>
 					item
+						.setSection("page-zettel")
 						.setTitle(
 							this.settings.ui.showEmojiInCommands
 								? "⬆️ ノートを昇格"
@@ -126,6 +130,7 @@ export default class DailyZettelPlugin extends Plugin {
 
 				menu.addItem((item) =>
 					item
+						.setSection("page-zettel")
 						.setTitle(
 							this.settings.ui.showEmojiInCommands
 								? "🔗 Structure Noteに接続"
@@ -143,8 +148,11 @@ export default class DailyZettelPlugin extends Plugin {
 				if (!this.settings.ui.showContextMenuItems) return;
 				if (!(file instanceof TFile) || file.extension !== "md") return;
 
+				menu.addSeparator();
+
 				menu.addItem((item) =>
 					item
+						.setSection("page-zettel")
 						.setTitle(
 							this.settings.ui.showEmojiInCommands
 								? "⬆️ ノートを昇格"
@@ -156,6 +164,7 @@ export default class DailyZettelPlugin extends Plugin {
 
 				menu.addItem((item) =>
 					item
+						.setSection("page-zettel")
 						.setTitle(
 							this.settings.ui.showEmojiInCommands
 								? "🔗 Structure Noteに接続"

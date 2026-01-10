@@ -37,9 +37,43 @@ const scrum: ScrumDashboard = {
     { id: "PBI-012", story: { role: "Zettelkasten実践者", capability: "設定画面でフォルダをサジェストから選択", benefit: "手入力のタイポ防止・既存フォルダの発見" }, acceptance_criteria: [{ criterion: "FolderSuggest extends AbstractInputSuggest<TFolder>（getSuggestions: vault.getAllLoadedFiles()→TFolderフィルタ→入力文字列で部分一致検索、renderSuggestion: folder.path表示、selectSuggestion: inputEl.valueに設定→close()）", verification: "src/ui/suggesters/folder-suggest.ts存在、pnpm build成功" }, { criterion: "DailyZettelSettingTab内の7つのフォルダ入力テキストボックス（Fleeting/Literature/Permanent/Structure/Index/Template/DailyNote）にFolderSuggestをアタッチ", verification: "設定画面→各フォルダ入力欄で文字入力→既存フォルダがドロップダウン表示" }, { criterion: "サジェスト選択時にonChange発火→settings自動保存", verification: "サジェストから選択→設定タブを閉じて再開→選択値が保持" }], status: "done" },
     // Phase 6: アクセシビリティ改善
     { id: "PBI-013", story: { role: "Obsidianモバイルユーザー", capability: "右クリックコンテキストメニューからノート操作を実行", benefit: "コマンドパレットを開かずに素早くアクセス" }, acceptance_criteria: [{ criterion: "エディタコンテキストメニュー統合（workspace.on('editor-menu')をregisterEvent、選択テキストがある場合「選択範囲から新規ノート」表示、常時「ノートを昇格」「Structure Noteに接続」表示、menu.addItem()で追加）", verification: "エディタ右クリック→メニュー項目表示確認、選択状態で項目変化確認" }, { criterion: "ファイルエクスプローラコンテキストメニュー統合（workspace.on('file-menu')をregisterEvent、.mdファイル右クリック時「ノートを昇格」「Structure Noteに接続」表示、menu.addItem()で追加）", verification: "ファイルエクスプローラで.mdファイル右クリック→メニュー項目表示確認" }, { criterion: "設定画面でコンテキストメニュー表示ON/OFF切り替え（settings.ui.showContextMenuItemsトグル追加、デフォルト: true、トグルOFF時はregisterEvent呼び出しスキップ）", verification: "設定画面→トグル表示確認、OFF時メニュー非表示、ON時メニュー表示" }], status: "done" },
+    // Phase 7: 国際化対応
+    { id: "PBI-014", story: { role: "Obsidianモバイルユーザー", capability: "UIを英語/日本語で表示", benefit: "言語設定に合わせた自然なUI体験" }, acceptance_criteria: [{ criterion: "i18n基盤構築（src/i18n/index.ts: t()関数・getCurrentLocale()・loadLocale()実装、src/i18n/locales/en.json: 英語翻訳、src/i18n/locales/ja.json: 日本語翻訳（現在のハードコード文字列）、moment.locale()でObsidianの言語設定を検出）", verification: "t()関数呼び出しでlocaleに応じた翻訳文字列取得、pnpm build成功" }, { criterion: "コマンド・コンテキストメニューのi18n化（main.ts: addCommand().name・menu.addItem().setTitle()をt()で置換、全コマンド名を翻訳キーに置換）", verification: "言語設定変更→コマンドパレット・コンテキストメニューの表示言語切り替え確認" }, { criterion: "設定画面のi18n化（settings.ts: setName()・setDesc()をt()で置換、フォルダ設定・動作設定・UI設定の全項目）", verification: "言語設定変更→設定画面の表示言語切り替え確認" }, { criterion: "モーダル・ビュー・Noticeのi18n化（QuickCaptureModal・StructureSuggestModal、OrphanView、各コマンドのNotice messages）", verification: "言語設定変更→Modal・View・Noticeの表示言語切り替え確認" }], status: "ready" },
+    { id: "PBI-015", story: { role: "Obsidianモバイルユーザー", capability: "コンテキストメニューでプラグインコマンドをグルーピング表示", benefit: "視覚的に整理されたメニューで操作性向上" }, acceptance_criteria: [{ criterion: "エディタコンテキストメニューグルーピング（menu.addItem().setSection('page-zettel')使用、セクション内に「選択範囲から新規ノート」「ノートを昇格」「Structure Noteに接続」を配置、menu.addSeparator()でセクション前後を視覚的分離）", verification: "エディタ右クリック→セパレーターで区切られたPage Zettelセクション表示→各コマンド選択可能" }, { criterion: "ファイルエクスプローラコンテキストメニューグルーピング（menu.addItem().setSection('page-zettel')使用、セクション内に「ノートを昇格」「Structure Noteに接続」を配置、menu.addSeparator()でセクション前後を視覚的分離）", verification: "ファイルエクスプローラ.md右クリック→セパレーターで区切られたPage Zettelセクション表示→各コマンド選択可能" }, { criterion: "絵文字設定対応維持（settings.ui.showEmojiInCommandsに応じてメニュー項目の絵文字表示切り替え）", verification: "絵文字ON時は「📝 選択範囲から新規ノート」等、OFF時は絵文字なし表示" }], status: "ready" }]
   ],
 
-  sprint: null,
+  sprint: {
+    number: 14,
+    pbi_id: "PBI-015",
+    goal: "コンテキストメニューでプラグインコマンドをグルーピング表示し、視覚的な操作性を向上",
+    status: "in_progress",
+    subtasks: [
+      {
+        test: "editor-menuハンドラで各menu.addItem()に.setSection('page-zettel')を追加、menu.addSeparator()でセクション分離を確認",
+        implementation: "src/main.ts (editor-menu handler)",
+        type: "behavioral",
+        status: "green",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "file-menuハンドラで各menu.addItem()に.setSection('page-zettel')を追加、menu.addSeparator()でセクション分離を確認",
+        implementation: "src/main.ts (file-menu handler)",
+        type: "behavioral",
+        status: "green",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "settings.ui.showEmojiInCommandsトグルでメニュー項目の絵文字表示が切り替わることを確認",
+        implementation: "既存ロジックの動作確認 (DoD検証)",
+        type: "behavioral",
+        status: "green",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
