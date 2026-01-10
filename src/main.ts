@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Plugin, WorkspaceLeaf } from "obsidian";
+import { Editor, MarkdownView, Plugin, TFile, WorkspaceLeaf } from "obsidian";
 import { DEFAULT_SETTINGS, DailyZettelSettingTab } from "./settings";
 import type { DailyZettelSettings } from "./types/settings";
 import { NoteManager } from "./core/note-manager";
@@ -87,6 +87,55 @@ export default class DailyZettelPlugin extends Plugin {
 				modal.open();
 			},
 		});
+
+		// Register editor context menu
+		this.registerEvent(
+			this.app.workspace.on("editor-menu", (menu, editor, info) => {
+				if (!this.settings.ui.showContextMenuItems) return;
+
+				// 選択テキストがある場合のみ表示
+				if (editor.getSelection()) {
+					menu.addItem((item) =>
+						item
+							.setTitle(
+								this.settings.ui.showEmojiInCommands
+									? "📝 選択範囲から新規ノート"
+									: "選択範囲から新規ノート",
+							)
+							.setIcon("file-plus")
+							.onClick(() => {
+								const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+								if (view) {
+									void extractSelection(this, editor, view);
+								}
+							}),
+					);
+				}
+
+				// 常時表示
+				menu.addItem((item) =>
+					item
+						.setTitle(
+							this.settings.ui.showEmojiInCommands
+								? "⬆️ ノートを昇格"
+								: "ノートを昇格",
+						)
+						.setIcon("arrow-up")
+						.onClick(() => void promoteNote(this)),
+				);
+
+				menu.addItem((item) =>
+					item
+						.setTitle(
+							this.settings.ui.showEmojiInCommands
+								? "🔗 Structure Noteに接続"
+								: "Structure Noteに接続",
+						)
+						.setIcon("link")
+						.onClick(() => void linkPermanent(this)),
+				);
+			}),
+		);
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new DailyZettelSettingTab(this.app, this));

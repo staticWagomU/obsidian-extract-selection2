@@ -35,9 +35,42 @@ const scrum: ScrumDashboard = {
     { id: "PBI-011", story: { role: "Zettelkasten実践者", capability: "Permanent Note接続率を数値で確認", benefit: "知識ネットワーク健全性の定量把握" }, acceptance_criteria: [{ criterion: "OrphanDetectorService.getStats()（型定義: interface OrphanStats { total: number; orphans: number; connected: number; connectionRate: number; }、全permanentノート数取得→getOrphanPermanentNotes()で孤立数→connected = total - orphans→connectionRate計算）", verification: "メソッド呼び出しでOrphanStatsオブジェクト取得、total/orphans/connected/connectionRate値の整合性確認" }, { criterion: "OrphanView.onOpen()でOrphanDetectorService.getStats()呼び出し、ヘッダーに統計情報表示（\"📊 接続率: X% (Y / Z 件が未接続)\"形式、リフレッシュ時に統計更新）", verification: "サイドバービュー開く→ヘッダー統計表示確認、リフレッシュボタン→統計更新確認" }], status: "done" },
     // Phase 5: 設定UX改善
     { id: "PBI-012", story: { role: "Zettelkasten実践者", capability: "設定画面でフォルダをサジェストから選択", benefit: "手入力のタイポ防止・既存フォルダの発見" }, acceptance_criteria: [{ criterion: "FolderSuggest extends AbstractInputSuggest<TFolder>（getSuggestions: vault.getAllLoadedFiles()→TFolderフィルタ→入力文字列で部分一致検索、renderSuggestion: folder.path表示、selectSuggestion: inputEl.valueに設定→close()）", verification: "src/ui/suggesters/folder-suggest.ts存在、pnpm build成功" }, { criterion: "DailyZettelSettingTab内の7つのフォルダ入力テキストボックス（Fleeting/Literature/Permanent/Structure/Index/Template/DailyNote）にFolderSuggestをアタッチ", verification: "設定画面→各フォルダ入力欄で文字入力→既存フォルダがドロップダウン表示" }, { criterion: "サジェスト選択時にonChange発火→settings自動保存", verification: "サジェストから選択→設定タブを閉じて再開→選択値が保持" }], status: "done" },
+    // Phase 6: アクセシビリティ改善
+    { id: "PBI-013", story: { role: "Obsidianモバイルユーザー", capability: "右クリックコンテキストメニューからノート操作を実行", benefit: "コマンドパレットを開かずに素早くアクセス" }, acceptance_criteria: [{ criterion: "エディタコンテキストメニュー統合（workspace.on('editor-menu')をregisterEvent、選択テキストがある場合「選択範囲から新規ノート」表示、常時「ノートを昇格」「Structure Noteに接続」表示、menu.addItem()で追加）", verification: "エディタ右クリック→メニュー項目表示確認、選択状態で項目変化確認" }, { criterion: "ファイルエクスプローラコンテキストメニュー統合（workspace.on('file-menu')をregisterEvent、.mdファイル右クリック時「ノートを昇格」「Structure Noteに接続」表示、menu.addItem()で追加）", verification: "ファイルエクスプローラで.mdファイル右クリック→メニュー項目表示確認" }, { criterion: "設定画面でコンテキストメニュー表示ON/OFF切り替え（settings.ui.showContextMenuItemsトグル追加、デフォルト: true、トグルOFF時はregisterEvent呼び出しスキップ）", verification: "設定画面→トグル表示確認、OFF時メニュー非表示、ON時メニュー表示" }], status: "ready" },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 13,
+    pbi_id: "PBI-013",
+    goal: "コンテキストメニューからノート操作でアクセシビリティ向上",
+    status: "in_progress",
+    subtasks: [
+      {
+        test: "エディタコンテキストメニュー統合（workspace.on('editor-menu')をregisterEvent、選択テキストがある場合「選択範囲から新規ノート」表示、常時「ノートを昇格」「Structure Noteに接続」表示、settings.ui.showContextMenuItemsで表示制御）",
+        implementation: "src/main.ts",
+        type: "behavioral",
+        status: "green",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "ファイルエクスプローラコンテキストメニュー統合（workspace.on('file-menu')をregisterEvent、.mdファイル右クリック時のみ「ノートを昇格」「Structure Noteに接続」表示）",
+        implementation: "src/main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "設定画面UI追加（settings.ui.showContextMenuItemsトグル追加、UI設定セクションに配置、デフォルト: true）",
+        implementation: "src/settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
