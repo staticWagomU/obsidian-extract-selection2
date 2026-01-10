@@ -2,6 +2,7 @@ import { App, PluginSettingTab, Setting } from "obsidian";
 import DailyZettelPlugin from "./main";
 import type { DailyZettelSettings } from "./types/settings";
 import { NOTE_TYPE_CONFIG } from "./types/note-types";
+import { FolderSuggest } from "./ui/suggesters/folder-suggest";
 
 export const DEFAULT_SETTINGS: DailyZettelSettings = {
 	folders: {
@@ -46,93 +47,100 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Fleetingノートフォルダ")
 			.setDesc("一時的なアイデアを保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("00-inbox/fleeting")
 					.setValue(this.plugin.settings.folders.typeFolders.fleeting)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.fleeting = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		new Setting(containerEl)
 			.setName("Literatureノートフォルダ")
 			.setDesc("文献メモを保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("10-literature")
 					.setValue(this.plugin.settings.folders.typeFolders.literature)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.literature = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		new Setting(containerEl)
 			.setName("Permanentノートフォルダ")
 			.setDesc("永続的な知識を保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("20-permanent")
 					.setValue(this.plugin.settings.folders.typeFolders.permanent)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.permanent = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		new Setting(containerEl)
 			.setName("Structureノートフォルダ")
 			.setDesc("構造ノートを保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("30-structure")
 					.setValue(this.plugin.settings.folders.typeFolders.structure)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.structure = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		new Setting(containerEl)
 			.setName("Indexノートフォルダ")
 			.setDesc("インデックスノートを保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("40-index")
 					.setValue(this.plugin.settings.folders.typeFolders.index)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.index = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		new Setting(containerEl)
 			.setName("テンプレートフォルダ")
 			.setDesc("ノート作成時に使用するテンプレートを保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("Templates")
 					.setValue(this.plugin.settings.folders.templateFolder)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.templateFolder = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		new Setting(containerEl)
 			.setName("デイリーノートフォルダ")
 			.setDesc("デイリーノートを保存するフォルダ")
-			.addText((text) =>
+			.addText((text) => {
 				text
 					.setPlaceholder("00-inbox/daily")
 					.setValue(this.plugin.settings.folders.dailyNoteFolder)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.dailyNoteFolder = value;
 						await this.plugin.saveSettings();
-					}),
-			);
+					});
+				new FolderSuggest(this.app, text.inputEl);
+			});
 
 		// 動作設定セクション
 		new Setting(containerEl).setName("動作設定").setHeading();
