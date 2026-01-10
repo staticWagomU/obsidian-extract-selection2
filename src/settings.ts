@@ -48,8 +48,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("Fleetingノートフォルダ")
 			.setDesc("一時的なアイデアを保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("00-inbox/fleeting")
+				text.setPlaceholder("00-inbox/fleeting")
 					.setValue(this.plugin.settings.folders.typeFolders.fleeting)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.fleeting = value;
@@ -62,8 +61,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("Literatureノートフォルダ")
 			.setDesc("文献メモを保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("10-literature")
+				text.setPlaceholder("10-literature")
 					.setValue(this.plugin.settings.folders.typeFolders.literature)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.literature = value;
@@ -76,8 +74,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("Permanentノートフォルダ")
 			.setDesc("永続的な知識を保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("20-permanent")
+				text.setPlaceholder("20-permanent")
 					.setValue(this.plugin.settings.folders.typeFolders.permanent)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.permanent = value;
@@ -90,8 +87,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("Structureノートフォルダ")
 			.setDesc("構造ノートを保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("30-structure")
+				text.setPlaceholder("30-structure")
 					.setValue(this.plugin.settings.folders.typeFolders.structure)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.structure = value;
@@ -104,8 +100,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("Indexノートフォルダ")
 			.setDesc("インデックスノートを保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("40-index")
+				text.setPlaceholder("40-index")
 					.setValue(this.plugin.settings.folders.typeFolders.index)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.typeFolders.index = value;
@@ -118,8 +113,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("テンプレートフォルダ")
 			.setDesc("ノート作成時に使用するテンプレートを保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("Templates")
+				text.setPlaceholder("Templates")
 					.setValue(this.plugin.settings.folders.templateFolder)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.templateFolder = value;
@@ -132,8 +126,7 @@ export class DailyZettelSettingTab extends PluginSettingTab {
 			.setName("デイリーノートフォルダ")
 			.setDesc("デイリーノートを保存するフォルダ")
 			.addText((text) => {
-				text
-					.setPlaceholder("00-inbox/daily")
+				text.setPlaceholder("00-inbox/daily")
 					.setValue(this.plugin.settings.folders.dailyNoteFolder)
 					.onChange(async (value) => {
 						this.plugin.settings.folders.dailyNoteFolder = value;

@@ -56,7 +56,7 @@ const scrum: ScrumDashboard = {
         implementation: "src/settings.ts",
         type: "behavioral",
         status: "green",
-        commits: [],
+        commits: [{ hash: "96bc2da", message: "feat(PBI-012): integrate FolderSuggest with settings", phase: "green" }],
         notes: [],
       },
     ],

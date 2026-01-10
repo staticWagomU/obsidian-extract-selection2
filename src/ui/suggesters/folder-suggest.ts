@@ -9,16 +9,14 @@ export class FolderSuggest extends AbstractInputSuggest<TFolder> {
 		return this.app.vault
 			.getAllLoadedFiles()
 			.filter((file): file is TFolder => file instanceof TFolder)
-			.filter((folder) =>
-				folder.path.toLowerCase().includes(query.toLowerCase()),
-			);
+			.filter((folder) => folder.path.toLowerCase().includes(query.toLowerCase()));
 	}
 
 	renderSuggestion(folder: TFolder, el: HTMLElement): void {
 		el.setText(folder.path);
 	}
 
-	selectSuggestion(folder: TFolder, evt: MouseEvent | KeyboardEvent): void {
+	selectSuggestion(folder: TFolder, _evt: MouseEvent | KeyboardEvent): void {
 		this.setValue(folder.path);
 		this.close();
 	}
