@@ -1,0 +1,123 @@
+{
+	"commands": {
+		"extractSelection": "Extract selection to new note",
+		"promoteNote": "Promote note",
+		"linkPermanent": "Link to Structure Note",
+		"quickFleeting": "Quick fleeting note"
+	},
+	"settings": {
+		"folders": {
+			"heading": "Folder Settings",
+			"fleeting": {
+				"name": "Fleeting notes folder",
+				"desc": "Folder for temporary ideas",
+				"placeholder": "00-inbox/fleeting"
+			},
+			"literature": {
+				"name": "Literature notes folder",
+				"desc": "Folder for literature notes",
+				"placeholder": "10-literature"
+			},
+			"permanent": {
+				"name": "Permanent notes folder",
+				"desc": "Folder for permanent knowledge",
+				"placeholder": "20-permanent"
+			},
+			"structure": {
+				"name": "Structure notes folder",
+				"desc": "Folder for structure notes",
+				"placeholder": "30-structure"
+			},
+			"index": {
+				"name": "Index notes folder",
+				"desc": "Folder for index notes",
+				"placeholder": "40-index"
+			},
+			"template": {
+				"name": "Templates folder",
+				"desc": "Folder for note templates",
+				"placeholder": "Templates"
+			},
+			"dailyNote": {
+				"name": "Daily notes folder",
+				"desc": "Folder for daily notes",
+				"placeholder": "00-inbox/daily"
+			}
+		},
+		"behavior": {
+			"heading": "Behavior Settings",
+			"insertLinkAfterExtract": {
+				"name": "Insert link after extraction",
+				"desc": "Insert a link to the new note in the original note after extraction"
+			},
+			"suggestStructureOnPermanent": {
+				"name": "Suggest structure on permanent note",
+				"desc": "Suggest connecting to structure notes when creating permanent notes"
+			},
+			"moveOnPromotion": {
+				"name": "Move folder on promotion",
+				"desc": "Automatically move note to corresponding folder when promoted"
+			},
+			"fileNamePrefix": {
+				"name": "File name prefix",
+				"desc": "Select the prefix format for new note filenames",
+				"options": {
+					"date": "Date format (yyyymmdd)",
+					"zettelId": "Zettelkasten ID format (yyyymmddhhmm)",
+					"none": "None"
+				}
+			}
+		},
+		"ui": {
+			"heading": "UI Settings",
+			"showEmojiInCommands": {
+				"name": "Show emoji in commands",
+				"desc": "Include emoji in command names displayed in the command palette"
+			},
+			"showContextMenuItems": {
+				"name": "Show in context menu",
+				"desc": "Display note operations in right-click context menu"
+			}
+		}
+	},
+	"modals": {
+		"quickCapture": {
+			"title": "Quick fleeting note",
+			"inputName": "Title",
+			"inputDesc": "Enter your fleeting note title.",
+			"inputPlaceholder": "Enter title...",
+			"createButton": "Create",
+			"cancelButton": "Cancel"
+		},
+		"structureSuggest": {
+			"placeholder": "Select structure note (or skip)...",
+			"skipOption": "⏭️ Skip (link later)"
+		},
+		"noteType": {
+			"placeholder": "Select note type..."
+		}
+	},
+	"views": {
+		"orphan": {
+			"title": "Orphan permanent notes",
+			"stats": "📊 Connection rate: {rate}% ({orphans} / {total} unconnected)",
+			"refreshButton": "Refresh",
+			"emptyMessage": "No orphan permanent notes",
+			"connectButton": "Connect"
+		}
+	},
+	"notices": {
+		"selectText": "⚠️ Please select text",
+		"openNote": "⚠️ Please open a note",
+		"noteTypeNotSet": "⚠️ Note type is not set",
+		"cannotPromote": "⚠️ {type} notes cannot be promoted",
+		"promoteSuccess": "✅ Promoted from {from} to {to}",
+		"permanentOnly": "⚠️ Only permanent notes can be linked",
+		"linkSuccess": "✅ Linked to {name}",
+		"skipLink": "You can link to a structure note later",
+		"noteCreated": "✅ Created {icon} {title}"
+	},
+	"ribbon": {
+		"orphanView": "Orphan permanent notes"
+	}
+}

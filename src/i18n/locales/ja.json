@@ -1,0 +1,123 @@
+{
+	"commands": {
+		"extractSelection": "選択範囲から新規ノート",
+		"promoteNote": "ノートを昇格",
+		"linkPermanent": "Structure Note に接続",
+		"quickFleeting": "Quick fleeting note"
+	},
+	"settings": {
+		"folders": {
+			"heading": "フォルダ設定",
+			"fleeting": {
+				"name": "Fleetingノートフォルダ",
+				"desc": "一時的なアイデアを保存するフォルダ",
+				"placeholder": "00-inbox/fleeting"
+			},
+			"literature": {
+				"name": "Literatureノートフォルダ",
+				"desc": "文献メモを保存するフォルダ",
+				"placeholder": "10-literature"
+			},
+			"permanent": {
+				"name": "Permanentノートフォルダ",
+				"desc": "永続的な知識を保存するフォルダ",
+				"placeholder": "20-permanent"
+			},
+			"structure": {
+				"name": "Structureノートフォルダ",
+				"desc": "構造ノートを保存するフォルダ",
+				"placeholder": "30-structure"
+			},
+			"index": {
+				"name": "Indexノートフォルダ",
+				"desc": "インデックスノートを保存するフォルダ",
+				"placeholder": "40-index"
+			},
+			"template": {
+				"name": "テンプレートフォルダ",
+				"desc": "ノート作成時に使用するテンプレートを保存するフォルダ",
+				"placeholder": "Templates"
+			},
+			"dailyNote": {
+				"name": "デイリーノートフォルダ",
+				"desc": "デイリーノートを保存するフォルダ",
+				"placeholder": "00-inbox/daily"
+			}
+		},
+		"behavior": {
+			"heading": "動作設定",
+			"insertLinkAfterExtract": {
+				"name": "切り出し後にリンクを挿入",
+				"desc": "選択範囲から新規ノート作成後、元ノートに新規ノートへのリンクを挿入します"
+			},
+			"suggestStructureOnPermanent": {
+				"name": "Permanentノート作成時にstructure提案",
+				"desc": "Permanentノート作成時に関連するstructureノートへの接続を提案します"
+			},
+			"moveOnPromotion": {
+				"name": "昇格時にフォルダ移動",
+				"desc": "ノート昇格時に自動的に対応するフォルダに移動します"
+			},
+			"fileNamePrefix": {
+				"name": "ファイル名プレフィックス",
+				"desc": "新規ノート作成時のファイル名のプレフィックス形式を選択します",
+				"options": {
+					"date": "日付形式 (yyyymmdd)",
+					"zettelId": "Zettelkasten ID形式 (yyyymmddhhmm)",
+					"none": "なし"
+				}
+			}
+		},
+		"ui": {
+			"heading": "UI設定",
+			"showEmojiInCommands": {
+				"name": "コマンドに絵文字を表示",
+				"desc": "コマンドパレットに表示されるコマンド名に絵文字を含めます"
+			},
+			"showContextMenuItems": {
+				"name": "コンテキストメニューに表示",
+				"desc": "右クリックメニューにノート操作を表示します"
+			}
+		}
+	},
+	"modals": {
+		"quickCapture": {
+			"title": "Quick fleeting note",
+			"inputName": "Title",
+			"inputDesc": "Enter your fleeting note title.",
+			"inputPlaceholder": "Enter title...",
+			"createButton": "Create",
+			"cancelButton": "Cancel"
+		},
+		"structureSuggest": {
+			"placeholder": "Select structure note (or skip)...",
+			"skipOption": "⏭️ Skip (link later)"
+		},
+		"noteType": {
+			"placeholder": "ノートタイプを選択..."
+		}
+	},
+	"views": {
+		"orphan": {
+			"title": "Orphan permanent notes",
+			"stats": "📊 接続率: {rate}% ({orphans} / {total} 件が未接続)",
+			"refreshButton": "更新",
+			"emptyMessage": "孤立したPermanent Noteはありません",
+			"connectButton": "接続"
+		}
+	},
+	"notices": {
+		"selectText": "⚠️ テキストを選択してください",
+		"openNote": "⚠️ ノートを開いてください",
+		"noteTypeNotSet": "⚠️ ノートタイプが設定されていません",
+		"cannotPromote": "⚠️ {type} ノートは昇格できません",
+		"promoteSuccess": "✅ {from} → {to} に昇格しました",
+		"permanentOnly": "⚠️ permanent note のみ接続できます",
+		"linkSuccess": "✅ {name} に接続しました",
+		"skipLink": "You can link to a structure note later",
+		"noteCreated": "✅ Created {icon} {title}"
+	},
+	"ribbon": {
+		"orphanView": "Orphan permanent notes"
+	}
+}
