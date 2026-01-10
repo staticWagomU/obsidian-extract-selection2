@@ -69,7 +69,8 @@ const scrum: ScrumDashboard = {
     { sprint: 7, improvements: [{ action: "既存実装検索必須化", timing: "sprint", status: "completed", outcome: "Sprint8/9確立" }] },
     { sprint: 8, improvements: [{ action: "メンテナンスPBI候補作成", timing: "product", status: "active", outcome: null }] },
     { sprint: 9, improvements: [{ action: "既存実装拡張パターン継続", timing: "sprint", status: "completed", outcome: "getStats()+UI統合成功" }] },
-    { sprint: 10, improvements: [{ action: "Modal実装前に既存Modal調査を必須化", timing: "sprint", status: "active", outcome: null }] },
+    { sprint: 10, improvements: [{ action: "Modal実装前に既存Modal調査を必須化", timing: "sprint", status: "completed", outcome: "Sprint11でModal不使用" }] },
+    { sprint: 11, improvements: [{ action: "既存Service活用を実装前調査で確認", timing: "sprint", status: "active", outcome: null }] },
   ],
 };
 
