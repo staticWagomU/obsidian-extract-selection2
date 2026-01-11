@@ -11,15 +11,12 @@ export const DEFAULT_SETTINGS: PageZettelSettings = {
 			fleeting: NOTE_TYPE_CONFIG.fleeting.folder,
 			literature: NOTE_TYPE_CONFIG.literature.folder,
 			permanent: NOTE_TYPE_CONFIG.permanent.folder,
-			structure: NOTE_TYPE_CONFIG.structure.folder,
-			index: NOTE_TYPE_CONFIG.index.folder,
 		},
 		templateFolder: "Templates",
 		dailyNoteFolder: "00-Inbox/Daily",
 	},
 	behavior: {
 		insertLinkAfterExtract: true,
-		suggestStructureOnPermanent: true,
 		moveOnPromotion: true,
 		fileNamePrefix: "date",
 	},
@@ -86,32 +83,6 @@ export class PageZettelSettingTab extends PluginSettingTab {
 			});
 
 		new Setting(containerEl)
-			.setName(t("settings.folders.structure.name"))
-			.setDesc(t("settings.folders.structure.desc"))
-			.addText((text) => {
-				text.setPlaceholder(t("settings.folders.structure.placeholder"))
-					.setValue(this.plugin.settings.folders.typeFolders.structure)
-					.onChange(async (value) => {
-						this.plugin.settings.folders.typeFolders.structure = value;
-						await this.plugin.saveSettings();
-					});
-				new FolderSuggest(this.app, text.inputEl);
-			});
-
-		new Setting(containerEl)
-			.setName(t("settings.folders.index.name"))
-			.setDesc(t("settings.folders.index.desc"))
-			.addText((text) => {
-				text.setPlaceholder(t("settings.folders.index.placeholder"))
-					.setValue(this.plugin.settings.folders.typeFolders.index)
-					.onChange(async (value) => {
-						this.plugin.settings.folders.typeFolders.index = value;
-						await this.plugin.saveSettings();
-					});
-				new FolderSuggest(this.app, text.inputEl);
-			});
-
-		new Setting(containerEl)
 			.setName(t("settings.folders.template.name"))
 			.setDesc(t("settings.folders.template.desc"))
 			.addText((text) => {
@@ -148,18 +119,6 @@ export class PageZettelSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.behavior.insertLinkAfterExtract)
 					.onChange(async (value) => {
 						this.plugin.settings.behavior.insertLinkAfterExtract = value;
-						await this.plugin.saveSettings();
-					}),
-			);
-
-		new Setting(containerEl)
-			.setName(t("settings.behavior.suggestStructureOnPermanent.name"))
-			.setDesc(t("settings.behavior.suggestStructureOnPermanent.desc"))
-			.addToggle((toggle) =>
-				toggle
-					.setValue(this.plugin.settings.behavior.suggestStructureOnPermanent)
-					.onChange(async (value) => {
-						this.plugin.settings.behavior.suggestStructureOnPermanent = value;
 						await this.plugin.saveSettings();
 					}),
 			);
