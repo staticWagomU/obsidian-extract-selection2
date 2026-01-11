@@ -29,7 +29,7 @@ const scrum: ScrumDashboard = {
     { id: "PBI-015", story: { role: "Obsidianモバイルユーザー", capability: "メニューグルーピング", benefit: "操作性向上" }, acceptance_criteria: [{ criterion: "setSection", verification: "セパレーター" }], status: "done" },
     { id: "PBI-016", story: { role: "Obsidianユーザー", capability: "3ノートタイプ化", benefit: "シンプル化" }, acceptance_criteria: [{ criterion: "Structure/Index削除", verification: "grep+build" }], status: "done" },
     // Phase: 新設計リファクタリング (DESIGN.md準拠)
-    { id: "PBI-017", story: { role: "Obsidianユーザー", capability: "設定画面で各ノートタイプのフォルダ・ファイル名形式・テンプレートを設定できる", benefit: "自分のワークフローに合わせたZettelkasten環境を構築できる" }, acceptance_criteria: [{ criterion: "フォルダ設定4項目", verification: "設定画面確認" }, { criterion: "ファイル名形式オプション", verification: "dropdown" }, { criterion: "エイリアス入力ON/OFF", verification: "トグル" }, { criterion: "テンプレートパス設定", verification: "テキスト入力" }], status: "draft" },
+    { id: "PBI-017", story: { role: "Obsidianユーザー", capability: "設定画面で各ノートタイプのフォルダ・ファイル名形式・テンプレートを設定できる", benefit: "自分のワークフローに合わせたZettelkasten環境を構築できる" }, acceptance_criteria: [{ criterion: "NoteTypeSettings型定義(fileNameFormat/showAliasInput/templatePath/folder)", verification: "types/settings.ts" }, { criterion: "PageZettelSettings拡張+DEFAULT_SETTINGS", verification: "settings.ts" }, { criterion: "3ノートタイプ×設定UI(各4項目)", verification: "設定画面表示" }, { criterion: "設定永続化", verification: "data.json保存確認" }], status: "ready" },
     { id: "PBI-018", story: { role: "Obsidianユーザー", capability: "NoteTypeSelectModalとAliasInputModalでノート作成フローを統一できる", benefit: "一貫したUI体験" }, acceptance_criteria: [{ criterion: "NoteTypeSelectModal 3種類", verification: "モーダル確認" }, { criterion: "AliasInputModal+インデント削除", verification: "DESIGN.md通り" }, { criterion: "設定連動", verification: "表示制御確認" }], status: "draft" },
     { id: "PBI-019", story: { role: "Obsidianユーザー", capability: "TemplateServiceでプレースホルダーを展開", benefit: "一貫したフォーマット" }, acceptance_criteria: [{ criterion: "{{content}}", verification: "Extract/Create" }, { criterion: "{{date}}{{time}}{{datetime}}", verification: "日時展開" }, { criterion: "{{title}}{{alias}}", verification: "タイトル展開" }, { criterion: "フォールバック", verification: "空テンプレート" }], status: "draft" },
     { id: "PBI-020", story: { role: "Obsidianユーザー", capability: "NoteCreatorServiceでノート作成統一", benefit: "コード重複防止" }, acceptance_criteria: [{ criterion: "createNote(type,content,alias)", verification: "サービス実装" }, { criterion: "ファイル名形式", verification: "設定連動" }, { criterion: "フォルダ配置", verification: "設定連動" }, { criterion: "TemplateService統合", verification: "テンプレート適用" }], status: "draft" },
@@ -78,7 +78,7 @@ const scrum: ScrumDashboard = {
     { sprint: 13, improvements: [{ action: "型定義事前確認継続", timing: "sprint", status: "completed", outcome: "Sprint14でsetSection採用" }] },
     { sprint: 14, improvements: [{ action: "obsidian.d.ts確認必須化", timing: "sprint", status: "completed", outcome: "Sprint15でgetLanguage活用" }] },
     { sprint: 15, improvements: [{ action: "tsconfig.json更新確認", timing: "sprint", status: "active", outcome: null }] },
-    { sprint: 16, improvements: [{ action: "大規模削除時grep網羅性向上", timing: "sprint", status: "active", outcome: null }, { action: "型依存関係の明示的リストアップ", timing: "sprint", status: "active", outcome: null }] },
+    { sprint: 16, improvements: [{ action: "大規模削除時grep網羅性向上", timing: "sprint", status: "active", outcome: null }, { action: "型依存関係の明示的リストアップ", timing: "sprint", status: "active", outcome: "PBI-017 Refinementで適用: NoteTypeSettings新規→PageZettelSettings拡張→settings.ts→main.ts" }] },
   ],
 };
 
