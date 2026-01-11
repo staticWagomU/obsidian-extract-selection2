@@ -2,12 +2,10 @@ import { Editor, MarkdownView, Plugin, TFile, WorkspaceLeaf } from "obsidian";
 import { DEFAULT_SETTINGS, PageZettelSettingTab } from "./settings";
 import type { PageZettelSettings } from "./types/settings";
 import { NoteManager } from "./core/note-manager";
-import { ConnectionManager } from "./core/connection-manager";
 import { PromotionService } from "./services/promotion-service";
 import { FolderService } from "./services/folder-service";
 import { extractSelection } from "./commands/extract-selection-command";
 import { promoteNote } from "./commands/promote-note-command";
-import { linkPermanent } from "./commands/link-permanent-command";
 import { OrphanView, VIEW_TYPE_ORPHAN } from "./ui/views/orphan-view";
 import { QuickCaptureModal } from "./ui/modals/quick-capture-modal";
 import { t } from "./i18n";
@@ -15,7 +13,6 @@ import { t } from "./i18n";
 export default class PageZettelPlugin extends Plugin {
 	settings: PageZettelSettings;
 	noteManager: NoteManager;
-	connectionManager: ConnectionManager;
 	promotionService: PromotionService;
 
 	async onload() {
@@ -27,7 +24,6 @@ export default class PageZettelPlugin extends Plugin {
 
 		// Initialize services
 		this.noteManager = new NoteManager(this.app, this.settings);
-		this.connectionManager = new ConnectionManager(this.app);
 		this.promotionService = new PromotionService(this.app, this.settings);
 
 		// Register views
@@ -56,16 +52,6 @@ export default class PageZettelPlugin extends Plugin {
 				: t("commands.promoteNote"),
 			callback: () => {
 				void promoteNote(this);
-			},
-		});
-
-		this.addCommand({
-			id: "link-permanent",
-			name: this.settings.ui.showEmojiInCommands
-				? `🔗 ${t("commands.linkPermanent")}`
-				: t("commands.linkPermanent"),
-			callback: () => {
-				void linkPermanent(this);
 			},
 		});
 
@@ -130,18 +116,6 @@ export default class PageZettelPlugin extends Plugin {
 						.setIcon("arrow-up")
 						.onClick(() => void promoteNote(this)),
 				);
-
-				menu.addItem((item) =>
-					item
-						.setSection("page-zettel")
-						.setTitle(
-							this.settings.ui.showEmojiInCommands
-								? `🔗 ${t("commands.linkPermanent")}`
-								: t("commands.linkPermanent"),
-						)
-						.setIcon("link")
-						.onClick(() => void linkPermanent(this)),
-				);
 			}),
 		);
 
@@ -163,18 +137,6 @@ export default class PageZettelPlugin extends Plugin {
 						)
 						.setIcon("arrow-up")
 						.onClick(() => void promoteNote(this)),
-				);
-
-				menu.addItem((item) =>
-					item
-						.setSection("page-zettel")
-						.setTitle(
-							this.settings.ui.showEmojiInCommands
-								? `🔗 ${t("commands.linkPermanent")}`
-								: t("commands.linkPermanent"),
-						)
-						.setIcon("link")
-						.onClick(() => void linkPermanent(this)),
 				);
 			}),
 		);
