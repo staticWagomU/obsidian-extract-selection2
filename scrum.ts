@@ -198,78 +198,7 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 16,
-    pbi_id: "PBI-016",
-    goal: "不要なStructure/Index関連コードを削除し、ノートタイプを3種類に整理",
-    status: "done",
-    subtasks: [
-      {
-        test: "connection-manager.ts, structure-suggest-modal.ts, suggestion-service.ts, link-permanent-command.tsの4ファイルが存在しないこと",
-        implementation: "src/core/connection-manager.ts, src/ui/modals/structure-suggest-modal.ts, src/services/suggestion-service.ts, src/commands/link-permanent-command.tsを削除",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "f72e1d8", message: "refactor(PBI-016): remove Structure Note related files", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "main.ts内でConnectionManager|StructureSuggestModal|linkPermanentがgrepで検出されないこと",
-        implementation: "src/main.tsからConnectionManager import/初期化/link-permanentコマンド/コンテキストメニュー項目を削除（L5,18,30,68-69,138-143,168-177）",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "906d105", message: "refactor(PBI-016): remove Structure-related code from main.ts", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "orphan-view.ts内で接続ボタンが存在せず、StructureSuggestModal|ConnectionManagerがgrepで検出されないこと",
-        implementation: "src/ui/views/orphan-view.tsからStructureSuggestModal(L3), ConnectionManager(L4,13,22,65), connectNote(L57-75)を削除",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "2f40134", message: "refactor(PBI-016): remove Structure connection feature from orphan-view.ts", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "settings.ts内でindex設定/structure設定/suggestStructureOnPermanent設定が存在しないこと",
-        implementation: "src/settings.tsからindex設定(L101-112), structure設定(L88-99), suggestStructureOnPermanent(L155-165)を削除",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "3a16274", message: "refactor(PBI-016): remove Index/Structure settings from settings.ts", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "NoteType型が\"fleeting\"|\"literature\"|\"permanent\"のみで、NOTE_TYPE_CONFIG/PROMOTION_PATHSからstructure/indexが削除されていること",
-        implementation: "src/types/note-types.tsから'structure'|'index'削除、NOTE_TYPE_CONFIG/PROMOTION_PATHS更新",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "3192980", message: "refactor(PBI-016): update NoteType to 3 types only", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "folder-service.tsのnoteTypes配列に'structure', 'index'が存在しないこと",
-        implementation: "src/services/folder-service.tsのinitializeAllFolders()から'structure', 'index'削除（L63）",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "b3ce117", message: "refactor(PBI-016): update folder-service.ts to 3 note types", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "i18n/locales/*.json内でstructure/index関連翻訳（settings.folders, commands.linkPermanent等）が検出されないこと",
-        implementation: "src/i18n/locales/en.json, src/i18n/locales/ja.jsonからstructure/index関連翻訳削除",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "095fd68", message: "refactor(PBI-016): remove structure/index i18n translations", phase: "green" }],
-        notes: []
-      },
-      {
-        test: "pnpm build && pnpm lintが成功すること",
-        implementation: "Definition of Done検証実行",
-        type: "structural",
-        status: "completed",
-        commits: [{ hash: "c26fa4a", message: "refactor(PBI-016): fix build errors - remove Structure references", phase: "green" }],
-        notes: []
-      }
-    ]
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -295,6 +224,7 @@ const scrum: ScrumDashboard = {
     { number: 13, pbi_id: "PBI-013", goal: "コンテキストメニューからノート操作でアクセシビリティ向上", status: "done", subtasks: [{ test: "エディタコンテキストメニュー統合（workspace.on('editor-menu')をregisterEvent、選択テキストがある場合「選択範囲から新規ノート」表示、常時「ノートを昇格」「Structure Noteに接続」表示、settings.ui.showContextMenuItemsで表示制御）", implementation: "src/main.ts", type: "behavioral", status: "completed", commits: [{ hash: "31a755d", message: "feat(PBI-013): implement editor context menu integration", phase: "green" }], notes: [] }, { test: "ファイルエクスプローラコンテキストメニュー統合（workspace.on('file-menu')をregisterEvent、.mdファイル右クリック時のみ「ノートを昇格」「Structure Noteに接続」表示）", implementation: "src/main.ts", type: "behavioral", status: "completed", commits: [{ hash: "ef716b0", message: "feat(PBI-013): implement file explorer context menu integration", phase: "green" }], notes: [] }, { test: "設定画面UI追加（settings.ui.showContextMenuItemsトグル追加、UI設定セクションに配置、デフォルト: true）", implementation: "src/settings.ts", type: "behavioral", status: "completed", commits: [{ hash: "1770f67", message: "feat(PBI-013): add showContextMenuItems toggle to settings", phase: "green" }], notes: [] }] },
     { number: 14, pbi_id: "PBI-015", goal: "コンテキストメニューでプラグインコマンドをグルーピング表示し、視覚的な操作性を向上", status: "done", subtasks: [{ test: "editor-menuハンドラで各menu.addItem()に.setSection('page-zettel')を追加、menu.addSeparator()でセクション分離を確認", implementation: "src/main.ts (editor-menu handler)", type: "behavioral", status: "completed", commits: [{ hash: "8df2157", message: "feat(PBI-015): add context menu grouping for improved visual organization", phase: "green" }], notes: [] }, { test: "file-menuハンドラで各menu.addItem()に.setSection('page-zettel')を追加、menu.addSeparator()でセクション分離を確認", implementation: "src/main.ts (file-menu handler)", type: "behavioral", status: "completed", commits: [{ hash: "8df2157", message: "feat(PBI-015): add context menu grouping for improved visual organization", phase: "green" }], notes: [] }, { test: "settings.ui.showEmojiInCommandsトグルでメニュー項目の絵文字表示が切り替わることを確認", implementation: "既存ロジックの動作確認 (DoD検証)", type: "behavioral", status: "completed", commits: [{ hash: "8df2157", message: "feat(PBI-015): add context menu grouping for improved visual organization", phase: "green" }], notes: [] }] },
     { number: 15, pbi_id: "PBI-014", goal: "i18n国際化対応基盤の構築と全UI要素の多言語化", status: "done", subtasks: [{ test: "i18n基盤構築（src/i18n/index.ts: t()関数・getCurrentLocale()実装、src/i18n/locales/en.json: 英語翻訳JSON、src/i18n/locales/ja.json: 日本語翻訳JSON、getLanguage() APIでObsidianのロケールを検出、デフォルトjaにフォールバック）", implementation: "src/i18n/index.ts, src/i18n/locales/en.json, src/i18n/locales/ja.json", type: "behavioral", status: "completed", commits: [{ hash: "65d7639", message: "feat(PBI-014): implement i18n infrastructure with locale detection", phase: "green" }], notes: [] }, { test: "コマンド・コンテキストメニューのi18n化（main.ts: 4つのaddCommand().name・3つのeditor-menu setTitle()・2つのfile-menu setTitle()をt()で置換、絵文字設定対応維持）", implementation: "src/main.ts", type: "behavioral", status: "completed", commits: [{ hash: "2adb8f0", message: "feat(PBI-014): internationalize commands and context menus", phase: "green" }], notes: [] }, { test: "設定画面のi18n化（settings.ts: 3セクションヘッディング・12項目のsetName()/setDesc()/setPlaceholder()をt()で置換、dropdownのaddOption()ラベルもi18n化）", implementation: "src/settings.ts", type: "behavioral", status: "completed", commits: [{ hash: "48ae0c6", message: "feat(PBI-014): internationalize settings screen", phase: "green" }], notes: [] }, { test: "モーダル・ビュー・Noticeのi18n化（QuickCaptureModal: 3箇所、StructureSuggestModal: 2箇所、NoteTypeModal: 1箇所、OrphanView: 5箇所、Notice messages: 9箇所、NoteManager: 1箇所、ribbon icon: 1箇所をt()で置換）", implementation: "src/ui/modals/quick-capture-modal.ts, src/ui/modals/structure-suggest-modal.ts, src/ui/modals/note-type-modal.ts, src/ui/views/orphan-view.ts, src/core/note-manager.ts, src/main.ts (ribbon)", type: "behavioral", status: "completed", commits: [{ hash: "9f36e7d", message: "feat(PBI-014): internationalize modals, views, and notices", phase: "green" }], notes: [] }] },
+    { number: 16, pbi_id: "PBI-016", goal: "不要なStructure/Index関連コードを削除し、ノートタイプを3種類に整理", status: "done", subtasks: [{ test: "connection-manager.ts, structure-suggest-modal.ts, suggestion-service.ts, link-permanent-command.tsの4ファイルが存在しないこと", implementation: "src/core/connection-manager.ts, src/ui/modals/structure-suggest-modal.ts, src/services/suggestion-service.ts, src/commands/link-permanent-command.tsを削除", type: "structural", status: "completed", commits: [{ hash: "f72e1d8", message: "refactor(PBI-016): remove Structure Note related files", phase: "green" }], notes: [] }, { test: "main.ts内でConnectionManager|StructureSuggestModal|linkPermanentがgrepで検出されないこと", implementation: "src/main.tsからConnectionManager import/初期化/link-permanentコマンド/コンテキストメニュー項目を削除（L5,18,30,68-69,138-143,168-177）", type: "structural", status: "completed", commits: [{ hash: "906d105", message: "refactor(PBI-016): remove Structure-related code from main.ts", phase: "green" }], notes: [] }, { test: "orphan-view.ts内で接続ボタンが存在せず、StructureSuggestModal|ConnectionManagerがgrepで検出されないこと", implementation: "src/ui/views/orphan-view.tsからStructureSuggestModal(L3), ConnectionManager(L4,13,22,65), connectNote(L57-75)を削除", type: "structural", status: "completed", commits: [{ hash: "2f40134", message: "refactor(PBI-016): remove Structure connection feature from orphan-view.ts", phase: "green" }], notes: [] }, { test: "settings.ts内でindex設定/structure設定/suggestStructureOnPermanent設定が存在しないこと", implementation: "src/settings.tsからindex設定(L101-112), structure設定(L88-99), suggestStructureOnPermanent(L155-165)を削除", type: "structural", status: "completed", commits: [{ hash: "3a16274", message: "refactor(PBI-016): remove Index/Structure settings from settings.ts", phase: "green" }], notes: [] }, { test: "NoteType型が\"fleeting\"|\"literature\"|\"permanent\"のみで、NOTE_TYPE_CONFIG/PROMOTION_PATHSからstructure/indexが削除されていること", implementation: "src/types/note-types.tsから'structure'|'index'削除、NOTE_TYPE_CONFIG/PROMOTION_PATHS更新", type: "structural", status: "completed", commits: [{ hash: "3192980", message: "refactor(PBI-016): update NoteType to 3 types only", phase: "green" }], notes: [] }, { test: "folder-service.tsのnoteTypes配列に'structure', 'index'が存在しないこと", implementation: "src/services/folder-service.tsのinitializeAllFolders()から'structure', 'index'削除（L63）", type: "structural", status: "completed", commits: [{ hash: "b3ce117", message: "refactor(PBI-016): update folder-service.ts to 3 note types", phase: "green" }], notes: [] }, { test: "i18n/locales/*.json内でstructure/index関連翻訳（settings.folders, commands.linkPermanent等）が検出されないこと", implementation: "src/i18n/locales/en.json, src/i18n/locales/ja.jsonからstructure/index関連翻訳削除", type: "structural", status: "completed", commits: [{ hash: "095fd68", message: "refactor(PBI-016): remove structure/index i18n translations", phase: "green" }], notes: [] }, { test: "pnpm build && pnpm lintが成功すること", implementation: "Definition of Done検証実行", type: "structural", status: "completed", commits: [{ hash: "c26fa4a", message: "refactor(PBI-016): fix build errors - remove Structure references", phase: "green" }], notes: [] }] },
   ],
 
   retrospectives: [
