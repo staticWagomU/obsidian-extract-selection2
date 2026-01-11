@@ -1,7 +1,7 @@
 /**
  * Zettelkasten ノートタイプ
  */
-export type NoteType = "fleeting" | "literature" | "permanent" | "structure" | "index";
+export type NoteType = "fleeting" | "literature" | "permanent";
 
 /**
  * ノートタイプごとの設定
@@ -49,22 +49,6 @@ export const NOTE_TYPE_CONFIG: Record<NoteType, NoteTypeConfig> = {
 		folder: "30-Permanent",
 		template: "permanent-template.md",
 	},
-	structure: {
-		label: "Structure Note",
-		labelJa: "構造ノート",
-		description: "Map of Content (MOC) organizing notes",
-		icon: "🗂️",
-		folder: "40-Structure",
-		template: "structure-template.md",
-	},
-	index: {
-		label: "Index Note",
-		labelJa: "インデックス",
-		description: "Top-level entry point",
-		icon: "📋",
-		folder: "50-Index",
-		template: "index-template.md",
-	},
 };
 
 /**
@@ -74,9 +58,7 @@ export const NOTE_TYPE_CONFIG: Record<NoteType, NoteTypeConfig> = {
 export const PROMOTION_PATHS: Record<NoteType, NoteType[]> = {
 	fleeting: ["permanent"],
 	literature: [], // Literature は独立（昇格なし）
-	permanent: ["structure"],
-	structure: ["index"],
-	index: [],
+	permanent: [], // Permanent は最終形（昇格なし）
 };
 
 /**
