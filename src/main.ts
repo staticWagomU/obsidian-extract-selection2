@@ -11,6 +11,8 @@ import { extractSelection } from "./commands/extract-selection-command";
 import { promoteNote } from "./commands/promote-note-command";
 import { OrphanView, VIEW_TYPE_ORPHAN } from "./ui/views/orphan-view";
 import { QuickCaptureModal } from "./ui/modals/quick-capture-modal";
+import { NoteTypeModal } from "./ui/modals/note-type-modal";
+import { NoteType } from "./types/note-types";
 import { t } from "./i18n";
 
 export default class PageZettelPlugin extends Plugin {
@@ -98,7 +100,14 @@ export default class PageZettelPlugin extends Plugin {
 				? `📄 ${t("commands.createNewNote")}`
 				: t("commands.createNewNote"),
 			callback: () => {
-				// TODO: NoteTypeModal表示統合（Subtask 4）
+				const modal = new NoteTypeModal(
+					this.app,
+					(type: NoteType) => {
+						// TODO: AliasInputModal条件表示（Subtask 5）
+					},
+					["fleeting", "literature", "permanent"],
+				);
+				modal.open();
 			},
 		});
 
