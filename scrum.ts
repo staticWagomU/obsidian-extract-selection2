@@ -39,7 +39,62 @@ const scrum: ScrumDashboard = {
     { id: "PBI-024", story: { role: "Obsidianユーザー", capability: "コンテキストメニューExtract", benefit: "右クリックアクセス" }, acceptance_criteria: [{ criterion: "メニュー表示", verification: "選択時のみ" }, { criterion: "コマンド実行", verification: "E2E" }, { criterion: "ON/OFF設定", verification: "設定連動" }], status: "draft" },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 21,
+    pbi_id: "PBI-021",
+    goal: "Create New Noteコマンドの実装",
+    status: "planning",
+    subtasks: [
+      {
+        test: "i18n翻訳キー追加: commands.createNewNote配下に日英翻訳キー追加",
+        implementation: "i18n/locales/ja.json, i18n/locales/en.json",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: ["AC1対応", "Sprint 18のi18n実装パターン踏襲"],
+      },
+      {
+        test: "NoteCreatorService初期化: main.ts内でNoteCreatorService初期化（app, settings, folderService, templateService, frontmatterService注入）",
+        implementation: "main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: ["AC6対応", "既存サービス注入パターン踏襲（Sprint 20参照）"],
+      },
+      {
+        test: "コマンド登録基本構造: addCommand({id:\"create-new-note\", name:絵文字設定連動, callback})",
+        implementation: "main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: ["AC2対応", "settings.ui.showEmojiInCommandsフラグでアイコン表示制御"],
+      },
+      {
+        test: "NoteTypeModal表示統合: NoteTypeModal(app, onSelect, [\"fleeting\", \"literature\", \"permanent\"])呼び出し",
+        implementation: "main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: ["AC3対応", "extract-selection-commandパターン踏襲"],
+      },
+      {
+        test: "AliasInputModal条件表示: settings[type].showAliasInput=trueの場合のみAliasInputModal表示 + showRemoveIndent=false",
+        implementation: "main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: ["AC4対応", "removeIndentチェックボックス非表示"],
+      },
+      {
+        test: "NoteCreatorService統合 + ノートオープン: noteCreatorService.createNote(type, \"\", alias) + openLinkText()でノートを開く",
+        implementation: "main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: ["AC5対応", "content=\"\"でテンプレートのみ展開", "DESIGN.md L46準拠"],
+      },
+    ],
+  },
 
   definition_of_done: { checks: [{ name: "Build passes", run: "pnpm build" }, { name: "Lint passes", run: "pnpm lint" }, { name: "Format check passes", run: "pnpm format:check" }] },
 
