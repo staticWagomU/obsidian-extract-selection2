@@ -61,6 +61,15 @@ export class AliasInputModal extends Modal {
 				}, 10);
 			});
 
+		// チェックボックス（Extract時のみ表示）
+		if (this.showRemoveIndent) {
+			new Setting(contentEl).setName(t("modals.aliasInput.removeIndent")).addToggle((toggle) => {
+				toggle.setValue(this.removeIndentValue).onChange((value) => {
+					this.removeIndentValue = value;
+				});
+			});
+		}
+
 		// ボタン
 		new Setting(contentEl)
 			.addButton((btn) =>
