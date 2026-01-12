@@ -82,7 +82,7 @@ const scrum: ScrumDashboard = {
     { sprint: 15, improvements: [{ action: "tsconfig.json更新確認", timing: "sprint", status: "active", outcome: null }] },
     { sprint: 16, improvements: [{ action: "大規模削除時grep網羅性向上", timing: "sprint", status: "active", outcome: null }, { action: "型依存関係の明示的リストアップ", timing: "sprint", status: "completed", outcome: "PBI-017で適用: NoteTypeSettings型→PageZettelSettings拡張→UI実装→永続化検証の順で進行、コンパイルエラーなし" }] },
     { sprint: 17, improvements: [{ action: "設定UI共通コンポーネント抽出パターン確立", timing: "sprint", status: "active", outcome: null }, { action: "UI実装前のi18n翻訳キー事前設計", timing: "sprint", status: "completed", outcome: "Sprint18でi18n翻訳キーを最初に実装し、Modal実装時にキー参照可能" }] },
-    { sprint: 18, improvements: [{ action: "Modal実装時の既存パターン活用徹底", timing: "sprint", status: "completed", outcome: "QuickCaptureModalパターンを完全踏襲してAliasInputModal実装成功" }, { action: "設定連動機能の段階的統合", timing: "sprint", status: "active", outcome: null }] },
+    { sprint: 18, improvements: [{ action: "Modal実装時の既存パターン完全踏襲", timing: "sprint", status: "completed", outcome: "QuickCaptureModalパターンを完全踏襲してAliasInputModal実装成功。既存NoteTypeModal確認により不要な実装回避" }, { action: "設定連動機能の段階的統合検証", timing: "sprint", status: "active", outcome: "showAliasInputフラグによるModal表示制御成功。PBI-019以降でテンプレート・ファイル名形式の設定連動を継続検証" }] },
   ],
 };
 

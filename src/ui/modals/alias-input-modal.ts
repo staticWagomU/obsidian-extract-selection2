@@ -63,11 +63,13 @@ export class AliasInputModal extends Modal {
 
 		// チェックボックス（Extract時のみ表示）
 		if (this.showRemoveIndent) {
-			new Setting(contentEl).setName(t("modals.aliasInput.removeIndent")).addToggle((toggle) => {
-				toggle.setValue(this.removeIndentValue).onChange((value) => {
-					this.removeIndentValue = value;
+			new Setting(contentEl)
+				.setName(t("modals.aliasInput.removeIndent"))
+				.addToggle((toggle) => {
+					toggle.setValue(this.removeIndentValue).onChange((value) => {
+						this.removeIndentValue = value;
+					});
 				});
-			});
 		}
 
 		// ボタン
