@@ -83,7 +83,8 @@ const scrum: ScrumDashboard = {
     { sprint: 15, improvements: [{ action: "tsconfig.json更新確認", timing: "sprint", status: "active", outcome: null }] },
     { sprint: 16, improvements: [{ action: "大規模削除時grep網羅性向上", timing: "sprint", status: "active", outcome: null }, { action: "型依存関係の明示的リストアップ", timing: "sprint", status: "completed", outcome: "PBI-017で適用: NoteTypeSettings型→PageZettelSettings拡張→UI実装→永続化検証の順で進行、コンパイルエラーなし" }] },
     { sprint: 17, improvements: [{ action: "設定UI共通コンポーネント抽出パターン確立", timing: "sprint", status: "active", outcome: null }, { action: "UI実装前のi18n翻訳キー事前設計", timing: "sprint", status: "completed", outcome: "Sprint18でi18n翻訳キーを最初に実装し、Modal実装時にキー参照可能" }] },
-    { sprint: 18, improvements: [{ action: "Modal実装時の既存パターン完全踏襲", timing: "sprint", status: "completed", outcome: "QuickCaptureModalパターンを完全踏襲してAliasInputModal実装成功。既存NoteTypeModal確認により不要な実装回避" }, { action: "設定連動機能の段階的統合検証", timing: "sprint", status: "active", outcome: "showAliasInputフラグによるModal表示制御成功。PBI-019以降でテンプレート・ファイル名形式の設定連動を継続検証" }] },
+    { sprint: 18, improvements: [{ action: "Modal実装時の既存パターン完全踏襲", timing: "sprint", status: "completed", outcome: "QuickCaptureModalパターンを完全踏襲してAliasInputModal実装成功。既存NoteTypeModal確認により不要な実装回避" }, { action: "設定連動機能の段階的統合検証", timing: "sprint", status: "completed", outcome: "showAliasInputフラグによるModal表示制御成功。Sprint19でテンプレート展開機能統合完了" }] },
+    { sprint: 19, improvements: [{ action: "既存Service拡張パターン継続（TemplateService）", timing: "sprint", status: "completed", outcome: "既存のTemplateServiceを拡張し、8つのプレースホルダー展開機能を追加。既存の{{date:FORMAT}}を壊さずに固定形式{{date}}/{{time}}/{{datetime}}を共存実装" }, { action: "正規表現マッチ順序による機能共存", timing: "sprint", status: "completed", outcome: "{{date:FORMAT}}を先にマッチさせることで、{{date}}との衝突を回避。段階的な機能追加が成功" }, { action: "型拡張による型安全性維持", timing: "sprint", status: "completed", outcome: "TemplateVariablesにalias?:stringを追加し、既存コードを壊さずに型安全に機能拡張" }] },
   ],
 };
 
