@@ -39,7 +39,74 @@ const scrum: ScrumDashboard = {
     { id: "PBI-024", story: { role: "Obsidianユーザー", capability: "コンテキストメニューExtract", benefit: "右クリックアクセス" }, acceptance_criteria: [{ criterion: "メニュー表示", verification: "選択時のみ" }, { criterion: "コマンド実行", verification: "E2E" }, { criterion: "ON/OFF設定", verification: "設定連動" }], status: "draft" },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 22,
+    pbi_id: "PBI-022",
+    goal: "Extract to Note機能の新設計準拠実装",
+    status: "in_progress",
+    subtasks: [
+      {
+        test: "AC1+AC4: NoteCreatorService統合+インデント削除機能維持",
+        implementation: "commands/extract-selection-command.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "NoteManager.createNote() → noteCreatorService.createNote()に置換",
+          "removeCommonIndent()関数維持確認（L117-134）",
+          "AliasInputModal.removeIndent統合確認（L61-62）",
+        ],
+      },
+      {
+        test: "AC3-1: BehaviorSettings.openAfterExtract設定追加",
+        implementation: "types/settings.ts, settings.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "BehaviorSettings型にopenAfterExtract: boolean追加",
+          "DEFAULT_SETTINGS.behavior.openAfterExtract = true追加",
+          "設定UI追加（insertLinkAfterExtractと同じパターン）",
+        ],
+      },
+      {
+        test: "AC3-2: extract-selection-commandで設定連動のopenLinkText()条件分岐実装",
+        implementation: "commands/extract-selection-command.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "settings.behavior.openAfterExtract=trueの場合のみopenLinkText()実行",
+          "条件分岐追加（L111を条件付きに変更）",
+        ],
+      },
+      {
+        test: "AC2: マークダウンリンク置換（[[basename]]から[alias](relativePath)形式へ変更）",
+        implementation: "commands/extract-selection-command.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "DESIGN.md L262-271準拠",
+          "エイリアスあり: [alias](relativePath)",
+          "エイリアスなし: [filename](relativePath)",
+          "app.metadataCache.fileToLinktext()で相対パス取得",
+        ],
+      },
+      {
+        test: "AC5: i18n翻訳キー更新（commands.extractSelection → commands.extractToNote）",
+        implementation: "i18n/locales/ja.json, i18n/locales/en.json, main.ts",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "ja.json: \"選択範囲から新規ノート\" → \"ノートに切り出す\"",
+          "en.json: \"Extract selection to new note\" → \"Extract to note\"",
+          "main.ts L58-64のコマンド名更新",
+        ],
+      },
+    ],
+  },
 
   definition_of_done: { checks: [{ name: "Build passes", run: "pnpm build" }, { name: "Lint passes", run: "pnpm lint" }, { name: "Format check passes", run: "pnpm format:check" }] },
 
