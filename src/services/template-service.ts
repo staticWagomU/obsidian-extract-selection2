@@ -6,6 +6,7 @@ export interface TemplateVariables {
 	title: string;
 	content?: string;
 	date: string;
+	alias?: string;
 	[key: string]: string | undefined;
 }
 
