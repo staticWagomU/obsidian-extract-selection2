@@ -72,7 +72,7 @@ export class TemplateService {
 		// {{content}} の展開
 		result = result.replace(/\{\{content\}\}/g, variables.content || "");
 
-		// {{date:FORMAT}} の展開
+		// {{date:FORMAT}} の展開（カスタムフォーマット）
 		result = result.replace(/\{\{date:([^}]+)\}\}/g, (match: string, format: string) => {
 			try {
 				return moment(variables.date).format(format);
@@ -80,6 +80,15 @@ export class TemplateService {
 				return match; // フォーマット失敗時は元の文字列を返す
 			}
 		});
+
+		// {{date}} の展開（固定形式: YYYY-MM-DD）
+		result = result.replace(/\{\{date\}\}/g, moment().format("YYYY-MM-DD"));
+
+		// {{time}} の展開（固定形式: HH:mm:ss）
+		result = result.replace(/\{\{time\}\}/g, moment().format("HH:mm:ss"));
+
+		// {{datetime}} の展開（固定形式: YYYY-MM-DD HH:mm:ss）
+		result = result.replace(/\{\{datetime\}\}/g, moment().format("YYYY-MM-DD HH:mm:ss"));
 
 		return result;
 	}
