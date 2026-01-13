@@ -8,9 +8,11 @@ export class PromotionService {
 	private app: App;
 	private frontmatterService: FrontmatterService;
 	private folderService: FolderService;
+	private settings: PageZettelSettings;
 
 	constructor(app: App, settings: PageZettelSettings) {
 		this.app = app;
+		this.settings = settings;
 		this.frontmatterService = new FrontmatterService(app);
 		this.folderService = new FolderService(app, settings);
 	}
