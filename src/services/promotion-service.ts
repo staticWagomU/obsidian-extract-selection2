@@ -19,7 +19,7 @@ export class PromotionService {
 
 	/**
 	 * ノートを昇格する
-	 * フロントマター更新 (type, promoted_from, promoted_at, tags) + フォルダ移動
+	 * フロントマター更新 (type, promoted_from, promoted_at, tags) + フォルダ移動（設定により制御）
 	 */
 	async promoteNote(file: TFile, fromType: NoteType, toType: NoteType): Promise<void> {
 		// 1. フロントマター更新
@@ -36,10 +36,12 @@ export class PromotionService {
 			[`type/${toType}`, "promoted"],
 		);
 
-		// 3. フォルダ移動
-		const targetFolder = await this.folderService.ensureFolderExists(toType);
-		const newPath = `${targetFolder}/${file.name}`;
+		// 3. フォルダ移動（moveOnPromotion設定が有効な場合のみ）
+		if (this.settings.behavior.moveOnPromotion) {
+			const targetFolder = await this.folderService.ensureFolderExists(toType);
+			const newPath = `${targetFolder}/${file.name}`;
 
-		await this.app.vault.rename(file, newPath);
+			await this.app.vault.rename(file, newPath);
+		}
 	}
 }
