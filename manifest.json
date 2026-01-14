@@ -1,9 +1,9 @@
 {
-	"id": "page-zettel",
-	"name": "Page Zettel",
+	"id": "extract-selection",
+	"name": "Extract Selection",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Zettelkasten workflow support for Obsidian - manage Fleeting, Permanent, and Structure notes with ease.",
+	"description": "Extract selected text into new notes with customizable templates and folder organization.",
 	"author": "staticWagomU",
 	"authorUrl": "https://github.com/staticWagomU",
 	"isDesktopOnly": false

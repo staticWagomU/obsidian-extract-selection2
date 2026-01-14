@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-page-zettel",
+	"name": "obsidian-extract-selection",
 	"version": "1.0.0",
-	"description": "Zettelkasten workflow support for Obsidian - manage Fleeting, Permanent, and Structure notes with ease.",
+	"description": "Extract selected text into new notes with customizable templates and folder organization.",
 	"main": "main.js",
 	"type": "module",
 	"packageManager": "pnpm@10.24.0",
