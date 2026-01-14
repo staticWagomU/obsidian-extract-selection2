@@ -131,15 +131,39 @@ const scrum: ScrumDashboard = {
       },
       acceptance_criteria: [
         {
-          criterion: "ExtractionTemplate interfaceが定義されている",
-          verification: "types/settings.tsにinterface定義が存在",
+          criterion: "ExtractionTemplate interfaceが9つの必須プロパティを持つ",
+          verification: "types/settings.tsにid, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, orderが定義されている",
         },
         {
-          criterion: "DEFAULT_SETTINGSが新構造に更新されている",
-          verification: "settings.tsのDEFAULT_SETTINGSが新型を使用",
+          criterion: "ExtractSelectionSettings interfaceがtemplates配列を持つ",
+          verification: "types/settings.tsにtemplates: ExtractionTemplate[]が定義されている",
+        },
+        {
+          criterion: "BehaviorSettingsがdefaultRemoveIndentを含む",
+          verification: "types/settings.tsのBehaviorSettingsにdefaultRemoveIndent: booleanが定義され、moveOnPromotionとfileNamePrefixが削除されている",
+        },
+        {
+          criterion: "UISettingsがmobileOptimizedを含まない",
+          verification: "types/settings.tsのUISettingsにmobileOptimizedプロパティが存在しない",
+        },
+        {
+          criterion: "DEFAULT_SETTINGSが1つのデフォルトテンプレートを含む",
+          verification: "settings.tsのDEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されている",
+        },
+        {
+          criterion: "DEFAULT_SETTINGSのbehaviorが新仕様に準拠",
+          verification: "settings.tsのDEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しない",
+        },
+        {
+          criterion: "DEFAULT_SETTINGSのuiが新仕様に準拠",
+          verification: "settings.tsのDEFAULT_SETTINGS.uiにmobileOptimizedが存在しない",
+        },
+        {
+          criterion: "PageZettelSettingsがExtractSelectionSettingsに置き換えられる",
+          verification: "types/settings.tsにPageZettelSettingsが存在せず、ExtractSelectionSettingsがエクスポートされている",
         },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-002",
