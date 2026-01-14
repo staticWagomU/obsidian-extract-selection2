@@ -176,10 +176,12 @@ const scrum: ScrumDashboard = {
       id: "PBI-006",
       story: { role: "多言語ユーザー", capability: "i18n翻訳更新", benefit: "母国語UI" },
       acceptance_criteria: [
-        { criterion: "en.json更新", verification: "テンプレート翻訳" },
-        { criterion: "ja.json更新", verification: "テンプレート翻訳" },
+        { criterion: "TemplateEditModal翻訳追加", verification: "en.json/ja.json に modals.templateEdit.* キー追加" },
+        { criterion: "コンテキストメニュー翻訳追加", verification: "en.json/ja.json に contextMenu.extractTo キー追加" },
+        { criterion: "ハードコード文字列のi18n化", verification: "template-edit-modal.ts と main.ts で t() 関数使用" },
+        { criterion: "DoD全チェック成功", verification: "tsc/lint/build" },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-007",
