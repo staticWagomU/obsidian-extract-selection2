@@ -136,38 +136,9 @@ const scrum: ScrumDashboard = {
       id: "PBI-002",
       story: { role: "開発者", capability: "不要なZettelkasten固有コード削除", benefit: "コードベースの簡略化" },
       acceptance_criteria: [
-        {
-          criterion: "8個のレガシーファイル削除完了",
-          verification: "note-types.ts, promote-note-command.ts, promotion-service.ts, orphan-detector-service.ts, orphan-view.ts, note-type-modal.ts, quick-capture-modal.ts, note-manager.tsが存在しない",
-        },
-        {
-          criterion: "main.tsからレガシーインポート削除",
-          verification: "NoteManager, PromotionService, promoteNote, OrphanView, QuickCaptureModal, NoteTypeModal, NoteTypeのインポートが存在しない",
-        },
-        {
-          criterion: "main.tsからレガシーサービス初期化削除",
-          verification: "noteManager, promotionServiceプロパティとその初期化コードが存在しない",
-        },
-        {
-          criterion: "main.tsからOrphanViewビュー登録削除",
-          verification: "OrphanView registerView呼び出しとリボンアイコン登録が存在しない",
-        },
-        {
-          criterion: "main.tsからレガシーコマンド削除",
-          verification: "promote-note, quick-fleeting, create-new-noteコマンドが存在しない",
-        },
-        {
-          criterion: "main.tsからレガシーコンテキストメニュー削除",
-          verification: "extractToFleeting/Literature/Permanent、promoteNoteのコンテキストメニューアイテムが存在しない",
-        },
-        {
-          criterion: "main.tsからレガシーヘルパーメソッド削除",
-          verification: "activateOrphanView, createNoteAndOpenメソッドが存在しない",
-        },
-        {
-          criterion: "TypeScript型チェック成功",
-          verification: "pnpm exec tsc --noEmit がエラーなしで完了",
-        },
+        { criterion: "8個のレガシーファイル削除", verification: "ファイル不存在確認" },
+        { criterion: "main.tsクリーンアップ", verification: "レガシーコード削除" },
+        { criterion: "DoD全チェック成功", verification: "tsc/lint/build" },
       ],
       status: "done",
     },
@@ -218,64 +189,7 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 2,
-    pbi_id: "PBI-002",
-    goal: "Zettelkasten固有のレガシーコードを完全削除し、Extract Selection汎用プラグインの基盤を確立する",
-    status: "review",
-    subtasks: [
-      {
-        test: "8個のレガシーファイルが存在しないこと",
-        implementation: "note-types.ts, promote-note-command.ts, promotion-service.ts, orphan-detector-service.ts, orphan-view.ts, note-type-modal.ts, quick-capture-modal.ts, note-manager.ts を削除",
-        type: "structural",
-        status: "completed",
-        commits: [
-          {
-            hash: "ded03e0",
-            message: "refactor: delete 8 legacy Zettelkasten files",
-            phase: "green",
-          },
-        ],
-        notes: ["RED: Verify that the 8 legacy files exist before deletion", "GREEN: All 8 legacy files deleted successfully"],
-      },
-      {
-        test: "main.tsにレガシー依存関係が存在しないこと (import, service初期化, ビュー登録)",
-        implementation: "NoteManager, PromotionService, promoteNote, OrphanView, QuickCaptureModal, NoteTypeModal, NoteType のインポート削除、noteManager/promotionServiceプロパティと初期化コード削除、OrphanView registerView呼び出しとリボンアイコン登録削除",
-        type: "structural",
-        status: "completed",
-        commits: [
-          {
-            hash: "11b784d",
-            message: "refactor: remove legacy dependencies from main.ts",
-            phase: "green",
-          },
-        ],
-        notes: ["RED: Identified legacy imports (lines 4-5, 11-14, 16), properties (lines 21-22), service initialization (lines 33-34), view registration (line 48), and ribbon icon (lines 51-53)", "GREEN: Removed all legacy dependencies from main.ts - imports, properties, service initialization, view registration, and ribbon icon"],
-      },
-      {
-        test: "main.tsにレガシー機能が存在しないこと (コマンド, コンテキストメニュー, ヘルパーメソッド)",
-        implementation: "promote-note, quick-fleeting, create-new-noteコマンド削除、extractToFleeting/Literature/Permanent・promoteNoteコンテキストメニューアイテム削除、activateOrphanView, createNoteAndOpenメソッド削除",
-        type: "structural",
-        status: "completed",
-        commits: [
-          {
-            hash: "e3eda54",
-            message: "refactor: remove legacy features from main.ts",
-            phase: "green",
-          },
-        ],
-        notes: ["RED: Identified legacy commands (lines 46-112), context menu items (lines 114-197), and helper methods (lines 210-243)", "GREEN: Removed all legacy commands, context menu items, helper methods, and unused imports from main.ts"],
-      },
-      {
-        test: "pnpm exec tsc --noEmit がエラーなく完了すること",
-        implementation: "TypeScript型チェックを実行し、すべての型エラーを解決",
-        type: "structural",
-        status: "completed",
-        commits: [],
-        notes: ["RED: Running type check to identify remaining errors after legacy code removal", "GREEN: tsc --noEmit, pnpm lint, pnpm build all passed successfully"],
-      },
-    ],
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -286,23 +200,23 @@ const scrum: ScrumDashboard = {
   },
 
   completed: [
-    {
-      number: 1,
-      pbi_id: "PBI-001",
-      goal: "ExtractionTemplate型と新設定構造を導入",
-      status: "done",
-      subtasks: [], // 9 subtasks完了: 9e234e4→0fa8348 (詳細はgit log参照)
-    },
+    { number: 1, pbi_id: "PBI-001", goal: "ExtractionTemplate型と新設定構造を導入", status: "done", subtasks: [] },
+    { number: 2, pbi_id: "PBI-002", goal: "レガシーZettelkastenコード削除", status: "done", subtasks: [] },
   ],
 
   retrospectives: [
     {
       sprint: 1,
       improvements: [
-        { action: "TDDアプローチ(tsc --noEmit)継続", timing: "immediate", status: "completed", outcome: "型安全性維持" },
-        { action: "@ts-expect-errorで技術的負債マーク", timing: "immediate", status: "completed", outcome: "削除範囲明確化" },
-        { action: "関連サブタスク統合", timing: "sprint", status: "active", outcome: null },
-        { action: "リファクタリングコミットに理由記録", timing: "sprint", status: "active", outcome: null },
+        { action: "TDDアプローチ継続", timing: "immediate", status: "completed", outcome: "型安全性維持" },
+        { action: "関連サブタスク統合", timing: "sprint", status: "completed", outcome: "Sprint2で4タスクに統合" },
+      ],
+    },
+    {
+      sprint: 2,
+      improvements: [
+        { action: "依存関係の確認を削除前に実施", timing: "sprint", status: "active", outcome: null },
+        { action: "サービス層のスタブ化パターン適用", timing: "immediate", status: "completed", outcome: "ビルド通過維持" },
       ],
     },
   ],
