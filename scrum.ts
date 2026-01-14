@@ -197,7 +197,38 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 7,
+    pbi_id: "PBI-007",
+    goal: "最終検証とリリース準備を完了し、品質基準を満たすことを確認する",
+    status: "planning",
+    subtasks: [
+      {
+        test: "DoD全チェック（tsc/lint/build）が成功することを確認",
+        implementation: "pnpm exec tsc --noEmit && pnpm lint && pnpm build を実行し、全て成功することを検証",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "コア機能（コマンド・テンプレート選択・ノート作成）が動作することを確認",
+        implementation: "Extract to Noteコマンド実行→テンプレート選択→ノート作成の一連の流れを手動検証",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "設定画面・i18n・manifest.json・ビルド成果物が正常であることを確認",
+        implementation: "設定画面表示・保存、en/ja翻訳切替、manifest.json整合性、main.jsサイズを検証",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
