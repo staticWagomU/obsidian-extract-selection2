@@ -1,7 +1,10 @@
 import { App } from "obsidian";
-import { NoteType, NOTE_TYPE_CONFIG } from "../types/note-types";
 import type { ExtractSelectionSettings } from "../types/settings";
 
+/**
+ * FolderService - placeholder until PBI-004 implements ExtractionTemplate-based folder handling
+ * TODO: Update to use ExtractionTemplate.folder property
+ */
 export class FolderService {
 	private app: App;
 	private settings: ExtractSelectionSettings;
@@ -12,59 +15,40 @@ export class FolderService {
 	}
 
 	/**
-	 * ノートタイプに対応するフォルダパスを取得
+	 * Placeholder: Initialize folders from templates
+	 * TODO: Iterate over settings.templates and create folders
 	 */
-	getFolderPath(type: NoteType): string {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-		return (this.settings as any)[type].folder || NOTE_TYPE_CONFIG[type].folder;
-	}
-
-	/**
-	 * フォルダが存在することを確認し、なければ作成
-	 */
-	async ensureFolderExists(type: NoteType): Promise<string> {
-		const folderPath = this.getFolderPath(type);
-		await this.ensureFolderExistsByPath(folderPath);
-		return folderPath;
-	}
-
-	/**
-	 * 指定パスのフォルダが存在することを確認し、なければ作成
-	 * 親フォルダも再帰的に作成する
-	 */
-	private async ensureFolderExistsByPath(folderPath: string): Promise<void> {
-		const existing = this.app.vault.getAbstractFileByPath(folderPath);
-		if (existing) {
-			return; // 既に存在する
-		}
-
-		// 親フォルダを先に作成
-		const parentPath = folderPath.split("/").slice(0, -1).join("/");
-		if (parentPath) {
-			await this.ensureFolderExistsByPath(parentPath);
-		}
-
-		// 親フォルダ作成後に再度チェック（競合状態対策）
-		const existingAfterParent = this.app.vault.getAbstractFileByPath(folderPath);
-		if (!existingAfterParent) {
-			try {
-				await this.app.vault.createFolder(folderPath);
-			} catch {
-				// フォルダが既に存在する場合のエラーを無視
+	async initializeAllFolders(): Promise<void> {
+		for (const template of this.settings.templates) {
+			if (template.folder) {
+				await this.ensureFolderExistsByPath(template.folder);
 			}
 		}
 	}
 
 	/**
-	 * 全ノートタイプのフォルダを初期化
-	 * プラグイン初回起動時にフォルダ構造を自動生成
+	 * Ensure folder exists, creating it if necessary
 	 */
-	async initializeAllFolders(): Promise<void> {
-		// 全NoteTypeに対してフォルダを作成
-		const noteTypes: NoteType[] = ["fleeting", "literature", "permanent"];
+	private async ensureFolderExistsByPath(folderPath: string): Promise<void> {
+		const existing = this.app.vault.getAbstractFileByPath(folderPath);
+		if (existing) {
+			return;
+		}
 
-		for (const type of noteTypes) {
-			await this.ensureFolderExists(type);
+		// Create parent folders first
+		const parentPath = folderPath.split("/").slice(0, -1).join("/");
+		if (parentPath) {
+			await this.ensureFolderExistsByPath(parentPath);
+		}
+
+		// Check again after parent creation
+		const existingAfterParent = this.app.vault.getAbstractFileByPath(folderPath);
+		if (!existingAfterParent) {
+			try {
+				await this.app.vault.createFolder(folderPath);
+			} catch {
+				// Ignore if folder already exists
+			}
 		}
 	}
 }

@@ -1,16 +1,16 @@
 import { Editor, MarkdownView, Notice } from "obsidian";
-import { NoteType } from "../types/note-types";
-import { NoteTypeModal } from "../ui/modals/note-type-modal";
-import { AliasInputModal } from "../ui/modals/alias-input-modal";
 import type PageZettelPlugin from "../main";
 import { t } from "../i18n";
 
+/**
+ * Extract selection command - placeholder until PBI-003/PBI-005 implement new template-based flow
+ * TODO: Implement with ExtractionTemplate-based modal (PBI-003) and new command flow (PBI-005)
+ */
 export async function extractSelection(
 	plugin: PageZettelPlugin,
 	editor: Editor,
-	view: MarkdownView,
+	_view: MarkdownView,
 ): Promise<void> {
-	// 1. 選択テキストを取得
 	const selection = editor.getSelection();
 
 	if (!selection || selection.trim() === "") {
@@ -18,139 +18,6 @@ export async function extractSelection(
 		return;
 	}
 
-	// 2. ノートタイプを選択
-	const modal = new NoteTypeModal(
-		plugin.app,
-		(type: NoteType) => {
-			void showAliasInputOrCreate(plugin, editor, view, selection, type);
-		},
-		["fleeting", "literature", "permanent"], // 切り出し時の選択肢
-	);
-
-	modal.open();
-}
-
-/**
- * 指定されたノートタイプに直接切り出す（NoteTypeModalをスキップ）
- * コンテキストメニューから特定タイプを直接選択した場合に使用
- */
-export async function extractSelectionToType(
-	plugin: PageZettelPlugin,
-	editor: Editor,
-	view: MarkdownView,
-	type: NoteType,
-): Promise<void> {
-	// 選択テキストを取得
-	const selection = editor.getSelection();
-
-	if (!selection || selection.trim() === "") {
-		new Notice(t("notices.selectText"));
-		return;
-	}
-
-	// 直接showAliasInputOrCreateへ（NoteTypeModalをスキップ）
-	await showAliasInputOrCreate(plugin, editor, view, selection, type);
-}
-
-async function showAliasInputOrCreate(
-	plugin: PageZettelPlugin,
-	editor: Editor,
-	view: MarkdownView,
-	selection: string,
-	type: NoteType,
-): Promise<void> {
-	// 設定確認: showAliasInputフラグ
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-	const showAliasInput = (plugin.settings as any)[type].showAliasInput;
-
-	if (!showAliasInput) {
-		// showAliasInput=falseの場合、AliasInputModalをスキップしてノート作成
-		await createNoteFromSelection(plugin, editor, view, selection, type, "", false);
-		return;
-	}
-
-	// showAliasInput=trueの場合、AliasInputModalを表示
-	const aliasModal = new AliasInputModal(
-		plugin.app,
-		plugin,
-		(result) => {
-			void createNoteFromSelection(
-				plugin,
-				editor,
-				view,
-				selection,
-				type,
-				result.alias,
-				result.removeIndent,
-			);
-		},
-		true, // Extract時なのでremoveIndentチェックボックスを表示
-	);
-
-	aliasModal.open();
-}
-
-async function createNoteFromSelection(
-	plugin: PageZettelPlugin,
-	editor: Editor,
-	view: MarkdownView,
-	selection: string,
-	type: NoteType,
-	alias: string,
-	removeIndent: boolean,
-): Promise<void> {
-	// 3. インデント削除処理（removeIndent=trueの場合）
-	let content = selection;
-	if (removeIndent) {
-		content = removeCommonIndent(selection);
-	}
-
-	// 4. 元ノートを取得
-	const sourceFile = plugin.app.workspace.getActiveFile();
-
-	// 5. NoteCreatorServiceでノートを作成
-	const newFile = await plugin.noteCreatorService.createNote(
-		type,
-		content,
-		alias,
-		sourceFile || undefined,
-	);
-
-	// 6. 元ノートにリンクを挿入（設定で有効な場合）
-	if (plugin.settings.behavior.insertLinkAfterExtract) {
-		// マークダウンリンク形式: [表示名](相対パス)
-		const linkText = alias || newFile.basename;
-		const relativePath = sourceFile
-			? plugin.app.metadataCache.fileToLinktext(newFile, sourceFile.path)
-			: newFile.path;
-		const link = `[${linkText}](${relativePath})`;
-		editor.replaceSelection(link);
-	}
-
-	// 7. 新規ノートを開く（設定で有効な場合）
-	if (plugin.settings.behavior.openAfterExtract) {
-		await plugin.app.workspace.openLinkText(newFile.path, "");
-	}
-}
-
-/**
- * 共通インデントを削除
- */
-function removeCommonIndent(text: string): string {
-	const lines = text.split("\n");
-	if (lines.length === 0) return text;
-
-	// 空行を除外して最小インデントを計算
-	const nonEmptyLines = lines.filter((line) => line.trim().length > 0);
-	if (nonEmptyLines.length === 0) return text;
-
-	const minIndent = Math.min(
-		...nonEmptyLines.map((line) => {
-			const match = line.match(/^(\s*)/);
-			return match?.[1]?.length ?? 0;
-		}),
-	);
-
-	// 各行から共通インデントを削除
-	return lines.map((line) => line.slice(minIndent)).join("\n");
+	// Placeholder: Show notice that feature is being reimplemented
+	new Notice("This feature is being reimplemented");
 }

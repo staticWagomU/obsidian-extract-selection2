@@ -1,15 +1,23 @@
 import { App, TFile, Notice, moment } from "obsidian";
-import { NoteType, NoteMetadata, NOTE_TYPE_CONFIG } from "../types/note-types";
-import type { ExtractSelectionSettings } from "../types/settings";
+import type { ExtractSelectionSettings, ExtractionTemplate } from "../types/settings";
 import { FrontmatterService } from "./frontmatter-service";
 import { TemplateService } from "./template-service";
 import { FolderService } from "./folder-service";
 import { mergeFrontmatter } from "../utils/frontmatter-parser";
-import { t } from "../i18n";
 
 /**
- * ノート作成を統一的に扱うサービス
- * 各ノートタイプの設定に基づいてファイル名形式・フォルダ配置・テンプレート・フロントマターを管理
+ * Note metadata for frontmatter
+ */
+export interface NoteMetadata {
+	created: string;
+	tags?: string[];
+	source_notes?: string[];
+	[key: string]: unknown;
+}
+
+/**
+ * NoteCreatorService - placeholder until PBI-004 implements full ExtractionTemplate-based creation
+ * TODO: Implement createNote with ExtractionTemplate parameter
  */
 export class NoteCreatorService {
 	private app: App;
@@ -33,35 +41,25 @@ export class NoteCreatorService {
 	}
 
 	/**
-	 * ノートを作成
-	 * @param type ノートタイプ
-	 * @param content ノート本文（オプショナル）
-	 * @param alias エイリアス（オプショナル）
-	 * @param sourceFile 元ノート（オプショナル）
-	 * @returns 作成されたTFile
+	 * Create a note using an ExtractionTemplate
+	 * TODO: Full implementation in PBI-004
 	 */
 	async createNote(
-		type: NoteType,
+		template: ExtractionTemplate,
 		content?: string,
 		alias?: string,
 		sourceFile?: TFile,
 	): Promise<TFile> {
-		// 1. タイトルを決定（aliasがある場合はalias、なければファイル名形式から生成）
 		const title = alias || moment().format("YYYYMMDDHHmmss");
+		const folderPath = template.folder || "";
 
-		// 2. フォルダ配置: settings[type].folderから取得+folderService.ensureFolderExistsByPath()
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-		const folderPath = (this.settings as any)[type].folder;
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		await this.ensureFolderExistsByPath(folderPath);
 
-		// 3. ファイル名を生成
-		const fileName = this.generateFileName(type, title, alias);
-		const filePath = `${folderPath}/${fileName}`;
+		const fileName = this.generateFileName(template, title, alias);
+		const filePath = folderPath ? `${folderPath}/${fileName}` : fileName;
 
-		// 4. テンプレート処理（フロントマター分離）
 		const templateResult = await this.templateService.getProcessedTemplateWithFrontmatter(
-			type,
+			template,
 			{
 				title,
 				content: content || "",
@@ -70,107 +68,62 @@ export class NoteCreatorService {
 			},
 		);
 
-		// 5. デフォルトメタデータ作成
 		const defaultMetadata: NoteMetadata = {
-			type,
 			created: new Date().toISOString(),
-			tags: [type],
+			tags: [template.name.toLowerCase()],
 		};
 
 		if (sourceFile) {
 			defaultMetadata.source_notes = [`[[${sourceFile.basename}]]`];
 		}
 
-		// 6. フロントマターマージ（type以外はテンプレート優先）
 		const mergedMetadata = mergeFrontmatter(defaultMetadata, templateResult.frontmatter);
 
-		// 7. 最終コンテンツ生成
 		const finalContent = this.frontmatterService.addFrontmatter(
 			templateResult.body || content || "",
 			mergedMetadata,
 		);
 
-		// 8. ファイル作成 + Notice通知
 		const file = await this.app.vault.create(filePath, finalContent);
 
-		new Notice(t("notices.noteCreated", { icon: NOTE_TYPE_CONFIG[type].icon, title }));
+		const icon = template.icon || "📝";
+		new Notice(`${icon} Created: ${title}`);
 
 		return file;
 	}
 
-	/**
-	 * フォルダが存在することを確認し、なければ作成
-	 * FolderService.ensureFolderExistsByPath()を直接利用
-	 */
 	private async ensureFolderExistsByPath(folderPath: string): Promise<void> {
-		const existing = this.app.vault.getAbstractFileByPath(folderPath);
-		if (existing) {
-			return;
-		}
+		if (!folderPath) return;
 
-		// 親フォルダを先に作成
+		const existing = this.app.vault.getAbstractFileByPath(folderPath);
+		if (existing) return;
+
 		const parentPath = folderPath.split("/").slice(0, -1).join("/");
 		if (parentPath) {
 			await this.ensureFolderExistsByPath(parentPath);
 		}
 
-		// 親フォルダ作成後に再度チェック（競合状態対策）
 		const existingAfterParent = this.app.vault.getAbstractFileByPath(folderPath);
 		if (!existingAfterParent) {
 			try {
 				await this.app.vault.createFolder(folderPath);
 			} catch {
-				// フォルダが既に存在する場合のエラーを無視
+				// Ignore if folder already exists
 			}
 		}
 	}
 
-	/**
-	 * ファイル名を生成
-	 * settings[type].fileNameFormatのプレースホルダーを展開
-	 * - {{date}} -> YYYY-MM-DD
-	 * - {{time}} -> HH:mm:ss
-	 * - {{datetime}} -> YYYY-MM-DD HH:mm:ss
-	 * - {{zettel-id}} -> YYYYMMDDHHmmss
-	 * - {{title}} -> sanitized title
-	 * - {{alias}} -> alias || title
-	 */
-	private generateFileName(type: NoteType, title: string, alias?: string): string {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-		const format = (this.settings as any)[type].fileNameFormat;
-
-		// タイトルのサニタイズ
+	private generateFileName(template: ExtractionTemplate, title: string, alias?: string): string {
+		let fileName = template.fileNameFormat || "{{zettel-id}}";
 		const sanitizedTitle = title.replace(/[\\/:*?"<>|]/g, "-").trim();
 
-		// プレースホルダーの展開
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-		let fileName = format;
-
-		// {{date}} -> YYYY-MM-DD
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{date\}\}/g, moment().format("YYYY-MM-DD"));
-
-		// {{time}} -> HH:mm:ss
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{time\}\}/g, moment().format("HH:mm:ss"));
-
-		// {{datetime}} -> YYYY-MM-DD HH:mm:ss
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{datetime\}\}/g, moment().format("YYYY-MM-DD HH:mm:ss"));
-
-		// {{zettel-id}} -> YYYYMMDDHHmmss (ISO形式から変換)
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{zettel-id\}\}/g, moment().format("YYYYMMDDHHmmss"));
-
-		// {{title}} -> sanitized title
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{title\}\}/g, sanitizedTitle);
-
-		// {{alias}} -> alias || title
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{alias\}\}/g, alias || sanitizedTitle);
 
-		// .md拡張子を追加
 		return `${fileName}.md`;
 	}
 }

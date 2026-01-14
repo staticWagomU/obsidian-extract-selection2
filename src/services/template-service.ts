@@ -1,6 +1,5 @@
 import { App, moment, TFile } from "obsidian";
-import type { NoteType } from "../types/note-types";
-import type { ExtractSelectionSettings } from "../types/settings";
+import type { ExtractSelectionSettings, ExtractionTemplate } from "../types/settings";
 import { parseTemplateFrontmatter } from "../utils/frontmatter-parser";
 
 export interface TemplateVariables {
@@ -12,13 +11,17 @@ export interface TemplateVariables {
 }
 
 /**
- * テンプレート処理結果（フロントマター分離版）
+ * Template processing result with separated frontmatter
  */
 export interface ProcessedTemplateResult {
 	frontmatter: Record<string, unknown> | null;
 	body: string;
 }
 
+/**
+ * TemplateService - placeholder until PBI-004 implements ExtractionTemplate-based processing
+ * TODO: Update methods to accept ExtractionTemplate instead of type string
+ */
 export class TemplateService {
 	private app: App;
 	private settings: ExtractSelectionSettings;
@@ -29,39 +32,34 @@ export class TemplateService {
 	}
 
 	/**
-	 * テンプレートを取得して変数を展開
+	 * Get processed template with variables expanded
+	 * TODO: Update to accept ExtractionTemplate
 	 */
-	async getProcessedTemplate(type: NoteType, variables: TemplateVariables): Promise<string> {
-		// 1. テンプレートファイルを読み込み
-		const templateContent = await this.loadTemplate(type);
+	async getProcessedTemplate(template: ExtractionTemplate, variables: TemplateVariables): Promise<string> {
+		const templateContent = await this.loadTemplate(template);
 
-		// 2. テンプレートが存在しない場合はcontentをフォールバック
 		if (!templateContent) {
 			return variables.content || "";
 		}
 
-		// 3. 変数を展開
 		return this.expandVariables(templateContent, variables);
 	}
 
 	/**
-	 * テンプレートを読み込み、フロントマターと本文を分離して変数展開
-	 * @returns フロントマターオブジェクトと展開済み本文
+	 * Load template and separate frontmatter from body
+	 * TODO: Update to accept ExtractionTemplate
 	 */
 	async getProcessedTemplateWithFrontmatter(
-		type: NoteType,
+		template: ExtractionTemplate,
 		variables: TemplateVariables,
 	): Promise<ProcessedTemplateResult> {
-		const templateContent = await this.loadTemplate(type);
+		const templateContent = await this.loadTemplate(template);
 
 		if (!templateContent) {
 			return { frontmatter: null, body: variables.content || "" };
 		}
 
-		// フロントマターと本文を分離
 		const parsed = parseTemplateFrontmatter(templateContent);
-
-		// 本文部分のみ変数展開
 		const expandedBody = this.expandVariables(parsed.body, variables);
 
 		return {
@@ -71,67 +69,48 @@ export class TemplateService {
 	}
 
 	/**
-	 * テンプレートファイルを読み込む
+	 * Load template file content
 	 */
-	private async loadTemplate(type: NoteType): Promise<string | null> {
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
-		const templatePath = (this.settings as any)[type].templatePath;
+	private async loadTemplate(template: ExtractionTemplate): Promise<string | null> {
+		const templatePath = template.templatePath;
 
-		// テンプレートパスが未設定の場合
 		if (!templatePath) {
 			return null;
 		}
 
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 			const file = this.app.vault.getAbstractFileByPath(templatePath);
-			if (!file) {
+			if (!file || !(file instanceof TFile)) {
 				return null;
 			}
 
-			// TFileかどうかチェック
-			if (!(file instanceof TFile)) {
-				return null;
-			}
-
-			const content = await this.app.vault.read(file);
-			return content;
+			return await this.app.vault.read(file);
 		} catch {
 			return null;
 		}
 	}
 
 	/**
-	 * テンプレート内の変数を展開
+	 * Expand template variables
 	 */
 	private expandVariables(template: string, variables: TemplateVariables): string {
 		let result = template;
 
-		// {{title}} の展開
 		result = result.replace(/\{\{title\}\}/g, variables.title);
-
-		// {{content}} の展開
 		result = result.replace(/\{\{content\}\}/g, variables.content || "");
-
-		// {{alias}} の展開
 		result = result.replace(/\{\{alias\}\}/g, variables.alias || "");
 
-		// {{date:FORMAT}} の展開（カスタムフォーマット）
+		// {{date:FORMAT}} custom format
 		result = result.replace(/\{\{date:([^}]+)\}\}/g, (match: string, format: string) => {
 			try {
 				return moment(variables.date).format(format);
 			} catch {
-				return match; // フォーマット失敗時は元の文字列を返す
+				return match;
 			}
 		});
 
-		// {{date}} の展開（固定形式: YYYY-MM-DD）
 		result = result.replace(/\{\{date\}\}/g, moment().format("YYYY-MM-DD"));
-
-		// {{time}} の展開（固定形式: HH:mm:ss）
 		result = result.replace(/\{\{time\}\}/g, moment().format("HH:mm:ss"));
-
-		// {{datetime}} の展開（固定形式: YYYY-MM-DD HH:mm:ss）
 		result = result.replace(/\{\{datetime\}\}/g, moment().format("YYYY-MM-DD HH:mm:ss"));
 
 		return result;

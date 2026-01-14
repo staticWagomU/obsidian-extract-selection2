@@ -1,5 +1,5 @@
 import { App, TFile, stringifyYaml } from "obsidian";
-import type { NoteType, NoteMetadata } from "../types";
+import type { NoteMetadata } from "./note-creator-service";
 
 export class FrontmatterService {
 	private app: App;
@@ -9,7 +9,7 @@ export class FrontmatterService {
 	}
 
 	/**
-	 * コンテンツにフロントマターを追加
+	 * Add frontmatter to content
 	 */
 	addFrontmatter(content: string, metadata: NoteMetadata): string {
 		const yaml = stringifyYaml(metadata);
@@ -17,7 +17,7 @@ export class FrontmatterService {
 	}
 
 	/**
-	 * フロントマターのメタデータを更新
+	 * Update frontmatter metadata
 	 */
 	async updateMetadata(file: TFile, updates: Partial<NoteMetadata>): Promise<void> {
 		await this.app.fileManager.processFrontMatter(file, (frontmatter) => {
@@ -26,15 +26,7 @@ export class FrontmatterService {
 	}
 
 	/**
-	 * ノートタイプを取得
-	 */
-	async getNoteType(file: TFile): Promise<NoteType | null> {
-		const cache = this.app.metadataCache.getFileCache(file);
-		return (cache?.frontmatter?.type as NoteType) || null;
-	}
-
-	/**
-	 * Structure Note へのリンクを追加
+	 * Add structure link to frontmatter
 	 */
 	async addStructureLink(file: TFile, structureNote: TFile): Promise<void> {
 		await this.app.fileManager.processFrontMatter(file, (frontmatter) => {
@@ -51,19 +43,14 @@ export class FrontmatterService {
 	}
 
 	/**
-	 * タグを更新（削除と追加）
+	 * Update tags (remove and add)
 	 */
 	async updateTags(file: TFile, tagsToRemove: string[], tagsToAdd: string[]): Promise<void> {
 		await this.app.fileManager.processFrontMatter(file, (frontmatter) => {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			const currentTags: string[] = (frontmatter.tags as string[]) || [];
-
-			// 削除
 			const filtered = currentTags.filter((t) => !tagsToRemove.includes(t));
-
-			// 追加（重複なし）
 			const newTags = [...new Set([...filtered, ...tagsToAdd])];
-
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 			frontmatter.tags = newTags;
 		});
