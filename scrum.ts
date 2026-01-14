@@ -156,54 +156,9 @@ const scrum: ScrumDashboard = {
       id: "PBI-004",
       story: { role: "Obsidianユーザー", capability: "ExtractionTemplateベースのノート作成", benefit: "カスタムテンプレート対応" },
       acceptance_criteria: [
-        {
-          criterion: "ファイル名プレースホルダー展開",
-          verification: "{{date}}, {{time}}, {{datetime}}, {{zettel-id}}, {{title}}, {{alias}}が正しく展開される"
-        },
-        {
-          criterion: "テンプレートプレースホルダー展開",
-          verification: "{{content}}, {{title}}, {{alias}}, {{date}}, {{time}}, {{datetime}}, {{date:FORMAT}}が正しく展開される"
-        },
-        {
-          criterion: "カスタム日付フォーマット対応",
-          verification: "{{date:YYYYMMDD}}等のカスタムフォーマットが正しく処理される"
-        },
-        {
-          criterion: "フォルダ自動作成",
-          verification: "存在しないフォルダパスが自動的に作成される（ネストされたパス含む）"
-        },
-        {
-          criterion: "テンプレートファイル読込",
-          verification: "templatePathが指定された場合、ファイルが読み込まれて変数展開される"
-        },
-        {
-          criterion: "テンプレートなし処理",
-          verification: "templatePathが空の場合、contentのみでノートが作成される"
-        },
-        {
-          criterion: "フロントマターマージ",
-          verification: "テンプレートのfrontmatterとデフォルトmetadataが正しくマージされる"
-        },
-        {
-          criterion: "source_notes自動付与",
-          verification: "sourceFileが提供された場合、frontmatterにsource_notesが追加される"
-        },
-        {
-          criterion: "ファイル名サニタイズ",
-          verification: "不正文字（\\/:*?\"<>|）がハイフンに置換される"
-        },
-        {
-          criterion: "空フォルダパス処理",
-          verification: "folderが空文字列の場合、vaultルートにファイルが作成される"
-        },
-        {
-          criterion: "作成通知表示",
-          verification: "ノート作成後、template.iconとタイトルを含む通知が表示される"
-        },
-        {
-          criterion: "DoD全チェック成功",
-          verification: "tsc/lint/build"
-        },
+        { criterion: "プレースホルダー展開", verification: "ファイル名・テンプレート変数" },
+        { criterion: "フォルダ・テンプレート処理", verification: "自動作成・読込・マージ" },
+        { criterion: "DoD全チェック成功", verification: "tsc/lint/build" },
       ],
       status: "done",
     },
@@ -249,52 +204,15 @@ const scrum: ScrumDashboard = {
   completed: [
     { number: 1, pbi_id: "PBI-001", goal: "ExtractionTemplate型と新設定構造を導入", status: "done", subtasks: [] },
     { number: 2, pbi_id: "PBI-002", goal: "レガシーZettelkastenコード削除", status: "done", subtasks: [] },
-    { number: 3, pbi_id: "PBI-003", goal: "テンプレート選択・編集モーダルを実装し、直感的なテンプレート管理UIを提供する", status: "done", subtasks: [] },
-    {
-      number: 4,
-      pbi_id: "PBI-004",
-      goal: "ExtractionTemplateベースのノート作成機能を検証し、TODOコメントをクリーンアップして本番環境対応を完了する",
-      status: "done",
-      subtasks: [
-        {
-          test: "TODO comments are removed from service files",
-          implementation: "Remove obsolete TODO comments from NoteCreatorService, TemplateService, FolderService",
-          type: "structural",
-          status: "completed",
-          commits: [
-            { hash: "182b402", message: "refactor: remove obsolete TODO comments from service files", phase: "green" }
-          ],
-          notes: [
-            "NoteCreatorService: Lines 19, 45 - Implementation is complete",
-            "TemplateService: Lines 23, 36, 50 - Already accepts ExtractionTemplate",
-            "FolderService: Lines 6, 19 - Already uses ExtractionTemplate.folder",
-          ],
-        },
-        {
-          test: "All DoD checks pass (tsc, lint, build)",
-          implementation: "Run DoD checks and fix any issues if found",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            { hash: "3ed8368", message: "chore: verify Definition of Done for Sprint 4", phase: "green" }
-          ],
-          notes: [
-            "Execute: pnpm exec tsc --noEmit",
-            "Execute: pnpm lint",
-            "Execute: pnpm build",
-          ],
-        },
-      ]
-    },
+    { number: 3, pbi_id: "PBI-003", goal: "テンプレート選択・編集モーダル", status: "done", subtasks: [] },
+    { number: 4, pbi_id: "PBI-004", goal: "ExtractionTemplateノート作成検証・クリーンアップ", status: "done", subtasks: [] },
   ],
 
   retrospectives: [
     { sprint: 1, improvements: [{ action: "TDDアプローチ継続", timing: "immediate", status: "completed", outcome: "型安全性維持" }] },
     { sprint: 2, improvements: [{ action: "サービス層スタブ化", timing: "immediate", status: "completed", outcome: "ビルド通過維持" }] },
-    { sprint: 3, improvements: [
-      { action: "Obsidian UIパターン活用", timing: "immediate", status: "completed", outcome: "FuzzySuggestModal/Setting活用" },
-      { action: "リアルタイムプレビュー実装", timing: "immediate", status: "completed", outcome: "UX向上" },
-    ]},
+    { sprint: 3, improvements: [{ action: "Obsidian UIパターン活用", timing: "immediate", status: "completed", outcome: "UX向上" }] },
+    { sprint: 4, improvements: [{ action: "早期実装によるクリーンアップスプリント", timing: "immediate", status: "completed", outcome: "効率的検証" }] },
   ],
 };
 
