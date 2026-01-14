@@ -236,7 +236,38 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 4,
+    pbi_id: "PBI-004",
+    goal: "ExtractionTemplateベースのノート作成機能を検証し、TODOコメントをクリーンアップして本番環境対応を完了する",
+    status: "planning",
+    subtasks: [
+      {
+        test: "TODO comments are removed from service files",
+        implementation: "Remove obsolete TODO comments from NoteCreatorService, TemplateService, FolderService",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [
+          "NoteCreatorService: Lines 19, 45 - Implementation is complete",
+          "TemplateService: Lines 23, 36, 50 - Already accepts ExtractionTemplate",
+          "FolderService: Lines 6, 19 - Already uses ExtractionTemplate.folder",
+        ],
+      },
+      {
+        test: "All DoD checks pass (tsc, lint, build)",
+        implementation: "Run DoD checks and fix any issues if found",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "Execute: pnpm exec tsc --noEmit",
+          "Execute: pnpm lint",
+          "Execute: pnpm build",
+        ],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
