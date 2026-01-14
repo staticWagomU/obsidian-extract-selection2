@@ -1,10 +1,12 @@
-import { App, Modal, Setting } from "obsidian";
+import { App, Modal, Setting, moment } from "obsidian";
 import type { ExtractionTemplate } from "../../types/settings";
+import { FolderSuggest } from "../suggesters/folder-suggest";
 
 export class TemplateEditModal extends Modal {
 	private template: Partial<ExtractionTemplate>;
 	private onSave: (template: Partial<ExtractionTemplate>) => void;
 	private nameInput: HTMLInputElement | null = null;
+	private previewEl: HTMLElement | null = null;
 
 	constructor(
 		app: App,
@@ -77,10 +79,13 @@ export class TemplateEditModal extends Modal {
 					.onChange((value) => {
 						this.template.folder = value;
 					});
+
+				// Add folder suggester
+				new FolderSuggest(this.app, text.inputEl);
 			});
 
 		// File name format field (required)
-		new Setting(contentEl)
+		const fileNameSetting = new Setting(contentEl)
 			.setName("File name format")
 			.setDesc("Format for the new file name")
 			.addText((text) => {
@@ -88,8 +93,15 @@ export class TemplateEditModal extends Modal {
 					.setPlaceholder("e.g., {{zettel-id}}")
 					.onChange((value) => {
 						this.template.fileNameFormat = value;
+						this.updatePreview();
 					});
 			});
+
+		// Add preview element
+		this.previewEl = fileNameSetting.descEl.createDiv({
+			cls: "setting-item-description",
+		});
+		this.updatePreview();
 
 		// Template file field (optional)
 		new Setting(contentEl)
@@ -166,5 +178,27 @@ export class TemplateEditModal extends Modal {
 
 		this.onSave(this.template);
 		this.close();
+	}
+
+	private updatePreview(): void {
+		if (!this.previewEl) {
+			return;
+		}
+
+		const format = this.template.fileNameFormat || "";
+		const preview = this.expandPlaceholders(format);
+		this.previewEl.setText(`Preview: ${preview}.md`);
+	}
+
+	private expandPlaceholders(format: string): string {
+		const now = moment();
+
+		// Expand placeholders with example values
+		return format
+			.replace(/{{zettel-id}}/g, now.format("YYYYMMDDHHmmss"))
+			.replace(/{{datetime}}/g, now.format("YYYY-MM-DD-HHmmss"))
+			.replace(/{{date}}/g, now.format("YYYY-MM-DD"))
+			.replace(/{{time}}/g, now.format("HHmmss"))
+			.replace(/{{title}}/g, "example-title");
 	}
 }

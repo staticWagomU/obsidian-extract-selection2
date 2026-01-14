@@ -235,8 +235,10 @@ const scrum: ScrumDashboard = {
         test: "TemplateEditModalがModal継承し、全ExtractionTemplateプロパティのフォームを持ち、保存/キャンセル/Enterキー/Escapeキー動作を検証",
         implementation: "template-edit-modal.ts作成、Modal継承、name/description/icon/folder/fileNameFormat/templatePath/showAliasInputの入力フィールド実装、保存/キャンセルボタン、キーボードショートカット",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          { hash: "2ca6553", message: "feat(ui): implement TemplateEditModal with form fields", phase: "green" }
+        ],
         notes: [
           "DESIGN.mdのテンプレート編集モーダル仕様に準拠",
           "alias-input-modal.tsのフォーム実装パターンを参考",
@@ -247,7 +249,7 @@ const scrum: ScrumDashboard = {
         test: "TemplateEditModalにfolderフィールドのフォルダサジェスト機能とfileNameFormatフィールドのリアルタイムプレビュー機能を統合し動作検証",
         implementation: "FolderSuggestをfolderフィールドに統合、fileNameFormatのonChangeでプレビュー更新ロジック実装（{{date}}/{{time}}/{{datetime}}の展開）、プレビュー表示要素の追加",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
         notes: [
           "src/ui/suggesters/folder-suggest.ts既存実装を活用",
