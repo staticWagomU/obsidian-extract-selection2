@@ -183,7 +183,7 @@ const scrum: ScrumDashboard = {
           verification: "showEmojiInCommands/showContextMenuItems動作確認"
         },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-006",
@@ -205,51 +205,7 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 5,
-    pbi_id: "PBI-005",
-    goal: "TemplateSelectModalとNoteCreatorServiceを統合し、お気に入りテンプレートへの素早いアクセスを実現",
-    status: "planning",
-    subtasks: [
-      {
-        test: "extractSelectionコマンドがTemplateSelectModalを開き、選択したテンプレートでNoteCreatorServiceを呼ぶ",
-        implementation: "extract-selection-commandを更新してTemplateSelectModal統合とNoteCreatorService呼出を実装",
-        type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [
-          "TemplateSelectModalはsrc/ui/modals/template-select-modal.tsで既に実装済み",
-          "NoteCreatorServiceはsrc/services/note-creator-service.tsで既に実装済み",
-          "AliasInputModalはsrc/ui/modals/alias-input-modal.tsで既に実装済み",
-          "showAliasInput=trueの場合、AliasInputModalを表示後にNoteCreatorServiceを呼ぶ",
-        ],
-      },
-      {
-        test: "isFavorite=trueのテンプレートが右クリックメニューに独立項目として表示され、直接抽出できる",
-        implementation: "main.tsにコンテキストメニュー登録処理を追加し、お気に入りテンプレートへのショートカットを実装",
-        type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [
-          "showContextMenuItems設定がtrueの場合のみ表示",
-          "showEmojiInCommands設定がtrueの場合、絵文字を含める",
-          "各お気に入りテンプレートは選択されたテンプレートで直接extractSelectionフローを実行",
-        ],
-      },
-      {
-        test: "DoD全チェック(tsc/lint/build)が成功する",
-        implementation: "TypeScript型チェック、Lint、Buildを実行してエラーを解消",
-        type: "structural",
-        status: "pending",
-        commits: [],
-        notes: [
-          "pnpm exec tsc --noEmit",
-          "pnpm lint",
-          "pnpm build",
-        ],
-      },
-    ],
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -264,6 +220,69 @@ const scrum: ScrumDashboard = {
     { number: 2, pbi_id: "PBI-002", goal: "レガシーZettelkastenコード削除", status: "done", subtasks: [] },
     { number: 3, pbi_id: "PBI-003", goal: "テンプレート選択・編集モーダル", status: "done", subtasks: [] },
     { number: 4, pbi_id: "PBI-004", goal: "ExtractionTemplateノート作成検証・クリーンアップ", status: "done", subtasks: [] },
+    {
+      number: 5,
+      pbi_id: "PBI-005",
+      goal: "TemplateSelectModalとNoteCreatorServiceを統合し、お気に入りテンプレートへの素早いアクセスを実現",
+      status: "done",
+      subtasks: [
+        {
+          test: "extractSelectionコマンドがTemplateSelectModalを開き、選択したテンプレートでNoteCreatorServiceを呼ぶ",
+          implementation: "extract-selection-commandを更新してTemplateSelectModal統合とNoteCreatorService呼出を実装",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "014d410",
+              message: "feat: integrate TemplateSelectModal and NoteCreatorService into extract-selection-command",
+              phase: "green"
+            }
+          ],
+          notes: [
+            "TemplateSelectModalを開いてテンプレート選択",
+            "showAliasInput=trueの場合、AliasInputModalを表示",
+            "NoteCreatorServiceを呼び出してノート作成",
+            "insertLinkAfterExtractとopenAfterExtract設定を実装",
+          ],
+        },
+        {
+          test: "isFavorite=trueのテンプレートが右クリックメニューに独立項目として表示され、直接抽出できる",
+          implementation: "main.tsにコンテキストメニュー登録処理を追加し、お気に入りテンプレートへのショートカットを実装",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "052ccd2",
+              message: "feat: add context menu items for favorite templates",
+              phase: "green"
+            }
+          ],
+          notes: [
+            "editor-menuイベントでコンテキストメニューに項目追加",
+            "showContextMenuItems設定で表示制御",
+            "showEmojiInCommands設定で絵文字表示制御",
+            "お気に入りテンプレートは直接extractSelectionWithTemplateを呼び出し",
+          ],
+        },
+        {
+          test: "DoD全チェック(tsc/lint/build)が成功する",
+          implementation: "TypeScript型チェック、Lint、Buildを実行してエラーを解消",
+          type: "structural",
+          status: "completed",
+          commits: [
+            {
+              hash: "822af56",
+              message: "fix: resolve eslint no-misused-promises error in AliasInputModal callback",
+              phase: "green"
+            }
+          ],
+          notes: [
+            "全てのDoDチェックが成功",
+            "eslintのno-misused-promisesエラーを修正",
+          ],
+        },
+      ],
+    },
   ],
 
   retrospectives: [
