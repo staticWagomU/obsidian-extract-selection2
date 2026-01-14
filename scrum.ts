@@ -181,7 +181,7 @@ const scrum: ScrumDashboard = {
         { criterion: "ハードコード文字列のi18n化", verification: "template-edit-modal.ts と main.ts で t() 関数使用" },
         { criterion: "DoD全チェック成功", verification: "tsc/lint/build" },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-007",
@@ -194,46 +194,7 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 6,
-    pbi_id: "PBI-006",
-    goal: "多言語ユーザーがテンプレート編集モーダルとコンテキストメニューを母国語で操作できるようにする",
-    status: "planning",
-    subtasks: [
-      {
-        test: "en.json/ja.json に modals.templateEdit.* と contextMenu.extractTo 翻訳キーが存在する",
-        implementation: "翻訳キーをen.json/ja.jsonに追加(title, name, description, icon, folder等17キー)",
-        type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [],
-      },
-      {
-        test: "template-edit-modal.ts がハードコード文字列を含まない(全てt()関数を使用)",
-        implementation: "template-edit-modal.tsの17箇所のハードコード文字列をt()に置換",
-        type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [],
-      },
-      {
-        test: "main.ts コンテキストメニューがハードコード文字列を含まない(t()使用)",
-        implementation: "main.tsの「Extract to ${template.name}」をt()に置換",
-        type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [],
-      },
-      {
-        test: "DoD全チェック成功(tsc/lint/build)",
-        implementation: "型チェック・lint・ビルド実行",
-        type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [],
-      },
-    ],
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -249,6 +210,46 @@ const scrum: ScrumDashboard = {
     { number: 3, pbi_id: "PBI-003", goal: "テンプレート選択・編集モーダル", status: "done", subtasks: [] },
     { number: 4, pbi_id: "PBI-004", goal: "ExtractionTemplateノート作成検証・クリーンアップ", status: "done", subtasks: [] },
     { number: 5, pbi_id: "PBI-005", goal: "コマンド・コンテキストメニュー統合", status: "done", subtasks: [] },
+    {
+      number: 6,
+      pbi_id: "PBI-006",
+      goal: "多言語ユーザーがテンプレート編集モーダルとコンテキストメニューを母国語で操作できるようにする",
+      status: "done",
+      subtasks: [
+        {
+          test: "en.json/ja.json に modals.templateEdit.* と contextMenu.extractTo 翻訳キーが存在する",
+          implementation: "翻訳キーをen.json/ja.jsonに追加(title, name, description, icon, folder等17キー)",
+          type: "behavioral",
+          status: "completed",
+          commits: [{ hash: "7555a13", message: "feat(i18n): add templateEdit and contextMenu translation keys", phase: "green" }],
+          notes: [],
+        },
+        {
+          test: "template-edit-modal.ts がハードコード文字列を含まない(全てt()関数を使用)",
+          implementation: "template-edit-modal.tsの17箇所のハードコード文字列をt()に置換",
+          type: "behavioral",
+          status: "completed",
+          commits: [{ hash: "e0ab35e", message: "feat(i18n): replace hardcoded strings in template-edit-modal.ts", phase: "green" }],
+          notes: [],
+        },
+        {
+          test: "main.ts コンテキストメニューがハードコード文字列を含まない(t()使用)",
+          implementation: "main.tsの「Extract to ${template.name}」をt()に置換",
+          type: "behavioral",
+          status: "completed",
+          commits: [{ hash: "83a8c1d", message: "feat(i18n): replace hardcoded strings in main.ts context menu", phase: "green" }],
+          notes: [],
+        },
+        {
+          test: "DoD全チェック成功(tsc/lint/build)",
+          implementation: "型チェック・lint・ビルド実行",
+          type: "behavioral",
+          status: "completed",
+          commits: [],
+          notes: ["全DoDチェック成功: TypeScript型チェック、Lint(0 warnings/errors)、Build"],
+        },
+      ],
+    },
   ],
 
   retrospectives: [
