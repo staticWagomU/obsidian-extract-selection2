@@ -156,10 +156,56 @@ const scrum: ScrumDashboard = {
       id: "PBI-004",
       story: { role: "Obsidianユーザー", capability: "ExtractionTemplateベースのノート作成", benefit: "カスタムテンプレート対応" },
       acceptance_criteria: [
-        { criterion: "note-creator-service更新", verification: "ExtractionTemplate引数" },
-        { criterion: "folder-service更新", verification: "動的フォルダ対応" },
+        {
+          criterion: "ファイル名プレースホルダー展開",
+          verification: "{{date}}, {{time}}, {{datetime}}, {{zettel-id}}, {{title}}, {{alias}}が正しく展開される"
+        },
+        {
+          criterion: "テンプレートプレースホルダー展開",
+          verification: "{{content}}, {{title}}, {{alias}}, {{date}}, {{time}}, {{datetime}}, {{date:FORMAT}}が正しく展開される"
+        },
+        {
+          criterion: "カスタム日付フォーマット対応",
+          verification: "{{date:YYYYMMDD}}等のカスタムフォーマットが正しく処理される"
+        },
+        {
+          criterion: "フォルダ自動作成",
+          verification: "存在しないフォルダパスが自動的に作成される（ネストされたパス含む）"
+        },
+        {
+          criterion: "テンプレートファイル読込",
+          verification: "templatePathが指定された場合、ファイルが読み込まれて変数展開される"
+        },
+        {
+          criterion: "テンプレートなし処理",
+          verification: "templatePathが空の場合、contentのみでノートが作成される"
+        },
+        {
+          criterion: "フロントマターマージ",
+          verification: "テンプレートのfrontmatterとデフォルトmetadataが正しくマージされる"
+        },
+        {
+          criterion: "source_notes自動付与",
+          verification: "sourceFileが提供された場合、frontmatterにsource_notesが追加される"
+        },
+        {
+          criterion: "ファイル名サニタイズ",
+          verification: "不正文字（\\/:*?\"<>|）がハイフンに置換される"
+        },
+        {
+          criterion: "空フォルダパス処理",
+          verification: "folderが空文字列の場合、vaultルートにファイルが作成される"
+        },
+        {
+          criterion: "作成通知表示",
+          verification: "ノート作成後、template.iconとタイトルを含む通知が表示される"
+        },
+        {
+          criterion: "DoD全チェック成功",
+          verification: "tsc/lint/build"
+        },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-005",
