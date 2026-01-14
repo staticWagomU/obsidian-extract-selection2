@@ -325,8 +325,14 @@ const scrum: ScrumDashboard = {
         test: "UISettingsからmobileOptimizedプロパティが削除されていることを検証",
         implementation: "types/settings.tsのUISettingsを更新: mobileOptimizedを削除",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "b6d5665",
+            message: "feat(types): remove mobileOptimized from UISettings",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: types/settings.tsのUISettingsからmobileOptimizedを削除し、pnpm buildで型チェック",
           "実装完了: UISettings型からmobileOptimizedを削除。既存コードは後続サブタスクで修正",
@@ -336,9 +342,12 @@ const scrum: ScrumDashboard = {
         test: "ExtractSelectionSettings interfaceがtemplates: ExtractionTemplate[]プロパティを持ち、PageZettelSettingsが存在しないことを検証",
         implementation: "types/settings.tsにExtractSelectionSettings interfaceを定義し、PageZettelSettingsを削除",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: types/settings.tsにExtractSelectionSettingsを定義し、PageZettelSettingsとNoteTypeSettingsを削除してpnpm buildで型チェック",
+          "実装完了: ExtractSelectionSettingsを定義、PageZettelSettingsとNoteTypeSettingsを削除、types/index.tsのエクスポートも更新",
+        ],
       },
       {
         test: "settings.tsのDEFAULT_SETTINGSの型がExtractSelectionSettingsであることを検証",

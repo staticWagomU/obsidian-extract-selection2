@@ -1,18 +1,4 @@
 /**
- * 各ノートタイプの詳細設定
- */
-export interface NoteTypeSettings {
-	/** フォルダパス */
-	folder: string;
-	/** ファイル名形式 (例: "{{date}}-{{title}}", "{{zettel-id}}-{{title}}") */
-	fileNameFormat: string;
-	/** エイリアス入力を表示するか */
-	showAliasInput: boolean;
-	/** テンプレートファイルパス（絶対パス） */
-	templatePath: string;
-}
-
-/**
  * 抽出テンプレート
  */
 export interface ExtractionTemplate {
@@ -38,16 +24,15 @@ export interface ExtractionTemplate {
 	order: number;
 }
 
-export interface PageZettelSettings {
-	// ノートタイプ別設定
-	fleeting: NoteTypeSettings;
-	literature: NoteTypeSettings;
-	permanent: NoteTypeSettings;
-
-	// 動作設定
+/**
+ * Extract Selection設定
+ */
+export interface ExtractSelectionSettings {
+	/** 抽出テンプレート一覧 */
+	templates: ExtractionTemplate[];
+	/** 動作設定 */
 	behavior: BehaviorSettings;
-
-	// UI設定
+	/** UI設定 */
 	ui: UISettings;
 }
 
