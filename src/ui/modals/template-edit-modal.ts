@@ -25,16 +25,16 @@ export class TemplateEditModal extends Modal {
 		contentEl.addClass("extract-selection-modal");
 
 		// Modal title
-		contentEl.createEl("h2", { text: "Edit Template" });
+		contentEl.createEl("h2", { text: "Edit template" });
 
 		// Name field (required)
 		new Setting(contentEl)
 			.setName("Name")
-			.setDesc("Template display name")
+			.setDesc("Display name for this template")
 			.addText((text) => {
 				this.nameInput = text.inputEl;
 				text.setValue(this.template.name || "")
-					.setPlaceholder("e.g., Fleeting")
+					.setPlaceholder("Fleeting")
 					.onChange((value) => {
 						this.template.name = value;
 					});
@@ -48,10 +48,10 @@ export class TemplateEditModal extends Modal {
 		// Description field (optional)
 		new Setting(contentEl)
 			.setName("Description (optional)")
-			.setDesc("Brief description of the template")
+			.setDesc("Brief description of this template")
 			.addText((text) => {
 				text.setValue(this.template.description || "")
-					.setPlaceholder("e.g., Quick thought or idea")
+					.setPlaceholder("Quick thought or idea")
 					.onChange((value) => {
 						this.template.description = value;
 					});
@@ -60,10 +60,10 @@ export class TemplateEditModal extends Modal {
 		// Icon field (optional)
 		new Setting(contentEl)
 			.setName("Icon (optional)")
-			.setDesc("Emoji icon for the template")
+			.setDesc("Emoji icon for this template")
 			.addText((text) => {
 				text.setValue(this.template.icon || "")
-					.setPlaceholder("e.g., 💭")
+					.setPlaceholder("💭")
 					.onChange((value) => {
 						this.template.icon = value;
 					});
@@ -72,10 +72,10 @@ export class TemplateEditModal extends Modal {
 		// Folder field (required)
 		new Setting(contentEl)
 			.setName("Folder")
-			.setDesc("Destination folder path")
+			.setDesc("Path to destination folder")
 			.addText((text) => {
 				text.setValue(this.template.folder || "")
-					.setPlaceholder("e.g., 10-Fleeting")
+					.setPlaceholder("Fleeting")
 					.onChange((value) => {
 						this.template.folder = value;
 					});
@@ -90,7 +90,7 @@ export class TemplateEditModal extends Modal {
 			.setDesc("Format for the new file name")
 			.addText((text) => {
 				text.setValue(this.template.fileNameFormat || "")
-					.setPlaceholder("e.g., {{zettel-id}}")
+					.setPlaceholder("{{zettel-id}}")
 					.onChange((value) => {
 						this.template.fileNameFormat = value;
 						this.updatePreview();
@@ -109,7 +109,7 @@ export class TemplateEditModal extends Modal {
 			.setDesc("Path to template file in vault")
 			.addText((text) => {
 				text.setValue(this.template.templatePath || "")
-					.setPlaceholder("e.g., Templates/fleeting.md")
+					.setPlaceholder("Templates/fleeting.md")
 					.onChange((value) => {
 						this.template.templatePath = value;
 					});

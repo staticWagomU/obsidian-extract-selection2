@@ -249,8 +249,10 @@ const scrum: ScrumDashboard = {
         test: "TemplateEditModalにfolderフィールドのフォルダサジェスト機能とfileNameFormatフィールドのリアルタイムプレビュー機能を統合し動作検証",
         implementation: "FolderSuggestをfolderフィールドに統合、fileNameFormatのonChangeでプレビュー更新ロジック実装（{{date}}/{{time}}/{{datetime}}の展開）、プレビュー表示要素の追加",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          { hash: "316e502", message: "feat(ui): add folder suggester and file name preview to TemplateEditModal", phase: "green" }
+        ],
         notes: [
           "src/ui/suggesters/folder-suggest.ts既存実装を活用",
           "DESIGN.mdのファイル名フォーマット仕様に準拠",
