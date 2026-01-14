@@ -146,10 +146,32 @@ const scrum: ScrumDashboard = {
       id: "PBI-003",
       story: { role: "Obsidianユーザー", capability: "テンプレート選択・編集モーダル", benefit: "直感的UI" },
       acceptance_criteria: [
-        { criterion: "テンプレート選択UI", verification: "template-select-modal.ts" },
-        { criterion: "テンプレート編集UI", verification: "template-edit-modal.ts" },
+        {
+          criterion: "TemplateSelectModal実装（FuzzySuggestModal継承）",
+          verification: "template-select-modal.ts存在、FuzzySuggestModal<ExtractionTemplate>継承、getItems/getItemText/onChooseItem実装"
+        },
+        {
+          criterion: "検索機能動作",
+          verification: "name/description/iconでの検索動作、order順のソート"
+        },
+        {
+          criterion: "TemplateEditModal実装（Modal継承）",
+          verification: "template-edit-modal.ts存在、全ExtractionTemplateプロパティのフォーム存在"
+        },
+        {
+          criterion: "入力フィールド検証",
+          verification: "name/folder/fileNameFormat入力欄、description/icon/templatePath任意欄、showAliasInputトグル、フォルダサジェスト動作"
+        },
+        {
+          criterion: "保存/キャンセル動作",
+          verification: "Saveボタンでコールバック実行、Cancelボタンでモーダル閉鎖、Enter/Escapeキー動作"
+        },
+        {
+          criterion: "ファイル名プレビュー表示",
+          verification: "fileNameFormat入力時にリアルタイムプレビュー更新（{{date}}/{{time}}/{{datetime}}展開）"
+        },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-004",
