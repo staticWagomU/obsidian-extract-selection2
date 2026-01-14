@@ -65,8 +65,8 @@ async function handleTemplateSelection(
 		new AliasInputModal(
 			plugin.app,
 			plugin,
-			async (result) => {
-				await createNoteAndHandlePostActions(
+			(result) => {
+				void createNoteAndHandlePostActions(
 					plugin,
 					editor,
 					view,
