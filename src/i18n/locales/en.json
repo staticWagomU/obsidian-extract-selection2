@@ -9,6 +9,18 @@
 		"createNewNote": "Create new note"
 	},
 	"settings": {
+		"templates": {
+			"heading": "Template settings",
+			"desc": "Manage templates for extracting notes",
+			"addButton": "Add template",
+			"editButton": "Edit",
+			"deleteButton": "Delete",
+			"moveUpButton": "Move up",
+			"moveDownButton": "Move down",
+			"favoriteLabel": "Favorite",
+			"confirmDelete": "Are you sure you want to delete the template \"{name}\"?",
+			"emptyMessage": "No templates. Click \"Add template\" to create one."
+		},
 		"folders": {
 			"heading": "Folder Settings",
 			"template": {
@@ -195,6 +207,10 @@
 			"showAliasInput": {
 				"label": "Show alias input",
 				"desc": "Show alias input modal when extracting"
+			},
+			"isFavorite": {
+				"label": "Favorite",
+				"desc": "Show directly in context menu"
 			},
 			"cancelButton": "Cancel",
 			"saveButton": "Save"

@@ -128,6 +128,18 @@ export class TemplateEditModal extends Modal {
 					});
 			});
 
+		// Favorite toggle
+		new Setting(contentEl)
+			.setName(t("modals.templateEdit.isFavorite.label"))
+			.setDesc(t("modals.templateEdit.isFavorite.desc"))
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.template.isFavorite ?? false)
+					.onChange((value) => {
+						this.template.isFavorite = value;
+					});
+			});
+
 		// Action buttons
 		new Setting(contentEl)
 			.addButton((btn) =>

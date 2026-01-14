@@ -1,7 +1,8 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import { App, PluginSettingTab, Setting, ButtonComponent } from "obsidian";
 import PageZettelPlugin from "./main";
-import type { ExtractSelectionSettings } from "./types/settings";
+import type { ExtractSelectionSettings, ExtractionTemplate } from "./types/settings";
 import { t } from "./i18n";
+import { TemplateEditModal } from "./ui/modals/template-edit-modal";
 
 export const DEFAULT_SETTINGS: ExtractSelectionSettings = {
 	templates: [
@@ -42,14 +43,8 @@ export class PageZettelSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		// TODO: PBI-003で新しいテンプレート管理UIを実装
-		// eslint-disable-next-line obsidianmd/settings-tab/no-problematic-settings-headings
-		new Setting(containerEl)
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
-			.setName("Extract Selection Settings")
-			// eslint-disable-next-line obsidianmd/ui/sentence-case
-			.setDesc("Template management UI will be implemented in PBI-003")
-			.setHeading();
+		// テンプレート設定セクション
+		this.renderTemplateSection(containerEl);
 
 		// 動作設定セクション
 		new Setting(containerEl).setName(t("settings.behavior.heading")).setHeading();
@@ -104,7 +99,232 @@ export class PageZettelSettingTab extends PluginSettingTab {
 						await this.plugin.saveSettings();
 					}),
 			);
+	}
 
+	private renderTemplateSection(containerEl: HTMLElement): void {
+		// セクションヘッダー
+		new Setting(containerEl)
+			.setName(t("settings.templates.heading"))
+			.setDesc(t("settings.templates.desc"))
+			.setHeading();
+
+		// テンプレート追加ボタン
+		new Setting(containerEl).addButton((btn) =>
+			btn
+				.setButtonText(t("settings.templates.addButton"))
+				.setCta()
+				.onClick(() => {
+					this.openTemplateEditModal();
+				}),
+		);
+
+		// テンプレート一覧コンテナ
+		const templatesContainer = containerEl.createDiv({
+			cls: "extract-selection-templates-container",
+		});
+
+		this.renderTemplateList(templatesContainer);
+	}
+
+	private renderTemplateList(container: HTMLElement): void {
+		container.empty();
+
+		const templates = this.plugin.settings.templates;
+
+		if (templates.length === 0) {
+			container.createDiv({
+				cls: "extract-selection-empty-message",
+				text: t("settings.templates.emptyMessage"),
+			});
+			return;
+		}
+
+		// テンプレートを順序でソート
+		const sortedTemplates = [...templates].sort((a, b) => a.order - b.order);
+
+		sortedTemplates.forEach((template, index) => {
+			this.renderTemplateItem(container, template, index, sortedTemplates.length);
+		});
+	}
+
+	private renderTemplateItem(
+		container: HTMLElement,
+		template: ExtractionTemplate,
+		index: number,
+		totalCount: number,
+	): void {
+		const itemEl = container.createDiv({
+			cls: "extract-selection-template-item",
+		});
+
+		// テンプレート情報表示
+		const infoEl = itemEl.createDiv({
+			cls: "extract-selection-template-info",
+		});
+
+		// アイコンと名前
+		const nameEl = infoEl.createDiv({
+			cls: "extract-selection-template-name",
+		});
+		if (template.icon) {
+			nameEl.createSpan({ text: template.icon + " " });
+		}
+		nameEl.createSpan({ text: template.name });
+
+		// お気に入りバッジ
+		if (template.isFavorite) {
+			nameEl.createSpan({
+				cls: "extract-selection-favorite-badge",
+				text: " ⭐",
+			});
+		}
+
+		// 説明
+		if (template.description) {
+			infoEl.createDiv({
+				cls: "extract-selection-template-desc",
+				text: template.description,
+			});
+		}
+
+		// フォルダパス
+		infoEl.createDiv({
+			cls: "extract-selection-template-folder",
+			text: `📁 ${template.folder || "/"}`,
+		});
+
+		// アクションボタン
+		const actionsEl = itemEl.createDiv({
+			cls: "extract-selection-template-actions",
+		});
+
+		// 上に移動ボタン
+		if (index > 0) {
+			new ButtonComponent(actionsEl)
+				.setIcon("chevron-up")
+				.setTooltip(t("settings.templates.moveUpButton"))
+				.onClick(() => this.moveTemplate(template.id, -1));
+		}
+
+		// 下に移動ボタン
+		if (index < totalCount - 1) {
+			new ButtonComponent(actionsEl)
+				.setIcon("chevron-down")
+				.setTooltip(t("settings.templates.moveDownButton"))
+				.onClick(() => this.moveTemplate(template.id, 1));
+		}
+
+		// 編集ボタン
+		new ButtonComponent(actionsEl)
+			.setIcon("pencil")
+			.setTooltip(t("settings.templates.editButton"))
+			.onClick(() => this.openTemplateEditModal(template));
+
+		// 削除ボタン
+		new ButtonComponent(actionsEl)
+			.setIcon("trash")
+			.setTooltip(t("settings.templates.deleteButton"))
+			.onClick(() => this.deleteTemplate(template));
+	}
+
+	private openTemplateEditModal(existingTemplate?: ExtractionTemplate): void {
+		const isNew = !existingTemplate;
+		const template: Partial<ExtractionTemplate> = existingTemplate
+			? { ...existingTemplate }
+			: {
+					name: "",
+					description: "",
+					icon: "",
+					folder: "",
+					fileNameFormat: "{{zettel-id}}",
+					templatePath: "",
+					showAliasInput: true,
+					isFavorite: false,
+				};
+
+		new TemplateEditModal(this.app, template, (savedTemplate) => {
+			void this.handleTemplateSave(savedTemplate, isNew, existingTemplate);
+		}).open();
+	}
+
+	private async handleTemplateSave(
+		savedTemplate: Partial<ExtractionTemplate>,
+		isNew: boolean,
+		existingTemplate?: ExtractionTemplate,
+	): Promise<void> {
+		if (isNew) {
+			// 新規テンプレートを追加
+			const newTemplate: ExtractionTemplate = {
+				id: crypto.randomUUID(),
+				name: savedTemplate.name || "",
+				description: savedTemplate.description || "",
+				icon: savedTemplate.icon || "",
+				folder: savedTemplate.folder || "",
+				fileNameFormat: savedTemplate.fileNameFormat || "{{zettel-id}}",
+				templatePath: savedTemplate.templatePath || "",
+				showAliasInput: savedTemplate.showAliasInput ?? true,
+				isFavorite: savedTemplate.isFavorite ?? false,
+				order: this.plugin.settings.templates.length,
+			};
+			this.plugin.settings.templates.push(newTemplate);
+		} else if (existingTemplate) {
+			// 既存テンプレートを更新
+			const index = this.plugin.settings.templates.findIndex(
+				(t) => t.id === existingTemplate.id,
+			);
+			if (index !== -1) {
+				this.plugin.settings.templates[index] = {
+					...this.plugin.settings.templates[index],
+					...savedTemplate,
+				} as ExtractionTemplate;
+			}
+		}
+
+		await this.plugin.saveSettings();
+		this.display(); // 設定画面を再描画
+	}
+
+	private async moveTemplate(templateId: string, direction: number): Promise<void> {
+		const templates = this.plugin.settings.templates;
+		const sortedTemplates = [...templates].sort((a, b) => a.order - b.order);
+		const currentIndex = sortedTemplates.findIndex((t) => t.id === templateId);
+
+		if (currentIndex === -1) return;
+
+		const newIndex = currentIndex + direction;
+		if (newIndex < 0 || newIndex >= sortedTemplates.length) return;
+
+		// 順序を入れ替え
+		const currentTemplate = sortedTemplates[currentIndex];
+		const swapTemplate = sortedTemplates[newIndex];
+
+		if (!currentTemplate || !swapTemplate) return;
+
+		const tempOrder = currentTemplate.order;
+		currentTemplate.order = swapTemplate.order;
+		swapTemplate.order = tempOrder;
+
+		await this.plugin.saveSettings();
+		this.display();
+	}
+
+	private async deleteTemplate(template: ExtractionTemplate): Promise<void> {
+		// eslint-disable-next-line no-alert
+		const confirmed = confirm(t("settings.templates.confirmDelete", { name: template.name }));
+		if (!confirmed) return;
+
+		this.plugin.settings.templates = this.plugin.settings.templates.filter(
+			(t) => t.id !== template.id,
+		);
+
+		// 順序を再計算
+		const sortedTemplates = [...this.plugin.settings.templates].sort((a, b) => a.order - b.order);
+		sortedTemplates.forEach((t, index) => {
+			t.order = index;
+		});
+
+		await this.plugin.saveSettings();
+		this.display();
 	}
 
 	/*

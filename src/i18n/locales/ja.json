@@ -9,6 +9,18 @@
 		"createNewNote": "新規ノートを作成"
 	},
 	"settings": {
+		"templates": {
+			"heading": "テンプレート設定",
+			"desc": "抽出ノートのテンプレートを管理します",
+			"addButton": "テンプレートを追加",
+			"editButton": "編集",
+			"deleteButton": "削除",
+			"moveUpButton": "上に移動",
+			"moveDownButton": "下に移動",
+			"favoriteLabel": "お気に入り",
+			"confirmDelete": "テンプレート「{name}」を削除しますか？",
+			"emptyMessage": "テンプレートがありません。「テンプレートを追加」をクリックして作成してください。"
+		},
 		"folders": {
 			"heading": "フォルダ設定",
 			"template": {
@@ -195,6 +207,10 @@
 			"showAliasInput": {
 				"label": "エイリアス入力を表示",
 				"desc": "抽出時にエイリアス入力モーダルを表示"
+			},
+			"isFavorite": {
+				"label": "お気に入り",
+				"desc": "コンテキストメニューに直接表示されます"
 			},
 			"cancelButton": "キャンセル",
 			"saveButton": "保存"

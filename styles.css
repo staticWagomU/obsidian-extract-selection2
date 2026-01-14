@@ -1,8 +1,83 @@
 /*
+ * Extract Selection Plugin Styles
+ */
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+/* テンプレート一覧コンテナ */
+.extract-selection-templates-container {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-top: 12px;
+}
 
-If your plugin does not need CSS, delete this file.
+/* テンプレートアイテム */
+.extract-selection-template-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px;
+	background-color: var(--background-secondary);
+	border-radius: 8px;
+	border: 1px solid var(--background-modifier-border);
+}
 
-*/
+.extract-selection-template-item:hover {
+	background-color: var(--background-secondary-alt);
+}
+
+/* テンプレート情報 */
+.extract-selection-template-info {
+	flex: 1;
+	min-width: 0;
+}
+
+.extract-selection-template-name {
+	font-weight: 600;
+	font-size: 14px;
+	margin-bottom: 4px;
+}
+
+.extract-selection-favorite-badge {
+	font-size: 12px;
+}
+
+.extract-selection-template-desc {
+	font-size: 12px;
+	color: var(--text-muted);
+	margin-bottom: 4px;
+}
+
+.extract-selection-template-folder {
+	font-size: 11px;
+	color: var(--text-faint);
+}
+
+/* アクションボタン */
+.extract-selection-template-actions {
+	display: flex;
+	gap: 4px;
+	margin-left: 12px;
+}
+
+.extract-selection-template-actions button {
+	padding: 4px 8px;
+}
+
+/* 空の状態メッセージ */
+.extract-selection-empty-message {
+	padding: 24px;
+	text-align: center;
+	color: var(--text-muted);
+	background-color: var(--background-secondary);
+	border-radius: 8px;
+	border: 1px dashed var(--background-modifier-border);
+}
+
+/* モーダルスタイル */
+.extract-selection-modal {
+	padding: 8px;
+}
+
+.extract-selection-modal h2 {
+	margin-bottom: 16px;
+}
