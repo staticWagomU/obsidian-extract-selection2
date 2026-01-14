@@ -205,7 +205,7 @@ const scrum: ScrumDashboard = {
           verification: "tsc/lint/build"
         },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-005",
@@ -236,40 +236,7 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 4,
-    pbi_id: "PBI-004",
-    goal: "ExtractionTemplateベースのノート作成機能を検証し、TODOコメントをクリーンアップして本番環境対応を完了する",
-    status: "in_progress",
-    subtasks: [
-      {
-        test: "TODO comments are removed from service files",
-        implementation: "Remove obsolete TODO comments from NoteCreatorService, TemplateService, FolderService",
-        type: "structural",
-        status: "completed",
-        commits: [
-          { hash: "182b402", message: "refactor: remove obsolete TODO comments from service files", phase: "green" }
-        ],
-        notes: [
-          "NoteCreatorService: Lines 19, 45 - Implementation is complete",
-          "TemplateService: Lines 23, 36, 50 - Already accepts ExtractionTemplate",
-          "FolderService: Lines 6, 19 - Already uses ExtractionTemplate.folder",
-        ],
-      },
-      {
-        test: "All DoD checks pass (tsc, lint, build)",
-        implementation: "Run DoD checks and fix any issues if found",
-        type: "behavioral",
-        status: "green",
-        commits: [],
-        notes: [
-          "Execute: pnpm exec tsc --noEmit",
-          "Execute: pnpm lint",
-          "Execute: pnpm build",
-        ],
-      },
-    ],
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -283,6 +250,42 @@ const scrum: ScrumDashboard = {
     { number: 1, pbi_id: "PBI-001", goal: "ExtractionTemplate型と新設定構造を導入", status: "done", subtasks: [] },
     { number: 2, pbi_id: "PBI-002", goal: "レガシーZettelkastenコード削除", status: "done", subtasks: [] },
     { number: 3, pbi_id: "PBI-003", goal: "テンプレート選択・編集モーダルを実装し、直感的なテンプレート管理UIを提供する", status: "done", subtasks: [] },
+    {
+      number: 4,
+      pbi_id: "PBI-004",
+      goal: "ExtractionTemplateベースのノート作成機能を検証し、TODOコメントをクリーンアップして本番環境対応を完了する",
+      status: "done",
+      subtasks: [
+        {
+          test: "TODO comments are removed from service files",
+          implementation: "Remove obsolete TODO comments from NoteCreatorService, TemplateService, FolderService",
+          type: "structural",
+          status: "completed",
+          commits: [
+            { hash: "182b402", message: "refactor: remove obsolete TODO comments from service files", phase: "green" }
+          ],
+          notes: [
+            "NoteCreatorService: Lines 19, 45 - Implementation is complete",
+            "TemplateService: Lines 23, 36, 50 - Already accepts ExtractionTemplate",
+            "FolderService: Lines 6, 19 - Already uses ExtractionTemplate.folder",
+          ],
+        },
+        {
+          test: "All DoD checks pass (tsc, lint, build)",
+          implementation: "Run DoD checks and fix any issues if found",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            { hash: "3ed8368", message: "chore: verify Definition of Done for Sprint 4", phase: "green" }
+          ],
+          notes: [
+            "Execute: pnpm exec tsc --noEmit",
+            "Execute: pnpm lint",
+            "Execute: pnpm build",
+          ],
+        },
+      ]
+    },
   ],
 
   retrospectives: [
