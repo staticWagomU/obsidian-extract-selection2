@@ -2,8 +2,7 @@ import { App } from "obsidian";
 import type { ExtractSelectionSettings } from "../types/settings";
 
 /**
- * FolderService - placeholder until PBI-004 implements ExtractionTemplate-based folder handling
- * TODO: Update to use ExtractionTemplate.folder property
+ * FolderService - Manages folder creation for ExtractionTemplate configurations
  */
 export class FolderService {
 	private app: App;
@@ -15,8 +14,7 @@ export class FolderService {
 	}
 
 	/**
-	 * Placeholder: Initialize folders from templates
-	 * TODO: Iterate over settings.templates and create folders
+	 * Initialize folders from templates
 	 */
 	async initializeAllFolders(): Promise<void> {
 		for (const template of this.settings.templates) {

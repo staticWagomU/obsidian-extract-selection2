@@ -19,8 +19,7 @@ export interface ProcessedTemplateResult {
 }
 
 /**
- * TemplateService - placeholder until PBI-004 implements ExtractionTemplate-based processing
- * TODO: Update methods to accept ExtractionTemplate instead of type string
+ * TemplateService - Processes templates with variable expansion and frontmatter handling
  */
 export class TemplateService {
 	private app: App;
@@ -33,7 +32,6 @@ export class TemplateService {
 
 	/**
 	 * Get processed template with variables expanded
-	 * TODO: Update to accept ExtractionTemplate
 	 */
 	async getProcessedTemplate(template: ExtractionTemplate, variables: TemplateVariables): Promise<string> {
 		const templateContent = await this.loadTemplate(template);
@@ -47,7 +45,6 @@ export class TemplateService {
 
 	/**
 	 * Load template and separate frontmatter from body
-	 * TODO: Update to accept ExtractionTemplate
 	 */
 	async getProcessedTemplateWithFrontmatter(
 		template: ExtractionTemplate,

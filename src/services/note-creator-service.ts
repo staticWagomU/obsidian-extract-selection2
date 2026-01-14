@@ -16,8 +16,7 @@ export interface NoteMetadata {
 }
 
 /**
- * NoteCreatorService - placeholder until PBI-004 implements full ExtractionTemplate-based creation
- * TODO: Implement createNote with ExtractionTemplate parameter
+ * NoteCreatorService - Creates notes using ExtractionTemplate configuration
  */
 export class NoteCreatorService {
 	private app: App;
@@ -42,7 +41,6 @@ export class NoteCreatorService {
 
 	/**
 	 * Create a note using an ExtractionTemplate
-	 * TODO: Full implementation in PBI-004
 	 */
 	async createNote(
 		template: ExtractionTemplate,

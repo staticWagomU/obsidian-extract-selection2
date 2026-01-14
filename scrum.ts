@@ -240,13 +240,13 @@ const scrum: ScrumDashboard = {
     number: 4,
     pbi_id: "PBI-004",
     goal: "ExtractionTemplateベースのノート作成機能を検証し、TODOコメントをクリーンアップして本番環境対応を完了する",
-    status: "planning",
+    status: "in_progress",
     subtasks: [
       {
         test: "TODO comments are removed from service files",
         implementation: "Remove obsolete TODO comments from NoteCreatorService, TemplateService, FolderService",
         type: "structural",
-        status: "pending",
+        status: "green",
         commits: [],
         notes: [
           "NoteCreatorService: Lines 19, 45 - Implementation is complete",
