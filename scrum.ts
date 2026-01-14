@@ -205,7 +205,51 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 5,
+    pbi_id: "PBI-005",
+    goal: "TemplateSelectModalとNoteCreatorServiceを統合し、お気に入りテンプレートへの素早いアクセスを実現",
+    status: "planning",
+    subtasks: [
+      {
+        test: "extractSelectionコマンドがTemplateSelectModalを開き、選択したテンプレートでNoteCreatorServiceを呼ぶ",
+        implementation: "extract-selection-commandを更新してTemplateSelectModal統合とNoteCreatorService呼出を実装",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "TemplateSelectModalはsrc/ui/modals/template-select-modal.tsで既に実装済み",
+          "NoteCreatorServiceはsrc/services/note-creator-service.tsで既に実装済み",
+          "AliasInputModalはsrc/ui/modals/alias-input-modal.tsで既に実装済み",
+          "showAliasInput=trueの場合、AliasInputModalを表示後にNoteCreatorServiceを呼ぶ",
+        ],
+      },
+      {
+        test: "isFavorite=trueのテンプレートが右クリックメニューに独立項目として表示され、直接抽出できる",
+        implementation: "main.tsにコンテキストメニュー登録処理を追加し、お気に入りテンプレートへのショートカットを実装",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "showContextMenuItems設定がtrueの場合のみ表示",
+          "showEmojiInCommands設定がtrueの場合、絵文字を含める",
+          "各お気に入りテンプレートは選択されたテンプレートで直接extractSelectionフローを実行",
+        ],
+      },
+      {
+        test: "DoD全チェック(tsc/lint/build)が成功する",
+        implementation: "TypeScript型チェック、Lint、Buildを実行してエラーを解消",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [
+          "pnpm exec tsc --noEmit",
+          "pnpm lint",
+          "pnpm build",
+        ],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
