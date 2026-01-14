@@ -308,8 +308,14 @@ const scrum: ScrumDashboard = {
         test: "BehaviorSettingsにdefaultRemoveIndent: booleanが存在し、moveOnPromotionとfileNamePrefixが削除されていることを検証",
         implementation: "types/settings.tsのBehaviorSettingsを更新: defaultRemoveIndent追加、moveOnPromotion/fileNamePrefix削除",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "4fc1ad6",
+            message: "feat(types): update BehaviorSettings for new specification",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: types/settings.tsのBehaviorSettingsを修正し、pnpm buildで型チェック",
           "実装完了: BehaviorSettings型を新仕様に更新。既存コード（settings.ts等）は後続サブタスクで修正",
@@ -319,9 +325,12 @@ const scrum: ScrumDashboard = {
         test: "UISettingsからmobileOptimizedプロパティが削除されていることを検証",
         implementation: "types/settings.tsのUISettingsを更新: mobileOptimizedを削除",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: types/settings.tsのUISettingsからmobileOptimizedを削除し、pnpm buildで型チェック",
+          "実装完了: UISettings型からmobileOptimizedを削除。既存コードは後続サブタスクで修正",
+        ],
       },
       {
         test: "ExtractSelectionSettings interfaceがtemplates: ExtractionTemplate[]プロパティを持ち、PageZettelSettingsが存在しないことを検証",

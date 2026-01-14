@@ -63,8 +63,6 @@ export interface BehaviorSettings {
 export interface UISettings {
 	/** コマンドに絵文字を表示 */
 	showEmojiInCommands: boolean;
-	/** モバイル最適化UI */
-	mobileOptimized: boolean;
 	/** コンテキストメニューにノート操作を表示 */
 	showContextMenuItems: boolean;
 }
