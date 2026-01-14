@@ -183,12 +183,17 @@ const scrum: ScrumDashboard = {
     },
     {
       id: "PBI-007",
-      story: { role: "開発者", capability: "動作検証・ドキュメント", benefit: "リリース品質" },
+      story: { role: "開発者", capability: "最終検証とリリース準備", benefit: "リリース品質保証" },
       acceptance_criteria: [
-        { criterion: "ビルド成功", verification: "pnpm build" },
-        { criterion: "Lint成功", verification: "pnpm lint" },
+        { criterion: "DoD全チェック成功", verification: "tsc/lint/build全通過" },
+        { criterion: "コア機能動作確認", verification: "Extract to Noteコマンド・テンプレート選択・ノート作成" },
+        { criterion: "設定画面表示確認", verification: "behavior/ui設定表示・保存" },
+        { criterion: "i18n動作確認", verification: "en/ja翻訳適用確認" },
+        { criterion: "manifest.json整合性", verification: "version/description/id確認" },
+        { criterion: "ビルド成果物確認", verification: "main.js生成・サイズ妥当性" },
+        { criterion: "DESIGN.md更新不要確認", verification: "設計書と実装の整合性" },
       ],
-      status: "draft",
+      status: "ready",
     },
   ],
 
