@@ -158,7 +158,50 @@
 			"removeIndent": "共通インデントを削除",
 			"createButton": "作成",
 			"cancelButton": "キャンセル"
+		},
+		"templateEdit": {
+			"title": "テンプレートを編集",
+			"name": {
+				"label": "名前",
+				"desc": "このテンプレートの表示名",
+				"placeholder": "Fleeting"
+			},
+			"description": {
+				"label": "説明（任意）",
+				"desc": "このテンプレートの簡単な説明",
+				"placeholder": "メモやアイデア"
+			},
+			"icon": {
+				"label": "アイコン（任意）",
+				"desc": "このテンプレートの絵文字アイコン",
+				"placeholder": "💭"
+			},
+			"folder": {
+				"label": "フォルダ",
+				"desc": "保存先フォルダのパス",
+				"placeholder": "Fleeting"
+			},
+			"fileNameFormat": {
+				"label": "ファイル名形式",
+				"desc": "新しいファイル名の形式",
+				"placeholder": "{{zettel-id}}",
+				"preview": "プレビュー: {preview}.md"
+			},
+			"templatePath": {
+				"label": "テンプレートファイル（任意）",
+				"desc": "Vault内のテンプレートファイルへのパス",
+				"placeholder": "Templates/fleeting.md"
+			},
+			"showAliasInput": {
+				"label": "エイリアス入力を表示",
+				"desc": "抽出時にエイリアス入力モーダルを表示"
+			},
+			"cancelButton": "キャンセル",
+			"saveButton": "保存"
 		}
+	},
+	"contextMenu": {
+		"extractTo": "{name}に切り出す"
 	},
 	"views": {
 		"orphan": {
