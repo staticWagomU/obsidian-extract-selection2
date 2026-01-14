@@ -228,17 +228,23 @@ const scrum: ScrumDashboard = {
         test: "8個のレガシーファイルが存在しないこと",
         implementation: "note-types.ts, promote-note-command.ts, promotion-service.ts, orphan-detector-service.ts, orphan-view.ts, note-type-modal.ts, quick-capture-modal.ts, note-manager.ts を削除",
         type: "structural",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "ded03e0",
+            message: "refactor: delete 8 legacy Zettelkasten files",
+            phase: "green",
+          },
+        ],
         notes: ["RED: Verify that the 8 legacy files exist before deletion", "GREEN: All 8 legacy files deleted successfully"],
       },
       {
         test: "main.tsにレガシー依存関係が存在しないこと (import, service初期化, ビュー登録)",
         implementation: "NoteManager, PromotionService, promoteNote, OrphanView, QuickCaptureModal, NoteTypeModal, NoteType のインポート削除、noteManager/promotionServiceプロパティと初期化コード削除、OrphanView registerView呼び出しとリボンアイコン登録削除",
         type: "structural",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: ["RED: Identified legacy imports (lines 4-5, 11-14, 16), properties (lines 21-22), service initialization (lines 33-34), view registration (line 48), and ribbon icon (lines 51-53)", "GREEN: Removed all legacy dependencies from main.ts - imports, properties, service initialization, view registration, and ribbon icon"],
       },
       {
         test: "main.tsにレガシー機能が存在しないこと (コマンド, コンテキストメニュー, ヘルパーメソッド)",

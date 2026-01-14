@@ -1,25 +1,16 @@
 import { Editor, MarkdownView, Plugin, TFile, WorkspaceLeaf } from "obsidian";
 import { DEFAULT_SETTINGS, PageZettelSettingTab } from "./settings";
 import type { ExtractSelectionSettings } from "./types/settings";
-import { NoteManager } from "./core/note-manager";
-import { PromotionService } from "./services/promotion-service";
 import { FolderService } from "./services/folder-service";
 import { TemplateService } from "./services/template-service";
 import { FrontmatterService } from "./services/frontmatter-service";
 import { NoteCreatorService } from "./services/note-creator-service";
 import { extractSelection, extractSelectionToType } from "./commands/extract-selection-command";
-import { promoteNote } from "./commands/promote-note-command";
-import { OrphanView, VIEW_TYPE_ORPHAN } from "./ui/views/orphan-view";
-import { QuickCaptureModal } from "./ui/modals/quick-capture-modal";
-import { NoteTypeModal } from "./ui/modals/note-type-modal";
 import { AliasInputModal } from "./ui/modals/alias-input-modal";
-import { NoteType } from "./types/note-types";
 import { t } from "./i18n";
 
 export default class PageZettelPlugin extends Plugin {
 	settings: ExtractSelectionSettings;
-	noteManager: NoteManager;
-	promotionService: PromotionService;
 	noteCreatorService: NoteCreatorService;
 
 	async onload() {
@@ -28,10 +19,6 @@ export default class PageZettelPlugin extends Plugin {
 		// Initialize folder structure on first load
 		const folderService = new FolderService(this.app, this.settings);
 		await folderService.initializeAllFolders();
-
-		// Initialize services
-		this.noteManager = new NoteManager(this.app, this.settings);
-		this.promotionService = new PromotionService(this.app, this.settings);
 
 		// Initialize NoteCreatorService
 		const templateService = new TemplateService(this.app, this.settings);
@@ -43,14 +30,6 @@ export default class PageZettelPlugin extends Plugin {
 			templateService,
 			frontmatterService,
 		);
-
-		// Register views
-		this.registerView(VIEW_TYPE_ORPHAN, (leaf) => new OrphanView(leaf, this.settings));
-
-		// Add ribbon icon to open orphan view
-		this.addRibbonIcon("unlink", t("ribbon.orphanView"), () => {
-			void this.activateOrphanView();
-		});
 
 		// Register commands
 		this.addCommand({
