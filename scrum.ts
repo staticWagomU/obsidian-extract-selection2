@@ -218,7 +218,46 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 2,
+    pbi_id: "PBI-002",
+    goal: "Zettelkasten固有のレガシーコードを完全削除し、Extract Selection汎用プラグインの基盤を確立する",
+    status: "planning",
+    subtasks: [
+      {
+        test: "8個のレガシーファイルが存在しないこと",
+        implementation: "note-types.ts, promote-note-command.ts, promotion-service.ts, orphan-detector-service.ts, orphan-view.ts, note-type-modal.ts, quick-capture-modal.ts, note-manager.ts を削除",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "main.tsにレガシー依存関係が存在しないこと (import, service初期化, ビュー登録)",
+        implementation: "NoteManager, PromotionService, promoteNote, OrphanView, QuickCaptureModal, NoteTypeModal, NoteType のインポート削除、noteManager/promotionServiceプロパティと初期化コード削除、OrphanView registerView呼び出しとリボンアイコン登録削除",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "main.tsにレガシー機能が存在しないこと (コマンド, コンテキストメニュー, ヘルパーメソッド)",
+        implementation: "promote-note, quick-fleeting, create-new-noteコマンド削除、extractToFleeting/Literature/Permanent・promoteNoteコンテキストメニューアイテム削除、activateOrphanView, createNoteAndOpenメソッド削除",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "pnpm exec tsc --noEmit がエラーなく完了すること",
+        implementation: "TypeScript型チェックを実行し、すべての型エラーを解決",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
