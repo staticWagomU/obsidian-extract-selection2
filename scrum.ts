@@ -359,8 +359,14 @@ const scrum: ScrumDashboard = {
         test: "settings.tsのDEFAULT_SETTINGSの型がExtractSelectionSettingsであることを検証",
         implementation: "settings.tsのDEFAULT_SETTINGS型宣言をExtractSelectionSettingsに変更",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "b45f003",
+            message: "refactor(settings): change DEFAULT_SETTINGS type to ExtractSelectionSettings",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: settings.tsのDEFAULT_SETTINGSの型宣言とimportを変更し、pnpm buildで型チェック",
           "実装完了: PageZettelSettingsからExtractSelectionSettingsへ型宣言を変更",
@@ -370,9 +376,12 @@ const scrum: ScrumDashboard = {
         test: "DEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されていることを検証",
         implementation: "settings.tsのDEFAULT_SETTINGSを更新: fleeting/literature/permanentを削除し、templates配列に1つのデフォルトテンプレートを追加",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: settings.tsのDEFAULT_SETTINGSをDESIGN.mdの仕様に従って更新し、pnpm buildで型チェック",
+          "実装完了: DESIGN.mdの仕様に従い、templates配列に1つのデフォルトテンプレート\"default-note\"を定義。behaviorとuiも新仕様に更新",
+        ],
       },
       {
         test: "DEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しないことを検証",

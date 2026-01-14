@@ -8,33 +8,27 @@ import { getDefaultFrontmatterPreview } from "./utils/frontmatter-parser";
 import { t } from "./i18n";
 
 export const DEFAULT_SETTINGS: ExtractSelectionSettings = {
-	fleeting: {
-		folder: "",
-		fileNameFormat: "{{date}}-{{title}}",
-		showAliasInput: false,
-		templatePath: "",
-	},
-	literature: {
-		folder: "",
-		fileNameFormat: "{{date}}-{{title}}",
-		showAliasInput: true,
-		templatePath: "",
-	},
-	permanent: {
-		folder: "",
-		fileNameFormat: "{{zettel-id}}-{{title}}",
-		showAliasInput: true,
-		templatePath: "",
-	},
+	templates: [
+		{
+			id: "default-note",
+			name: "Note",
+			description: "Basic note extraction",
+			icon: "📝",
+			folder: "",
+			fileNameFormat: "{{zettel-id}}",
+			templatePath: "",
+			showAliasInput: true,
+			isFavorite: false,
+			order: 0,
+		},
+	],
 	behavior: {
 		insertLinkAfterExtract: true,
-		openAfterExtract: true,
-		moveOnPromotion: true,
-		fileNamePrefix: "date",
+		openAfterExtract: false,
+		defaultRemoveIndent: false,
 	},
 	ui: {
 		showEmojiInCommands: true,
-		mobileOptimized: true,
 		showContextMenuItems: true,
 	},
 };
