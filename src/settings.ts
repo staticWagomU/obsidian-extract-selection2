@@ -1,10 +1,6 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import PageZettelPlugin from "./main";
 import type { ExtractSelectionSettings } from "./types/settings";
-import type { NoteType } from "./types/note-types";
-import { FolderSuggest } from "./ui/suggesters/folder-suggest";
-import { FileSuggest } from "./ui/suggesters/file-suggest";
-import { getDefaultFrontmatterPreview } from "./utils/frontmatter-parser";
 import { t } from "./i18n";
 
 export const DEFAULT_SETTINGS: ExtractSelectionSettings = {
@@ -46,6 +42,72 @@ export class PageZettelSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
+		// TODO: PBI-003で新しいテンプレート管理UIを実装
+		new Setting(containerEl)
+			.setName("Extract Selection Settings")
+			.setDesc("Template management UI will be implemented in PBI-003")
+			.setHeading();
+
+		// 動作設定セクション
+		new Setting(containerEl).setName(t("settings.behavior.heading")).setHeading();
+
+		new Setting(containerEl)
+			.setName(t("settings.behavior.insertLinkAfterExtract.name"))
+			.setDesc(t("settings.behavior.insertLinkAfterExtract.desc"))
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.behavior.insertLinkAfterExtract)
+					.onChange(async (value) => {
+						this.plugin.settings.behavior.insertLinkAfterExtract = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName(t("settings.behavior.openAfterExtract.name"))
+			.setDesc(t("settings.behavior.openAfterExtract.desc"))
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.behavior.openAfterExtract)
+					.onChange(async (value) => {
+						this.plugin.settings.behavior.openAfterExtract = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		// UI設定セクション
+		new Setting(containerEl).setName(t("settings.ui.heading")).setHeading();
+
+		new Setting(containerEl)
+			.setName(t("settings.ui.showEmojiInCommands.name"))
+			.setDesc(t("settings.ui.showEmojiInCommands.desc"))
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.ui.showEmojiInCommands)
+					.onChange(async (value) => {
+						this.plugin.settings.ui.showEmojiInCommands = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName(t("settings.ui.showContextMenuItems.name"))
+			.setDesc(t("settings.ui.showContextMenuItems.desc"))
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.ui.showContextMenuItems)
+					.onChange(async (value) => {
+						this.plugin.settings.ui.showContextMenuItems = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+	}
+
+	/*
+	// 以下の旧設定UIはPBI-002で削除予定
+	private oldDisplay(): void {
+		const { containerEl } = this;
 		// Fleeting設定セクション
 		new Setting(containerEl).setName(t("settings.noteTypes.fleeting.heading")).setHeading();
 
@@ -296,14 +358,6 @@ export class PageZettelSettingTab extends PluginSettingTab {
 			);
 	}
 
-	/**
-	 * デフォルトフロントマターのプレビューを追加
-	 */
-	private addFrontmatterPreview(containerEl: HTMLElement, type: NoteType): void {
-		const setting = new Setting(containerEl)
-			.setName(t(`settings.noteTypes.${type}.defaultFrontmatter.name`))
-			.setDesc(t(`settings.noteTypes.${type}.defaultFrontmatter.desc`));
-
 		const previewEl = setting.settingEl.createDiv({
 			cls: "page-zettel-frontmatter-preview",
 		});
@@ -311,4 +365,5 @@ export class PageZettelSettingTab extends PluginSettingTab {
 			text: getDefaultFrontmatterPreview(type),
 		});
 	}
+	*/
 }

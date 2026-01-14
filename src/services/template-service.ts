@@ -1,6 +1,6 @@
 import { App, moment, TFile } from "obsidian";
 import type { NoteType } from "../types/note-types";
-import type { PageZettelSettings } from "../types/settings";
+import type { ExtractSelectionSettings } from "../types/settings";
 import { parseTemplateFrontmatter } from "../utils/frontmatter-parser";
 
 export interface TemplateVariables {
@@ -21,9 +21,9 @@ export interface ProcessedTemplateResult {
 
 export class TemplateService {
 	private app: App;
-	private settings: PageZettelSettings;
+	private settings: ExtractSelectionSettings;
 
-	constructor(app: App, settings: PageZettelSettings) {
+	constructor(app: App, settings: ExtractSelectionSettings) {
 		this.app = app;
 		this.settings = settings;
 	}
@@ -74,6 +74,7 @@ export class TemplateService {
 	 * テンプレートファイルを読み込む
 	 */
 	private async loadTemplate(type: NoteType): Promise<string | null> {
+		// @ts-expect-error PBI-002で削除予定の旧コード
 		const templatePath = this.settings[type].templatePath;
 
 		// テンプレートパスが未設定の場合

@@ -1,6 +1,6 @@
 import { App, TFile, Notice, moment } from "obsidian";
 import { NoteType, NoteMetadata, NOTE_TYPE_CONFIG } from "../types/note-types";
-import type { PageZettelSettings } from "../types/settings";
+import type { ExtractSelectionSettings } from "../types/settings";
 import { FrontmatterService } from "./frontmatter-service";
 import { TemplateService } from "./template-service";
 import { FolderService } from "./folder-service";
@@ -13,14 +13,14 @@ import { t } from "../i18n";
  */
 export class NoteCreatorService {
 	private app: App;
-	private settings: PageZettelSettings;
+	private settings: ExtractSelectionSettings;
 	private frontmatterService: FrontmatterService;
 	private templateService: TemplateService;
 	private folderService: FolderService;
 
 	constructor(
 		app: App,
-		settings: PageZettelSettings,
+		settings: ExtractSelectionSettings,
 		folderService: FolderService,
 		templateService: TemplateService,
 		frontmatterService: FrontmatterService,
@@ -50,6 +50,7 @@ export class NoteCreatorService {
 		const title = alias || moment().format("YYYYMMDDHHmmss");
 
 		// 2. フォルダ配置: settings[type].folderから取得+folderService.ensureFolderExistsByPath()
+		// @ts-expect-error PBI-002で削除予定の旧コード
 		const folderPath = this.settings[type].folder;
 		await this.ensureFolderExistsByPath(folderPath);
 
@@ -134,6 +135,7 @@ export class NoteCreatorService {
 	 * - {{alias}} -> alias || title
 	 */
 	private generateFileName(type: NoteType, title: string, alias?: string): string {
+		// @ts-expect-error PBI-002で削除予定の旧コード
 		const format = this.settings[type].fileNameFormat;
 
 		// タイトルのサニタイズ

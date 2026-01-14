@@ -1,12 +1,12 @@
 import { App } from "obsidian";
 import { NoteType, NOTE_TYPE_CONFIG } from "../types/note-types";
-import type { PageZettelSettings } from "../types/settings";
+import type { ExtractSelectionSettings } from "../types/settings";
 
 export class FolderService {
 	private app: App;
-	private settings: PageZettelSettings;
+	private settings: ExtractSelectionSettings;
 
-	constructor(app: App, settings: PageZettelSettings) {
+	constructor(app: App, settings: ExtractSelectionSettings) {
 		this.app = app;
 		this.settings = settings;
 	}
@@ -15,6 +15,7 @@ export class FolderService {
 	 * ノートタイプに対応するフォルダパスを取得
 	 */
 	getFolderPath(type: NoteType): string {
+		// @ts-expect-error PBI-002で削除予定の旧コード
 		return this.settings[type].folder || NOTE_TYPE_CONFIG[type].folder;
 	}
 

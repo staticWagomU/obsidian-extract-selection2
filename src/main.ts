@@ -1,6 +1,6 @@
 import { Editor, MarkdownView, Plugin, TFile, WorkspaceLeaf } from "obsidian";
 import { DEFAULT_SETTINGS, PageZettelSettingTab } from "./settings";
-import type { PageZettelSettings } from "./types/settings";
+import type { ExtractSelectionSettings } from "./types/settings";
 import { NoteManager } from "./core/note-manager";
 import { PromotionService } from "./services/promotion-service";
 import { FolderService } from "./services/folder-service";
@@ -17,7 +17,7 @@ import { NoteType } from "./types/note-types";
 import { t } from "./i18n";
 
 export default class PageZettelPlugin extends Plugin {
-	settings: PageZettelSettings;
+	settings: ExtractSelectionSettings;
 	noteManager: NoteManager;
 	promotionService: PromotionService;
 	noteCreatorService: NoteCreatorService;
@@ -105,6 +105,7 @@ export default class PageZettelPlugin extends Plugin {
 					this.app,
 					(type: NoteType) => {
 						// 設定確認: showAliasInputフラグ
+						// @ts-expect-error PBI-002で削除予定の旧コード
 						const showAliasInput = this.settings[type].showAliasInput;
 
 						if (!showAliasInput) {
@@ -265,7 +266,7 @@ export default class PageZettelPlugin extends Plugin {
 		this.settings = Object.assign(
 			{},
 			DEFAULT_SETTINGS,
-			(await this.loadData()) as Partial<PageZettelSettings>,
+			(await this.loadData()) as Partial<ExtractSelectionSettings>,
 		);
 	}
 

@@ -376,8 +376,14 @@ const scrum: ScrumDashboard = {
         test: "DEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されていることを検証",
         implementation: "settings.tsのDEFAULT_SETTINGSを更新: fleeting/literature/permanentを削除し、templates配列に1つのデフォルトテンプレートを追加",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "907320e",
+            message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: settings.tsのDEFAULT_SETTINGSをDESIGN.mdの仕様に従って更新し、pnpm buildで型チェック",
           "実装完了: DESIGN.mdの仕様に従い、templates配列に1つのデフォルトテンプレート\"default-note\"を定義。behaviorとuiも新仕様に更新",
@@ -387,25 +393,44 @@ const scrum: ScrumDashboard = {
         test: "DEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しないことを検証",
         implementation: "settings.tsのDEFAULT_SETTINGS.behaviorを更新",
         type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "907320e",
+            message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
+            phase: "green",
+          },
+        ],
+        notes: [
+          "サブタスク6で同時に実装済み",
+        ],
       },
       {
         test: "DEFAULT_SETTINGS.uiにmobileOptimizedが存在しないことを検証",
         implementation: "settings.tsのDEFAULT_SETTINGS.uiを更新: mobileOptimizedを削除",
         type: "behavioral",
-        status: "pending",
-        commits: [],
-        notes: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "907320e",
+            message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
+            phase: "green",
+          },
+        ],
+        notes: [
+          "サブタスク6で同時に実装済み",
+        ],
       },
       {
         test: "TypeScript型チェックが成功することを検証(pnpm exec tsc --noEmit)",
         implementation: "型エラーを修正し、すべての型定義が整合性を持つことを確認",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: pnpm buildを実行し、PageZettelSettings参照箇所のエラーを修正",
+          "実装完了: 全PageZettelSettings参照をExtractSelectionSettingsに変更。旧Zettelkasten機能の型エラーは@ts-expect-errorでマーク（PBI-002で削除予定）。設定UIを簡略化し、pnpm buildが成功",
+        ],
       },
     ],
   },

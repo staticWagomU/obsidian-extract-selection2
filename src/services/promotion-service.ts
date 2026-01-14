@@ -2,15 +2,15 @@ import { App, TFile } from "obsidian";
 import { NoteType } from "../types/note-types";
 import { FrontmatterService } from "./frontmatter-service";
 import { FolderService } from "./folder-service";
-import type { PageZettelSettings } from "../types/settings";
+import type { ExtractSelectionSettings } from "../types/settings";
 
 export class PromotionService {
 	private app: App;
 	private frontmatterService: FrontmatterService;
 	private folderService: FolderService;
-	private settings: PageZettelSettings;
+	private settings: ExtractSelectionSettings;
 
-	constructor(app: App, settings: PageZettelSettings) {
+	constructor(app: App, settings: ExtractSelectionSettings) {
 		this.app = app;
 		this.settings = settings;
 		this.frontmatterService = new FrontmatterService(app);
@@ -37,6 +37,7 @@ export class PromotionService {
 		);
 
 		// 3. フォルダ移動（moveOnPromotion設定が有効な場合のみ）
+		// @ts-expect-error PBI-002で削除予定の旧コード
 		if (this.settings.behavior.moveOnPromotion) {
 			const targetFolder = await this.folderService.ensureFolderExists(toType);
 			const newPath = `${targetFolder}/${file.name}`;

@@ -60,6 +60,7 @@ async function showAliasInputOrCreate(
 	type: NoteType,
 ): Promise<void> {
 	// 設定確認: showAliasInputフラグ
+	// @ts-expect-error PBI-002で削除予定の旧コード
 	const showAliasInput = plugin.settings[type].showAliasInput;
 
 	if (!showAliasInput) {

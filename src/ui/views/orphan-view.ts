@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf, TFile } from "obsidian";
 import { OrphanDetectorService } from "../../services/orphan-detector-service";
-import type { PageZettelSettings } from "../../types/settings";
+import type { ExtractSelectionSettings } from "../../types/settings";
 import type { OrphanStats } from "../../types";
 import { t } from "../../i18n";
 
@@ -10,9 +10,9 @@ export class OrphanView extends ItemView {
 	private orphanDetectorService: OrphanDetectorService;
 	private orphanNotes: TFile[] = [];
 	private orphanStats: OrphanStats | null = null;
-	private settings: PageZettelSettings;
+	private settings: ExtractSelectionSettings;
 
-	constructor(leaf: WorkspaceLeaf, settings: PageZettelSettings) {
+	constructor(leaf: WorkspaceLeaf, settings: ExtractSelectionSettings) {
 		super(leaf);
 		this.settings = settings;
 		this.orphanDetectorService = new OrphanDetectorService(this.app);

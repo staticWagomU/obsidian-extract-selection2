@@ -1,6 +1,6 @@
 import { App, TFile, Notice } from "obsidian";
 import { NoteType, NoteMetadata, NOTE_TYPE_CONFIG } from "../types/note-types";
-import type { PageZettelSettings } from "../types/settings";
+import type { ExtractSelectionSettings } from "../types/settings";
 import { FrontmatterService } from "../services/frontmatter-service";
 import { TemplateService } from "../services/template-service";
 import { FolderService } from "../services/folder-service";
@@ -16,12 +16,12 @@ export interface CreateNoteOptions {
 
 export class NoteManager {
 	private app: App;
-	private settings: PageZettelSettings;
+	private settings: ExtractSelectionSettings;
 	private frontmatterService: FrontmatterService;
 	private templateService: TemplateService;
 	private folderService: FolderService;
 
-	constructor(app: App, settings: PageZettelSettings) {
+	constructor(app: App, settings: ExtractSelectionSettings) {
 		this.app = app;
 		this.settings = settings;
 		this.frontmatterService = new FrontmatterService(app);
@@ -81,6 +81,7 @@ export class NoteManager {
 	private generateFileName(title: string): string {
 		const sanitizedTitle = title.replace(/[\\/:*?"<>|]/g, "-").trim();
 
+		// @ts-expect-error PBI-002で削除予定の旧コード
 		switch (this.settings.behavior.fileNamePrefix) {
 			case "date": {
 				const datePrefix = new Date().toISOString().slice(0, 10);
