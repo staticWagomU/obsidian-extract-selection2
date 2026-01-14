@@ -12,6 +12,32 @@ export interface NoteTypeSettings {
 	templatePath: string;
 }
 
+/**
+ * 抽出テンプレート
+ */
+export interface ExtractionTemplate {
+	/** 一意識別子（UUID） */
+	id: string;
+	/** 表示名（モーダル・メニューに表示） */
+	name: string;
+	/** 説明文（モーダルに表示、任意） */
+	description: string;
+	/** アイコン（絵文字、任意） */
+	icon: string;
+	/** 保存先フォルダパス */
+	folder: string;
+	/** ファイル名フォーマット */
+	fileNameFormat: string;
+	/** テンプレートファイルパス（Vault内の.mdファイル） */
+	templatePath: string;
+	/** エイリアス入力モーダルを表示するか */
+	showAliasInput: boolean;
+	/** お気に入り（コンテキストメニューに独立表示） */
+	isFavorite: boolean;
+	/** 表示順序 */
+	order: number;
+}
+
 export interface PageZettelSettings {
 	// ノートタイプ別設定
 	fleeting: NoteTypeSettings;

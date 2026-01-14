@@ -285,15 +285,18 @@ const scrum: ScrumDashboard = {
     number: 1,
     pbi_id: "PBI-001",
     goal: "ExtractionTemplate型と新設定構造を導入し、固定3タイプから無制限テンプレートへの基盤を確立する",
-    status: "planning",
+    status: "in_progress",
     subtasks: [
       {
         test: "ExtractionTemplate interfaceが9つの必須プロパティ(id, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, order)を持つことを検証",
         implementation: "types/settings.tsにExtractionTemplate interfaceを定義",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: types/settings.tsにExtractionTemplate interfaceを追加し、pnpm exec tsc --noEmitで型チェックを実行",
+          "実装完了: ExtractionTemplateを9つのプロパティで定義。pnpm buildが成功",
+        ],
       },
       {
         test: "BehaviorSettingsにdefaultRemoveIndent: booleanが存在し、moveOnPromotionとfileNamePrefixが削除されていることを検証",
