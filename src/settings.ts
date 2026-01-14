@@ -1,13 +1,13 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
 import PageZettelPlugin from "./main";
-import type { PageZettelSettings } from "./types/settings";
+import type { ExtractSelectionSettings } from "./types/settings";
 import type { NoteType } from "./types/note-types";
 import { FolderSuggest } from "./ui/suggesters/folder-suggest";
 import { FileSuggest } from "./ui/suggesters/file-suggest";
 import { getDefaultFrontmatterPreview } from "./utils/frontmatter-parser";
 import { t } from "./i18n";
 
-export const DEFAULT_SETTINGS: PageZettelSettings = {
+export const DEFAULT_SETTINGS: ExtractSelectionSettings = {
 	fleeting: {
 		folder: "",
 		fileNameFormat: "{{date}}-{{title}}",

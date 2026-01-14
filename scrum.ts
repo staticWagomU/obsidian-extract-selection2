@@ -342,8 +342,14 @@ const scrum: ScrumDashboard = {
         test: "ExtractSelectionSettings interfaceがtemplates: ExtractionTemplate[]プロパティを持ち、PageZettelSettingsが存在しないことを検証",
         implementation: "types/settings.tsにExtractSelectionSettings interfaceを定義し、PageZettelSettingsを削除",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "53f7d0f",
+            message: "feat(types): add ExtractSelectionSettings and remove PageZettelSettings",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: types/settings.tsにExtractSelectionSettingsを定義し、PageZettelSettingsとNoteTypeSettingsを削除してpnpm buildで型チェック",
           "実装完了: ExtractSelectionSettingsを定義、PageZettelSettingsとNoteTypeSettingsを削除、types/index.tsのエクスポートも更新",
@@ -353,9 +359,12 @@ const scrum: ScrumDashboard = {
         test: "settings.tsのDEFAULT_SETTINGSの型がExtractSelectionSettingsであることを検証",
         implementation: "settings.tsのDEFAULT_SETTINGS型宣言をExtractSelectionSettingsに変更",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: settings.tsのDEFAULT_SETTINGSの型宣言とimportを変更し、pnpm buildで型チェック",
+          "実装完了: PageZettelSettingsからExtractSelectionSettingsへ型宣言を変更",
+        ],
       },
       {
         test: "DEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されていることを検証",
