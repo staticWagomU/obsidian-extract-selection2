@@ -166,22 +166,9 @@ const scrum: ScrumDashboard = {
       id: "PBI-005",
       story: { role: "Obsidianユーザー", capability: "新コマンド・コンテキストメニュー", benefit: "お気に入りへの素早いアクセス" },
       acceptance_criteria: [
-        {
-          criterion: "Extract to Noteコマンド実装",
-          verification: "コマンドパレット実行→TemplateSelectModal表示→テンプレート選択→NoteCreatorService呼出"
-        },
-        {
-          criterion: "お気に入りコンテキストメニュー",
-          verification: "右クリック→isFavorite=trueが独立項目表示→直接抽出実行"
-        },
-        {
-          criterion: "NoteCreatorService統合",
-          verification: "ExtractionTemplate/選択範囲/エイリアス/オプションを正しく渡す"
-        },
-        {
-          criterion: "UI設定反映",
-          verification: "showEmojiInCommands/showContextMenuItems動作確認"
-        },
+        { criterion: "Extract to Noteコマンド", verification: "TemplateSelectModal→NoteCreatorService" },
+        { criterion: "お気に入りコンテキストメニュー", verification: "isFavorite=true直接抽出" },
+        { criterion: "UI設定反映", verification: "showEmojiInCommands/showContextMenuItems" },
       ],
       status: "done",
     },
@@ -220,76 +207,15 @@ const scrum: ScrumDashboard = {
     { number: 2, pbi_id: "PBI-002", goal: "レガシーZettelkastenコード削除", status: "done", subtasks: [] },
     { number: 3, pbi_id: "PBI-003", goal: "テンプレート選択・編集モーダル", status: "done", subtasks: [] },
     { number: 4, pbi_id: "PBI-004", goal: "ExtractionTemplateノート作成検証・クリーンアップ", status: "done", subtasks: [] },
-    {
-      number: 5,
-      pbi_id: "PBI-005",
-      goal: "TemplateSelectModalとNoteCreatorServiceを統合し、お気に入りテンプレートへの素早いアクセスを実現",
-      status: "done",
-      subtasks: [
-        {
-          test: "extractSelectionコマンドがTemplateSelectModalを開き、選択したテンプレートでNoteCreatorServiceを呼ぶ",
-          implementation: "extract-selection-commandを更新してTemplateSelectModal統合とNoteCreatorService呼出を実装",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "014d410",
-              message: "feat: integrate TemplateSelectModal and NoteCreatorService into extract-selection-command",
-              phase: "green"
-            }
-          ],
-          notes: [
-            "TemplateSelectModalを開いてテンプレート選択",
-            "showAliasInput=trueの場合、AliasInputModalを表示",
-            "NoteCreatorServiceを呼び出してノート作成",
-            "insertLinkAfterExtractとopenAfterExtract設定を実装",
-          ],
-        },
-        {
-          test: "isFavorite=trueのテンプレートが右クリックメニューに独立項目として表示され、直接抽出できる",
-          implementation: "main.tsにコンテキストメニュー登録処理を追加し、お気に入りテンプレートへのショートカットを実装",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "052ccd2",
-              message: "feat: add context menu items for favorite templates",
-              phase: "green"
-            }
-          ],
-          notes: [
-            "editor-menuイベントでコンテキストメニューに項目追加",
-            "showContextMenuItems設定で表示制御",
-            "showEmojiInCommands設定で絵文字表示制御",
-            "お気に入りテンプレートは直接extractSelectionWithTemplateを呼び出し",
-          ],
-        },
-        {
-          test: "DoD全チェック(tsc/lint/build)が成功する",
-          implementation: "TypeScript型チェック、Lint、Buildを実行してエラーを解消",
-          type: "structural",
-          status: "completed",
-          commits: [
-            {
-              hash: "822af56",
-              message: "fix: resolve eslint no-misused-promises error in AliasInputModal callback",
-              phase: "green"
-            }
-          ],
-          notes: [
-            "全てのDoDチェックが成功",
-            "eslintのno-misused-promisesエラーを修正",
-          ],
-        },
-      ],
-    },
+    { number: 5, pbi_id: "PBI-005", goal: "コマンド・コンテキストメニュー統合", status: "done", subtasks: [] },
   ],
 
   retrospectives: [
     { sprint: 1, improvements: [{ action: "TDDアプローチ継続", timing: "immediate", status: "completed", outcome: "型安全性維持" }] },
     { sprint: 2, improvements: [{ action: "サービス層スタブ化", timing: "immediate", status: "completed", outcome: "ビルド通過維持" }] },
     { sprint: 3, improvements: [{ action: "Obsidian UIパターン活用", timing: "immediate", status: "completed", outcome: "UX向上" }] },
-    { sprint: 4, improvements: [{ action: "早期実装によるクリーンアップスプリント", timing: "immediate", status: "completed", outcome: "効率的検証" }] },
+    { sprint: 4, improvements: [{ action: "早期実装によるクリーンアップ", timing: "immediate", status: "completed", outcome: "効率的検証" }] },
+    { sprint: 5, improvements: [{ action: "既存コンポーネント統合", timing: "immediate", status: "completed", outcome: "迅速な機能完成" }] },
   ],
 };
 
