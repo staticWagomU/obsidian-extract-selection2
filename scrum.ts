@@ -146,30 +146,9 @@ const scrum: ScrumDashboard = {
       id: "PBI-003",
       story: { role: "Obsidianユーザー", capability: "テンプレート選択・編集モーダル", benefit: "直感的UI" },
       acceptance_criteria: [
-        {
-          criterion: "TemplateSelectModal実装（FuzzySuggestModal継承）",
-          verification: "template-select-modal.ts存在、FuzzySuggestModal<ExtractionTemplate>継承、getItems/getItemText/onChooseItem実装"
-        },
-        {
-          criterion: "検索機能動作",
-          verification: "name/description/iconでの検索動作、order順のソート"
-        },
-        {
-          criterion: "TemplateEditModal実装（Modal継承）",
-          verification: "template-edit-modal.ts存在、全ExtractionTemplateプロパティのフォーム存在"
-        },
-        {
-          criterion: "入力フィールド検証",
-          verification: "name/folder/fileNameFormat入力欄、description/icon/templatePath任意欄、showAliasInputトグル、フォルダサジェスト動作"
-        },
-        {
-          criterion: "保存/キャンセル動作",
-          verification: "Saveボタンでコールバック実行、Cancelボタンでモーダル閉鎖、Enter/Escapeキー動作"
-        },
-        {
-          criterion: "ファイル名プレビュー表示",
-          verification: "fileNameFormat入力時にリアルタイムプレビュー更新（{{date}}/{{time}}/{{datetime}}展開）"
-        },
+        { criterion: "TemplateSelectModal実装", verification: "FuzzySuggestModal継承" },
+        { criterion: "TemplateEditModal実装", verification: "全プロパティフォーム" },
+        { criterion: "フォルダサジェスト・プレビュー", verification: "動的UI機能" },
       ],
       status: "done",
     },
@@ -228,20 +207,12 @@ const scrum: ScrumDashboard = {
   ],
 
   retrospectives: [
-    {
-      sprint: 1,
-      improvements: [
-        { action: "TDDアプローチ継続", timing: "immediate", status: "completed", outcome: "型安全性維持" },
-        { action: "関連サブタスク統合", timing: "sprint", status: "completed", outcome: "Sprint2で4タスクに統合" },
-      ],
-    },
-    {
-      sprint: 2,
-      improvements: [
-        { action: "依存関係の確認を削除前に実施", timing: "sprint", status: "active", outcome: null },
-        { action: "サービス層のスタブ化パターン適用", timing: "immediate", status: "completed", outcome: "ビルド通過維持" },
-      ],
-    },
+    { sprint: 1, improvements: [{ action: "TDDアプローチ継続", timing: "immediate", status: "completed", outcome: "型安全性維持" }] },
+    { sprint: 2, improvements: [{ action: "サービス層スタブ化", timing: "immediate", status: "completed", outcome: "ビルド通過維持" }] },
+    { sprint: 3, improvements: [
+      { action: "Obsidian UIパターン活用", timing: "immediate", status: "completed", outcome: "FuzzySuggestModal/Setting活用" },
+      { action: "リアルタイムプレビュー実装", timing: "immediate", status: "completed", outcome: "UX向上" },
+    ]},
   ],
 };
 
