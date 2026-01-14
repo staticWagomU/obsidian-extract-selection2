@@ -136,10 +136,40 @@ const scrum: ScrumDashboard = {
       id: "PBI-002",
       story: { role: "開発者", capability: "不要なZettelkasten固有コード削除", benefit: "コードベースの簡略化" },
       acceptance_criteria: [
-        { criterion: "note-types.ts等削除", verification: "ファイル不存在" },
-        { criterion: "main.ts関連コード削除", verification: "orphan/promote関連なし" },
+        {
+          criterion: "8個のレガシーファイル削除完了",
+          verification: "note-types.ts, promote-note-command.ts, promotion-service.ts, orphan-detector-service.ts, orphan-view.ts, note-type-modal.ts, quick-capture-modal.ts, note-manager.tsが存在しない",
+        },
+        {
+          criterion: "main.tsからレガシーインポート削除",
+          verification: "NoteManager, PromotionService, promoteNote, OrphanView, QuickCaptureModal, NoteTypeModal, NoteTypeのインポートが存在しない",
+        },
+        {
+          criterion: "main.tsからレガシーサービス初期化削除",
+          verification: "noteManager, promotionServiceプロパティとその初期化コードが存在しない",
+        },
+        {
+          criterion: "main.tsからOrphanViewビュー登録削除",
+          verification: "OrphanView registerView呼び出しとリボンアイコン登録が存在しない",
+        },
+        {
+          criterion: "main.tsからレガシーコマンド削除",
+          verification: "promote-note, quick-fleeting, create-new-noteコマンドが存在しない",
+        },
+        {
+          criterion: "main.tsからレガシーコンテキストメニュー削除",
+          verification: "extractToFleeting/Literature/Permanent、promoteNoteのコンテキストメニューアイテムが存在しない",
+        },
+        {
+          criterion: "main.tsからレガシーヘルパーメソッド削除",
+          verification: "activateOrphanView, createNoteAndOpenメソッドが存在しない",
+        },
+        {
+          criterion: "TypeScript型チェック成功",
+          verification: "pnpm exec tsc --noEmit がエラーなしで完了",
+        },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-003",
