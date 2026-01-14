@@ -211,7 +211,61 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 3,
+    pbi_id: "PBI-003",
+    goal: "テンプレート選択・編集モーダルを実装し、直感的なテンプレート管理UIを提供する",
+    status: "planning",
+    subtasks: [
+      {
+        test: "TemplateSelectModalがFuzzySuggestModal<ExtractionTemplate>を継承し、getItems/getItemText/onChooseItemを実装していることを型レベルで検証",
+        implementation: "template-select-modal.ts作成、FuzzySuggestModal継承、テンプレート一覧の取得・表示・選択ロジック実装、order順ソート、name/description/iconでの検索対応",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "DESIGN.mdのテンプレート選択モーダル仕様に準拠",
+          "alias-input-modal.tsのModalパターンを参考",
+          "ExtractionTemplate型をsrc/types/settings.tsから参照"
+        ]
+      },
+      {
+        test: "TemplateEditModalがModal継承し、全ExtractionTemplateプロパティのフォームを持ち、保存/キャンセル/Enterキー/Escapeキー動作を検証",
+        implementation: "template-edit-modal.ts作成、Modal継承、name/description/icon/folder/fileNameFormat/templatePath/showAliasInputの入力フィールド実装、保存/キャンセルボタン、キーボードショートカット",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "DESIGN.mdのテンプレート編集モーダル仕様に準拠",
+          "alias-input-modal.tsのフォーム実装パターンを参考",
+          "必須フィールド（name/folder/fileNameFormat）と任意フィールド（description/icon/templatePath）の区別"
+        ]
+      },
+      {
+        test: "TemplateEditModalにfolderフィールドのフォルダサジェスト機能とfileNameFormatフィールドのリアルタイムプレビュー機能を統合し動作検証",
+        implementation: "FolderSuggestをfolderフィールドに統合、fileNameFormatのonChangeでプレビュー更新ロジック実装（{{date}}/{{time}}/{{datetime}}の展開）、プレビュー表示要素の追加",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [
+          "src/ui/suggesters/folder-suggest.ts既存実装を活用",
+          "DESIGN.mdのファイル名フォーマット仕様に準拠",
+          "プレビュー例: {{date}}-{{title}} → 2025-01-14-私のメモ.md"
+        ]
+      },
+      {
+        test: "TypeScript型チェック、Lint、Buildが全て成功することを検証",
+        implementation: "pnpm exec tsc --noEmit、pnpm lint、pnpm buildを実行し、全エラーを修正",
+        type: "structural",
+        status: "pending",
+        commits: [],
+        notes: [
+          "Definition of Doneの全チェック項目を実行",
+          "Sprint 2振り返り「依存関係の確認を削除前に実施」を適用"
+        ]
+      }
+    ]
+  },
 
   definition_of_done: {
     checks: [
