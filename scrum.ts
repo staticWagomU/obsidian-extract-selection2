@@ -163,7 +163,7 @@ const scrum: ScrumDashboard = {
           verification: "types/settings.tsにPageZettelSettingsが存在せず、ExtractSelectionSettingsがエクスポートされている",
         },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-002",
@@ -281,165 +281,7 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: {
-    number: 1,
-    pbi_id: "PBI-001",
-    goal: "ExtractionTemplate型と新設定構造を導入し、固定3タイプから無制限テンプレートへの基盤を確立する",
-    status: "in_progress",
-    subtasks: [
-      {
-        test: "ExtractionTemplate interfaceが9つの必須プロパティ(id, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, order)を持つことを検証",
-        implementation: "types/settings.tsにExtractionTemplate interfaceを定義",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "9e234e4",
-            message: "feat(types): add ExtractionTemplate interface with 9 properties",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: types/settings.tsにExtractionTemplate interfaceを追加し、pnpm exec tsc --noEmitで型チェックを実行",
-          "実装完了: ExtractionTemplateを9つのプロパティで定義。pnpm buildが成功",
-        ],
-      },
-      {
-        test: "BehaviorSettingsにdefaultRemoveIndent: booleanが存在し、moveOnPromotionとfileNamePrefixが削除されていることを検証",
-        implementation: "types/settings.tsのBehaviorSettingsを更新: defaultRemoveIndent追加、moveOnPromotion/fileNamePrefix削除",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "4fc1ad6",
-            message: "feat(types): update BehaviorSettings for new specification",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: types/settings.tsのBehaviorSettingsを修正し、pnpm buildで型チェック",
-          "実装完了: BehaviorSettings型を新仕様に更新。既存コード（settings.ts等）は後続サブタスクで修正",
-        ],
-      },
-      {
-        test: "UISettingsからmobileOptimizedプロパティが削除されていることを検証",
-        implementation: "types/settings.tsのUISettingsを更新: mobileOptimizedを削除",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "b6d5665",
-            message: "feat(types): remove mobileOptimized from UISettings",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: types/settings.tsのUISettingsからmobileOptimizedを削除し、pnpm buildで型チェック",
-          "実装完了: UISettings型からmobileOptimizedを削除。既存コードは後続サブタスクで修正",
-        ],
-      },
-      {
-        test: "ExtractSelectionSettings interfaceがtemplates: ExtractionTemplate[]プロパティを持ち、PageZettelSettingsが存在しないことを検証",
-        implementation: "types/settings.tsにExtractSelectionSettings interfaceを定義し、PageZettelSettingsを削除",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "53f7d0f",
-            message: "feat(types): add ExtractSelectionSettings and remove PageZettelSettings",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: types/settings.tsにExtractSelectionSettingsを定義し、PageZettelSettingsとNoteTypeSettingsを削除してpnpm buildで型チェック",
-          "実装完了: ExtractSelectionSettingsを定義、PageZettelSettingsとNoteTypeSettingsを削除、types/index.tsのエクスポートも更新",
-        ],
-      },
-      {
-        test: "settings.tsのDEFAULT_SETTINGSの型がExtractSelectionSettingsであることを検証",
-        implementation: "settings.tsのDEFAULT_SETTINGS型宣言をExtractSelectionSettingsに変更",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "b45f003",
-            message: "refactor(settings): change DEFAULT_SETTINGS type to ExtractSelectionSettings",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: settings.tsのDEFAULT_SETTINGSの型宣言とimportを変更し、pnpm buildで型チェック",
-          "実装完了: PageZettelSettingsからExtractSelectionSettingsへ型宣言を変更",
-        ],
-      },
-      {
-        test: "DEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されていることを検証",
-        implementation: "settings.tsのDEFAULT_SETTINGSを更新: fleeting/literature/permanentを削除し、templates配列に1つのデフォルトテンプレートを追加",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "907320e",
-            message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: settings.tsのDEFAULT_SETTINGSをDESIGN.mdの仕様に従って更新し、pnpm buildで型チェック",
-          "実装完了: DESIGN.mdの仕様に従い、templates配列に1つのデフォルトテンプレート\"default-note\"を定義。behaviorとuiも新仕様に更新",
-        ],
-      },
-      {
-        test: "DEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しないことを検証",
-        implementation: "settings.tsのDEFAULT_SETTINGS.behaviorを更新",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "907320e",
-            message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "サブタスク6で同時に実装済み",
-        ],
-      },
-      {
-        test: "DEFAULT_SETTINGS.uiにmobileOptimizedが存在しないことを検証",
-        implementation: "settings.tsのDEFAULT_SETTINGS.uiを更新: mobileOptimizedを削除",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "907320e",
-            message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "サブタスク6で同時に実装済み",
-        ],
-      },
-      {
-        test: "TypeScript型チェックが成功することを検証(pnpm exec tsc --noEmit)",
-        implementation: "型エラーを修正し、すべての型定義が整合性を持つことを確認",
-        type: "behavioral",
-        status: "completed",
-        commits: [
-          {
-            hash: "1787b7e",
-            message: "refactor: migrate all PageZettelSettings references to ExtractSelectionSettings",
-            phase: "green",
-          },
-        ],
-        notes: [
-          "検証方法: pnpm buildを実行し、PageZettelSettings参照箇所のエラーを修正",
-          "実装完了: 全PageZettelSettings参照をExtractSelectionSettingsに変更。旧Zettelkasten機能の型エラーは@ts-expect-errorでマーク（PBI-002で削除予定）。設定UIを簡略化し、pnpm buildが成功",
-        ],
-      },
-    ],
-  },
+  sprint: null,
 
   definition_of_done: {
     checks: [
@@ -449,7 +291,172 @@ const scrum: ScrumDashboard = {
     ],
   },
 
-  completed: [],
+  completed: [
+    {
+      number: 1,
+      pbi_id: "PBI-001",
+      goal: "ExtractionTemplate型と新設定構造を導入し、固定3タイプから無制限テンプレートへの基盤を確立する",
+      status: "done",
+      subtasks: [
+        {
+          test: "ExtractionTemplate interfaceが9つの必須プロパティ(id, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, order)を持つことを検証",
+          implementation: "types/settings.tsにExtractionTemplate interfaceを定義",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "9e234e4",
+              message: "feat(types): add ExtractionTemplate interface with 9 properties",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: types/settings.tsにExtractionTemplate interfaceを追加し、pnpm exec tsc --noEmitで型チェックを実行",
+            "実装完了: ExtractionTemplateを9つのプロパティで定義。pnpm buildが成功",
+          ],
+        },
+        {
+          test: "BehaviorSettingsにdefaultRemoveIndent: booleanが存在し、moveOnPromotionとfileNamePrefixが削除されていることを検証",
+          implementation: "types/settings.tsのBehaviorSettingsを更新: defaultRemoveIndent追加、moveOnPromotion/fileNamePrefix削除",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "4fc1ad6",
+              message: "feat(types): update BehaviorSettings for new specification",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: types/settings.tsのBehaviorSettingsを修正し、pnpm buildで型チェック",
+            "実装完了: BehaviorSettings型を新仕様に更新。既存コード（settings.ts等）は後続サブタスクで修正",
+          ],
+        },
+        {
+          test: "UISettingsからmobileOptimizedプロパティが削除されていることを検証",
+          implementation: "types/settings.tsのUISettingsを更新: mobileOptimizedを削除",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "b6d5665",
+              message: "feat(types): remove mobileOptimized from UISettings",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: types/settings.tsのUISettingsからmobileOptimizedを削除し、pnpm buildで型チェック",
+            "実装完了: UISettings型からmobileOptimizedを削除。既存コードは後続サブタスクで修正",
+          ],
+        },
+        {
+          test: "ExtractSelectionSettings interfaceがtemplates: ExtractionTemplate[]プロパティを持ち、PageZettelSettingsが存在しないことを検証",
+          implementation: "types/settings.tsにExtractSelectionSettings interfaceを定義し、PageZettelSettingsを削除",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "53f7d0f",
+              message: "feat(types): add ExtractSelectionSettings and remove PageZettelSettings",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: types/settings.tsにExtractSelectionSettingsを定義し、PageZettelSettingsとNoteTypeSettingsを削除してpnpm buildで型チェック",
+            "実装完了: ExtractSelectionSettingsを定義、PageZettelSettingsとNoteTypeSettingsを削除、types/index.tsのエクスポートも更新",
+          ],
+        },
+        {
+          test: "settings.tsのDEFAULT_SETTINGSの型がExtractSelectionSettingsであることを検証",
+          implementation: "settings.tsのDEFAULT_SETTINGS型宣言をExtractSelectionSettingsに変更",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "b45f003",
+              message: "refactor(settings): change DEFAULT_SETTINGS type to ExtractSelectionSettings",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: settings.tsのDEFAULT_SETTINGSの型宣言とimportを変更し、pnpm buildで型チェック",
+            "実装完了: PageZettelSettingsからExtractSelectionSettingsへ型宣言を変更",
+          ],
+        },
+        {
+          test: "DEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されていることを検証",
+          implementation: "settings.tsのDEFAULT_SETTINGSを更新: fleeting/literature/permanentを削除し、templates配列に1つのデフォルトテンプレートを追加",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "907320e",
+              message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: settings.tsのDEFAULT_SETTINGSをDESIGN.mdの仕様に従って更新し、pnpm buildで型チェック",
+            "実装完了: DESIGN.mdの仕様に従い、templates配列に1つのデフォルトテンプレート\"default-note\"を定義。behaviorとuiも新仕様に更新",
+          ],
+        },
+        {
+          test: "DEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しないことを検証",
+          implementation: "settings.tsのDEFAULT_SETTINGS.behaviorを更新",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "907320e",
+              message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "サブタスク6で同時に実装済み",
+          ],
+        },
+        {
+          test: "DEFAULT_SETTINGS.uiにmobileOptimizedが存在しないことを検証",
+          implementation: "settings.tsのDEFAULT_SETTINGS.uiを更新: mobileOptimizedを削除",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "907320e",
+              message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "サブタスク6で同時に実装済み",
+          ],
+        },
+        {
+          test: "TypeScript型チェックが成功することを検証(pnpm exec tsc --noEmit)",
+          implementation: "型エラーを修正し、すべての型定義が整合性を持つことを確認",
+          type: "behavioral",
+          status: "completed",
+          commits: [
+            {
+              hash: "1787b7e",
+              message: "refactor: migrate all PageZettelSettings references to ExtractSelectionSettings",
+              phase: "green",
+            },
+            {
+              hash: "0fa8348",
+              message: "fix: resolve all lint errors for Sprint 1 completion",
+              phase: "green",
+            },
+          ],
+          notes: [
+            "検証方法: pnpm buildを実行し、PageZettelSettings参照箇所のエラーを修正",
+            "実装完了: 全PageZettelSettings参照をExtractSelectionSettingsに変更。旧Zettelkasten機能の型エラーは@ts-expect-errorでマーク（PBI-002で削除予定）。設定UIを簡略化し、pnpm buildが成功",
+          ],
+        },
+      ],
+    },
+  ],
 
   retrospectives: [],
 };
