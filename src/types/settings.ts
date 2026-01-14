@@ -56,10 +56,8 @@ export interface BehaviorSettings {
 	insertLinkAfterExtract: boolean;
 	/** 切り出し後に新規ノートを開く */
 	openAfterExtract: boolean;
-	/** 昇格時に自動でフォルダ移動 */
-	moveOnPromotion: boolean;
-	/** ファイル名のプレフィックス形式 */
-	fileNamePrefix: "date" | "zettel-id" | "none";
+	/** 共通インデント削除のデフォルト値 */
+	defaultRemoveIndent: boolean;
 }
 
 export interface UISettings {

@@ -291,8 +291,14 @@ const scrum: ScrumDashboard = {
         test: "ExtractionTemplate interfaceが9つの必須プロパティ(id, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, order)を持つことを検証",
         implementation: "types/settings.tsにExtractionTemplate interfaceを定義",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "9e234e4",
+            message: "feat(types): add ExtractionTemplate interface with 9 properties",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: types/settings.tsにExtractionTemplate interfaceを追加し、pnpm exec tsc --noEmitで型チェックを実行",
           "実装完了: ExtractionTemplateを9つのプロパティで定義。pnpm buildが成功",
@@ -302,9 +308,12 @@ const scrum: ScrumDashboard = {
         test: "BehaviorSettingsにdefaultRemoveIndent: booleanが存在し、moveOnPromotionとfileNamePrefixが削除されていることを検証",
         implementation: "types/settings.tsのBehaviorSettingsを更新: defaultRemoveIndent追加、moveOnPromotion/fileNamePrefix削除",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: [
+          "検証方法: types/settings.tsのBehaviorSettingsを修正し、pnpm buildで型チェック",
+          "実装完了: BehaviorSettings型を新仕様に更新。既存コード（settings.ts等）は後続サブタスクで修正",
+        ],
       },
       {
         test: "UISettingsからmobileOptimizedプロパティが削除されていることを検証",
