@@ -246,8 +246,10 @@ const scrum: ScrumDashboard = {
         test: "TODO comments are removed from service files",
         implementation: "Remove obsolete TODO comments from NoteCreatorService, TemplateService, FolderService",
         type: "structural",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          { hash: "182b402", message: "refactor: remove obsolete TODO comments from service files", phase: "green" }
+        ],
         notes: [
           "NoteCreatorService: Lines 19, 45 - Implementation is complete",
           "TemplateService: Lines 23, 36, 50 - Already accepts ExtractionTemplate",
@@ -258,7 +260,7 @@ const scrum: ScrumDashboard = {
         test: "All DoD checks pass (tsc, lint, build)",
         implementation: "Run DoD checks and fix any issues if found",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
         notes: [
           "Execute: pnpm exec tsc --noEmit",
