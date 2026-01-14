@@ -228,9 +228,9 @@ const scrum: ScrumDashboard = {
         test: "8個のレガシーファイルが存在しないこと",
         implementation: "note-types.ts, promote-note-command.ts, promotion-service.ts, orphan-detector-service.ts, orphan-view.ts, note-type-modal.ts, quick-capture-modal.ts, note-manager.ts を削除",
         type: "structural",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: ["RED: Verify that the 8 legacy files exist before deletion", "GREEN: All 8 legacy files deleted successfully"],
       },
       {
         test: "main.tsにレガシー依存関係が存在しないこと (import, service初期化, ビュー登録)",
