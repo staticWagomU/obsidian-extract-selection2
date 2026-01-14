@@ -1,6 +1,7 @@
 import { App, Modal, Setting, moment } from "obsidian";
 import type { ExtractionTemplate } from "../../types/settings";
 import { FolderSuggest } from "../suggesters/folder-suggest";
+import { t } from "../../i18n";
 
 export class TemplateEditModal extends Modal {
 	private template: Partial<ExtractionTemplate>;
@@ -25,16 +26,16 @@ export class TemplateEditModal extends Modal {
 		contentEl.addClass("extract-selection-modal");
 
 		// Modal title
-		contentEl.createEl("h2", { text: "Edit template" });
+		contentEl.createEl("h2", { text: t("modals.templateEdit.title") });
 
 		// Name field (required)
 		new Setting(contentEl)
-			.setName("Name")
-			.setDesc("Display name for this template")
+			.setName(t("modals.templateEdit.name.label"))
+			.setDesc(t("modals.templateEdit.name.desc"))
 			.addText((text) => {
 				this.nameInput = text.inputEl;
 				text.setValue(this.template.name || "")
-					.setPlaceholder("Fleeting")
+					.setPlaceholder(t("modals.templateEdit.name.placeholder"))
 					.onChange((value) => {
 						this.template.name = value;
 					});
@@ -47,11 +48,11 @@ export class TemplateEditModal extends Modal {
 
 		// Description field (optional)
 		new Setting(contentEl)
-			.setName("Description (optional)")
-			.setDesc("Brief description of this template")
+			.setName(t("modals.templateEdit.description.label"))
+			.setDesc(t("modals.templateEdit.description.desc"))
 			.addText((text) => {
 				text.setValue(this.template.description || "")
-					.setPlaceholder("Quick thought or idea")
+					.setPlaceholder(t("modals.templateEdit.description.placeholder"))
 					.onChange((value) => {
 						this.template.description = value;
 					});
@@ -59,11 +60,11 @@ export class TemplateEditModal extends Modal {
 
 		// Icon field (optional)
 		new Setting(contentEl)
-			.setName("Icon (optional)")
-			.setDesc("Emoji icon for this template")
+			.setName(t("modals.templateEdit.icon.label"))
+			.setDesc(t("modals.templateEdit.icon.desc"))
 			.addText((text) => {
 				text.setValue(this.template.icon || "")
-					.setPlaceholder("💭")
+					.setPlaceholder(t("modals.templateEdit.icon.placeholder"))
 					.onChange((value) => {
 						this.template.icon = value;
 					});
@@ -71,11 +72,11 @@ export class TemplateEditModal extends Modal {
 
 		// Folder field (required)
 		new Setting(contentEl)
-			.setName("Folder")
-			.setDesc("Path to destination folder")
+			.setName(t("modals.templateEdit.folder.label"))
+			.setDesc(t("modals.templateEdit.folder.desc"))
 			.addText((text) => {
 				text.setValue(this.template.folder || "")
-					.setPlaceholder("Fleeting")
+					.setPlaceholder(t("modals.templateEdit.folder.placeholder"))
 					.onChange((value) => {
 						this.template.folder = value;
 					});
@@ -86,11 +87,11 @@ export class TemplateEditModal extends Modal {
 
 		// File name format field (required)
 		const fileNameSetting = new Setting(contentEl)
-			.setName("File name format")
-			.setDesc("Format for the new file name")
+			.setName(t("modals.templateEdit.fileNameFormat.label"))
+			.setDesc(t("modals.templateEdit.fileNameFormat.desc"))
 			.addText((text) => {
 				text.setValue(this.template.fileNameFormat || "")
-					.setPlaceholder("{{zettel-id}}")
+					.setPlaceholder(t("modals.templateEdit.fileNameFormat.placeholder"))
 					.onChange((value) => {
 						this.template.fileNameFormat = value;
 						this.updatePreview();
@@ -105,11 +106,11 @@ export class TemplateEditModal extends Modal {
 
 		// Template file field (optional)
 		new Setting(contentEl)
-			.setName("Template file (optional)")
-			.setDesc("Path to template file in vault")
+			.setName(t("modals.templateEdit.templatePath.label"))
+			.setDesc(t("modals.templateEdit.templatePath.desc"))
 			.addText((text) => {
 				text.setValue(this.template.templatePath || "")
-					.setPlaceholder("Templates/fleeting.md")
+					.setPlaceholder(t("modals.templateEdit.templatePath.placeholder"))
 					.onChange((value) => {
 						this.template.templatePath = value;
 					});
@@ -117,8 +118,8 @@ export class TemplateEditModal extends Modal {
 
 		// Show alias input toggle
 		new Setting(contentEl)
-			.setName("Show alias input")
-			.setDesc("Show alias input modal when extracting")
+			.setName(t("modals.templateEdit.showAliasInput.label"))
+			.setDesc(t("modals.templateEdit.showAliasInput.desc"))
 			.addToggle((toggle) => {
 				toggle
 					.setValue(this.template.showAliasInput ?? true)
@@ -131,14 +132,14 @@ export class TemplateEditModal extends Modal {
 		new Setting(contentEl)
 			.addButton((btn) =>
 				btn
-					.setButtonText("Cancel")
+					.setButtonText(t("modals.templateEdit.cancelButton"))
 					.onClick(() => {
 						this.close();
 					}),
 			)
 			.addButton((btn) =>
 				btn
-					.setButtonText("Save")
+					.setButtonText(t("modals.templateEdit.saveButton"))
 					.setCta()
 					.onClick(() => {
 						this.handleSave();
@@ -187,7 +188,7 @@ export class TemplateEditModal extends Modal {
 
 		const format = this.template.fileNameFormat || "";
 		const preview = this.expandPlaceholders(format);
-		this.previewEl.setText(`Preview: ${preview}.md`);
+		this.previewEl.setText(t("modals.templateEdit.fileNameFormat.preview", { preview }));
 	}
 
 	private expandPlaceholders(format: string): string {
