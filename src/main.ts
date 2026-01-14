@@ -74,8 +74,8 @@ export default class PageZettelPlugin extends Plugin {
 
 					for (const template of favoriteTemplates) {
 						const commandName = this.settings.ui.showEmojiInCommands && template.icon
-							? `${template.icon} Extract to ${template.name}`
-							: `Extract to ${template.name}`;
+							? `${template.icon} ${t("contextMenu.extractTo", { name: template.name })}`
+							: t("contextMenu.extractTo", { name: template.name });
 
 						menu.addItem((item) => {
 							item
