@@ -169,7 +169,7 @@ const scrum: ScrumDashboard = {
           verification: "pnpm exec tsc --noEmit がエラーなしで完了",
         },
       ],
-      status: "ready",
+      status: "done",
     },
     {
       id: "PBI-003",
@@ -222,7 +222,7 @@ const scrum: ScrumDashboard = {
     number: 2,
     pbi_id: "PBI-002",
     goal: "Zettelkasten固有のレガシーコードを完全削除し、Extract Selection汎用プラグインの基盤を確立する",
-    status: "in_progress",
+    status: "review",
     subtasks: [
       {
         test: "8個のレガシーファイルが存在しないこと",
@@ -256,17 +256,23 @@ const scrum: ScrumDashboard = {
         test: "main.tsにレガシー機能が存在しないこと (コマンド, コンテキストメニュー, ヘルパーメソッド)",
         implementation: "promote-note, quick-fleeting, create-new-noteコマンド削除、extractToFleeting/Literature/Permanent・promoteNoteコンテキストメニューアイテム削除、activateOrphanView, createNoteAndOpenメソッド削除",
         type: "structural",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "e3eda54",
+            message: "refactor: remove legacy features from main.ts",
+            phase: "green",
+          },
+        ],
         notes: ["RED: Identified legacy commands (lines 46-112), context menu items (lines 114-197), and helper methods (lines 210-243)", "GREEN: Removed all legacy commands, context menu items, helper methods, and unused imports from main.ts"],
       },
       {
         test: "pnpm exec tsc --noEmit がエラーなく完了すること",
         implementation: "TypeScript型チェックを実行し、すべての型エラーを解決",
         type: "structural",
-        status: "pending",
+        status: "completed",
         commits: [],
-        notes: [],
+        notes: ["RED: Running type check to identify remaining errors after legacy code removal", "GREEN: tsc --noEmit, pnpm lint, pnpm build all passed successfully"],
       },
     ],
   },
