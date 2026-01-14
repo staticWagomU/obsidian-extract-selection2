@@ -215,13 +215,13 @@ const scrum: ScrumDashboard = {
     number: 3,
     pbi_id: "PBI-003",
     goal: "テンプレート選択・編集モーダルを実装し、直感的なテンプレート管理UIを提供する",
-    status: "planning",
+    status: "in_progress",
     subtasks: [
       {
         test: "TemplateSelectModalがFuzzySuggestModal<ExtractionTemplate>を継承し、getItems/getItemText/onChooseItemを実装していることを型レベルで検証",
         implementation: "template-select-modal.ts作成、FuzzySuggestModal継承、テンプレート一覧の取得・表示・選択ロジック実装、order順ソート、name/description/iconでの検索対応",
         type: "behavioral",
-        status: "pending",
+        status: "green",
         commits: [],
         notes: [
           "DESIGN.mdのテンプレート選択モーダル仕様に準拠",
