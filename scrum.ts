@@ -222,7 +222,7 @@ const scrum: ScrumDashboard = {
     number: 2,
     pbi_id: "PBI-002",
     goal: "Zettelkasten固有のレガシーコードを完全削除し、Extract Selection汎用プラグインの基盤を確立する",
-    status: "planning",
+    status: "in_progress",
     subtasks: [
       {
         test: "8個のレガシーファイルが存在しないこと",
