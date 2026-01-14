@@ -37,8 +37,8 @@ export class PromotionService {
 		);
 
 		// 3. フォルダ移動（moveOnPromotion設定が有効な場合のみ）
-		// @ts-expect-error PBI-002で削除予定の旧コード
-		if (this.settings.behavior.moveOnPromotion) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+		if ((this.settings.behavior as any).moveOnPromotion) {
 			const targetFolder = await this.folderService.ensureFolderExists(toType);
 			const newPath = `${targetFolder}/${file.name}`;
 

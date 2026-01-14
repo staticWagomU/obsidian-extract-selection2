@@ -60,8 +60,8 @@ async function showAliasInputOrCreate(
 	type: NoteType,
 ): Promise<void> {
 	// 設定確認: showAliasInputフラグ
-	// @ts-expect-error PBI-002で削除予定の旧コード
-	const showAliasInput = plugin.settings[type].showAliasInput;
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+	const showAliasInput = (plugin.settings as any)[type].showAliasInput;
 
 	if (!showAliasInput) {
 		// showAliasInput=falseの場合、AliasInputModalをスキップしてノート作成

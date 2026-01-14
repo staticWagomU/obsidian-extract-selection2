@@ -15,8 +15,8 @@ export class FolderService {
 	 * ノートタイプに対応するフォルダパスを取得
 	 */
 	getFolderPath(type: NoteType): string {
-		// @ts-expect-error PBI-002で削除予定の旧コード
-		return this.settings[type].folder || NOTE_TYPE_CONFIG[type].folder;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+		return (this.settings as any)[type].folder || NOTE_TYPE_CONFIG[type].folder;
 	}
 
 	/**

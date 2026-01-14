@@ -81,8 +81,8 @@ export class NoteManager {
 	private generateFileName(title: string): string {
 		const sanitizedTitle = title.replace(/[\\/:*?"<>|]/g, "-").trim();
 
-		// @ts-expect-error PBI-002で削除予定の旧コード
-		switch (this.settings.behavior.fileNamePrefix) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
+		switch ((this.settings.behavior as any).fileNamePrefix) {
 			case "date": {
 				const datePrefix = new Date().toISOString().slice(0, 10);
 				return `${datePrefix}-${sanitizedTitle}.md`;

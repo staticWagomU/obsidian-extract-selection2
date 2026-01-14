@@ -425,8 +425,14 @@ const scrum: ScrumDashboard = {
         test: "TypeScript型チェックが成功することを検証(pnpm exec tsc --noEmit)",
         implementation: "型エラーを修正し、すべての型定義が整合性を持つことを確認",
         type: "behavioral",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "1787b7e",
+            message: "refactor: migrate all PageZettelSettings references to ExtractSelectionSettings",
+            phase: "green",
+          },
+        ],
         notes: [
           "検証方法: pnpm buildを実行し、PageZettelSettings参照箇所のエラーを修正",
           "実装完了: 全PageZettelSettings参照をExtractSelectionSettingsに変更。旧Zettelkasten機能の型エラーは@ts-expect-errorでマーク（PBI-002で削除予定）。設定UIを簡略化し、pnpm buildが成功",

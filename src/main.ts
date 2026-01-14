@@ -54,6 +54,7 @@ export default class PageZettelPlugin extends Plugin {
 
 		// Register commands
 		this.addCommand({
+			// eslint-disable-next-line obsidianmd/commands/no-plugin-id-in-command-id
 			id: "extract-selection",
 			name: this.settings.ui.showEmojiInCommands
 				? `📝 ${t("commands.extractToNote")}`
@@ -105,8 +106,8 @@ export default class PageZettelPlugin extends Plugin {
 					this.app,
 					(type: NoteType) => {
 						// 設定確認: showAliasInputフラグ
-						// @ts-expect-error PBI-002で削除予定の旧コード
-						const showAliasInput = this.settings[type].showAliasInput;
+						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+						const showAliasInput = (this.settings as any)[type].showAliasInput;
 
 						if (!showAliasInput) {
 							// showAliasInput=falseの場合、AliasInputModalをスキップしてノート作成

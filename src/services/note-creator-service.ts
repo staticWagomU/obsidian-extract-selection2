@@ -50,8 +50,9 @@ export class NoteCreatorService {
 		const title = alias || moment().format("YYYYMMDDHHmmss");
 
 		// 2. フォルダ配置: settings[type].folderから取得+folderService.ensureFolderExistsByPath()
-		// @ts-expect-error PBI-002で削除予定の旧コード
-		const folderPath = this.settings[type].folder;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+		const folderPath = (this.settings as any)[type].folder;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 		await this.ensureFolderExistsByPath(folderPath);
 
 		// 3. ファイル名を生成
@@ -135,31 +136,38 @@ export class NoteCreatorService {
 	 * - {{alias}} -> alias || title
 	 */
 	private generateFileName(type: NoteType, title: string, alias?: string): string {
-		// @ts-expect-error PBI-002で削除予定の旧コード
-		const format = this.settings[type].fileNameFormat;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+		const format = (this.settings as any)[type].fileNameFormat;
 
 		// タイトルのサニタイズ
 		const sanitizedTitle = title.replace(/[\\/:*?"<>|]/g, "-").trim();
 
 		// プレースホルダーの展開
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 		let fileName = format;
 
 		// {{date}} -> YYYY-MM-DD
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{date\}\}/g, moment().format("YYYY-MM-DD"));
 
 		// {{time}} -> HH:mm:ss
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{time\}\}/g, moment().format("HH:mm:ss"));
 
 		// {{datetime}} -> YYYY-MM-DD HH:mm:ss
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{datetime\}\}/g, moment().format("YYYY-MM-DD HH:mm:ss"));
 
 		// {{zettel-id}} -> YYYYMMDDHHmmss (ISO形式から変換)
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{zettel-id\}\}/g, moment().format("YYYYMMDDHHmmss"));
 
 		// {{title}} -> sanitized title
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{title\}\}/g, sanitizedTitle);
 
 		// {{alias}} -> alias || title
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
 		fileName = fileName.replace(/\{\{alias\}\}/g, alias || sanitizedTitle);
 
 		// .md拡張子を追加

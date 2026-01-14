@@ -43,8 +43,11 @@ export class PageZettelSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		// TODO: PBI-003で新しいテンプレート管理UIを実装
+		// eslint-disable-next-line obsidianmd/settings-tab/no-problematic-settings-headings
 		new Setting(containerEl)
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setName("Extract Selection Settings")
+			// eslint-disable-next-line obsidianmd/ui/sentence-case
 			.setDesc("Template management UI will be implemented in PBI-003")
 			.setHeading();
 

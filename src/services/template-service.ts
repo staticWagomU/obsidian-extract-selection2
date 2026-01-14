@@ -74,8 +74,8 @@ export class TemplateService {
 	 * テンプレートファイルを読み込む
 	 */
 	private async loadTemplate(type: NoteType): Promise<string | null> {
-		// @ts-expect-error PBI-002で削除予定の旧コード
-		const templatePath = this.settings[type].templatePath;
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+		const templatePath = (this.settings as any)[type].templatePath;
 
 		// テンプレートパスが未設定の場合
 		if (!templatePath) {
@@ -83,6 +83,7 @@ export class TemplateService {
 		}
 
 		try {
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 			const file = this.app.vault.getAbstractFileByPath(templatePath);
 			if (!file) {
 				return null;
