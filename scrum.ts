@@ -242,17 +242,23 @@ const scrum: ScrumDashboard = {
         test: "main.tsにレガシー依存関係が存在しないこと (import, service初期化, ビュー登録)",
         implementation: "NoteManager, PromotionService, promoteNote, OrphanView, QuickCaptureModal, NoteTypeModal, NoteType のインポート削除、noteManager/promotionServiceプロパティと初期化コード削除、OrphanView registerView呼び出しとリボンアイコン登録削除",
         type: "structural",
-        status: "green",
-        commits: [],
+        status: "completed",
+        commits: [
+          {
+            hash: "11b784d",
+            message: "refactor: remove legacy dependencies from main.ts",
+            phase: "green",
+          },
+        ],
         notes: ["RED: Identified legacy imports (lines 4-5, 11-14, 16), properties (lines 21-22), service initialization (lines 33-34), view registration (line 48), and ribbon icon (lines 51-53)", "GREEN: Removed all legacy dependencies from main.ts - imports, properties, service initialization, view registration, and ribbon icon"],
       },
       {
         test: "main.tsにレガシー機能が存在しないこと (コマンド, コンテキストメニュー, ヘルパーメソッド)",
         implementation: "promote-note, quick-fleeting, create-new-noteコマンド削除、extractToFleeting/Literature/Permanent・promoteNoteコンテキストメニューアイテム削除、activateOrphanView, createNoteAndOpenメソッド削除",
         type: "structural",
-        status: "pending",
+        status: "green",
         commits: [],
-        notes: [],
+        notes: ["RED: Identified legacy commands (lines 46-112), context menu items (lines 114-197), and helper methods (lines 210-243)", "GREEN: Removed all legacy commands, context menu items, helper methods, and unused imports from main.ts"],
       },
       {
         test: "pnpm exec tsc --noEmit がエラーなく完了すること",
