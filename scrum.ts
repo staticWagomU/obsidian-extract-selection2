@@ -194,7 +194,46 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 6,
+    pbi_id: "PBI-006",
+    goal: "多言語ユーザーがテンプレート編集モーダルとコンテキストメニューを母国語で操作できるようにする",
+    status: "planning",
+    subtasks: [
+      {
+        test: "en.json/ja.json に modals.templateEdit.* と contextMenu.extractTo 翻訳キーが存在する",
+        implementation: "翻訳キーをen.json/ja.jsonに追加(title, name, description, icon, folder等17キー)",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "template-edit-modal.ts がハードコード文字列を含まない(全てt()関数を使用)",
+        implementation: "template-edit-modal.tsの17箇所のハードコード文字列をt()に置換",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "main.ts コンテキストメニューがハードコード文字列を含まない(t()使用)",
+        implementation: "main.tsの「Extract to ${template.name}」をt()に置換",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "DoD全チェック成功(tsc/lint/build)",
+        implementation: "型チェック・lint・ビルド実行",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
