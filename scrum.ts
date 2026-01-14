@@ -166,10 +166,24 @@ const scrum: ScrumDashboard = {
       id: "PBI-005",
       story: { role: "Obsidianユーザー", capability: "新コマンド・コンテキストメニュー", benefit: "お気に入りへの素早いアクセス" },
       acceptance_criteria: [
-        { criterion: "extract-selection新フロー", verification: "テンプレート選択モーダル" },
-        { criterion: "お気に入りメニュー表示", verification: "isFavorite=true表示" },
+        {
+          criterion: "Extract to Noteコマンド実装",
+          verification: "コマンドパレット実行→TemplateSelectModal表示→テンプレート選択→NoteCreatorService呼出"
+        },
+        {
+          criterion: "お気に入りコンテキストメニュー",
+          verification: "右クリック→isFavorite=trueが独立項目表示→直接抽出実行"
+        },
+        {
+          criterion: "NoteCreatorService統合",
+          verification: "ExtractionTemplate/選択範囲/エイリアス/オプションを正しく渡す"
+        },
+        {
+          criterion: "UI設定反映",
+          verification: "showEmojiInCommands/showContextMenuItems動作確認"
+        },
       ],
-      status: "draft",
+      status: "ready",
     },
     {
       id: "PBI-006",
