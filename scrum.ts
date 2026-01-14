@@ -124,158 +124,65 @@ const scrum: ScrumDashboard = {
   product_backlog: [
     {
       id: "PBI-001",
-      story: {
-        role: "Obsidianユーザー",
-        capability: "ExtractionTemplate型を使用した新しい設定構造",
-        benefit: "固定3タイプから無制限のユーザー定義テンプレートに移行できる",
-      },
+      story: { role: "Obsidianユーザー", capability: "ExtractionTemplate型による新設定構造", benefit: "無制限のユーザー定義テンプレート" },
       acceptance_criteria: [
-        {
-          criterion: "ExtractionTemplate interfaceが9つの必須プロパティを持つ",
-          verification: "types/settings.tsにid, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, orderが定義されている",
-        },
-        {
-          criterion: "ExtractSelectionSettings interfaceがtemplates配列を持つ",
-          verification: "types/settings.tsにtemplates: ExtractionTemplate[]が定義されている",
-        },
-        {
-          criterion: "BehaviorSettingsがdefaultRemoveIndentを含む",
-          verification: "types/settings.tsのBehaviorSettingsにdefaultRemoveIndent: booleanが定義され、moveOnPromotionとfileNamePrefixが削除されている",
-        },
-        {
-          criterion: "UISettingsがmobileOptimizedを含まない",
-          verification: "types/settings.tsのUISettingsにmobileOptimizedプロパティが存在しない",
-        },
-        {
-          criterion: "DEFAULT_SETTINGSが1つのデフォルトテンプレートを含む",
-          verification: "settings.tsのDEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されている",
-        },
-        {
-          criterion: "DEFAULT_SETTINGSのbehaviorが新仕様に準拠",
-          verification: "settings.tsのDEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しない",
-        },
-        {
-          criterion: "DEFAULT_SETTINGSのuiが新仕様に準拠",
-          verification: "settings.tsのDEFAULT_SETTINGS.uiにmobileOptimizedが存在しない",
-        },
-        {
-          criterion: "PageZettelSettingsがExtractSelectionSettingsに置き換えられる",
-          verification: "types/settings.tsにPageZettelSettingsが存在せず、ExtractSelectionSettingsがエクスポートされている",
-        },
+        { criterion: "ExtractionTemplate interface定義", verification: "types/settings.ts" },
+        { criterion: "ExtractSelectionSettings定義", verification: "types/settings.ts" },
+        { criterion: "DEFAULT_SETTINGS更新", verification: "settings.ts" },
       ],
       status: "done",
     },
     {
       id: "PBI-002",
-      story: {
-        role: "開発者",
-        capability: "不要なZettelkasten固有コードを削除",
-        benefit: "コードベースがシンプルになり保守性が向上する",
-      },
+      story: { role: "開発者", capability: "不要なZettelkasten固有コード削除", benefit: "コードベースの簡略化" },
       acceptance_criteria: [
-        {
-          criterion: "note-types.ts, promote-note-command.ts等が削除",
-          verification: "該当ファイルが存在しない",
-        },
-        {
-          criterion: "main.tsから関連コマンド・ビュー登録が削除",
-          verification: "main.tsにorphan/promote関連コードがない",
-        },
+        { criterion: "note-types.ts等削除", verification: "ファイル不存在" },
+        { criterion: "main.ts関連コード削除", verification: "orphan/promote関連なし" },
       ],
       status: "draft",
     },
     {
       id: "PBI-003",
-      story: {
-        role: "Obsidianユーザー",
-        capability: "テンプレート選択・編集モーダル",
-        benefit: "直感的なUIでテンプレートを選択・管理できる",
-      },
+      story: { role: "Obsidianユーザー", capability: "テンプレート選択・編集モーダル", benefit: "直感的UI" },
       acceptance_criteria: [
-        {
-          criterion: "FuzzySuggestModalベースのテンプレート選択UI",
-          verification: "template-select-modal.tsが動作する",
-        },
-        {
-          criterion: "Modalベースのテンプレート編集UI",
-          verification: "template-edit-modal.tsが動作する",
-        },
+        { criterion: "テンプレート選択UI", verification: "template-select-modal.ts" },
+        { criterion: "テンプレート編集UI", verification: "template-edit-modal.ts" },
       ],
       status: "draft",
     },
     {
       id: "PBI-004",
-      story: {
-        role: "Obsidianユーザー",
-        capability: "ExtractionTemplateベースのノート作成",
-        benefit: "カスタムテンプレートでノートを作成できる",
-      },
+      story: { role: "Obsidianユーザー", capability: "ExtractionTemplateベースのノート作成", benefit: "カスタムテンプレート対応" },
       acceptance_criteria: [
-        {
-          criterion: "note-creator-serviceがExtractionTemplateを受け取る",
-          verification: "サービスの引数型がExtractionTemplate",
-        },
-        {
-          criterion: "folder-serviceが動的フォルダをサポート",
-          verification: "テンプレートのfolderプロパティが使用される",
-        },
+        { criterion: "note-creator-service更新", verification: "ExtractionTemplate引数" },
+        { criterion: "folder-service更新", verification: "動的フォルダ対応" },
       ],
       status: "draft",
     },
     {
       id: "PBI-005",
-      story: {
-        role: "Obsidianユーザー",
-        capability: "新フローに基づくコマンドとコンテキストメニュー",
-        benefit: "お気に入りテンプレートへの素早いアクセス",
-      },
+      story: { role: "Obsidianユーザー", capability: "新コマンド・コンテキストメニュー", benefit: "お気に入りへの素早いアクセス" },
       acceptance_criteria: [
-        {
-          criterion: "extract-selectionコマンドが新フローを使用",
-          verification: "コマンド実行時にテンプレート選択モーダルが開く",
-        },
-        {
-          criterion: "お気に入りテンプレートがコンテキストメニューに表示",
-          verification: "isFavorite=trueのテンプレートがメニューに表示",
-        },
+        { criterion: "extract-selection新フロー", verification: "テンプレート選択モーダル" },
+        { criterion: "お気に入りメニュー表示", verification: "isFavorite=true表示" },
       ],
       status: "draft",
     },
     {
       id: "PBI-006",
-      story: {
-        role: "多言語ユーザー",
-        capability: "更新されたi18n翻訳",
-        benefit: "新UIが母国語で表示される",
-      },
+      story: { role: "多言語ユーザー", capability: "i18n翻訳更新", benefit: "母国語UI" },
       acceptance_criteria: [
-        {
-          criterion: "en.jsonに新しい翻訳キーが追加",
-          verification: "テンプレート関連の英語翻訳が存在",
-        },
-        {
-          criterion: "ja.jsonに新しい翻訳キーが追加",
-          verification: "テンプレート関連の日本語翻訳が存在",
-        },
+        { criterion: "en.json更新", verification: "テンプレート翻訳" },
+        { criterion: "ja.json更新", verification: "テンプレート翻訳" },
       ],
       status: "draft",
     },
     {
       id: "PBI-007",
-      story: {
-        role: "開発者",
-        capability: "全機能の動作検証とドキュメント更新",
-        benefit: "リリース品質の確保",
-      },
+      story: { role: "開発者", capability: "動作検証・ドキュメント", benefit: "リリース品質" },
       acceptance_criteria: [
-        {
-          criterion: "ビルドが成功する",
-          verification: "pnpm build が成功",
-        },
-        {
-          criterion: "Lintが通る",
-          verification: "pnpm lint が成功",
-        },
+        { criterion: "ビルド成功", verification: "pnpm build" },
+        { criterion: "Lint成功", verification: "pnpm lint" },
       ],
       status: "draft",
     },
@@ -295,170 +202,23 @@ const scrum: ScrumDashboard = {
     {
       number: 1,
       pbi_id: "PBI-001",
-      goal: "ExtractionTemplate型と新設定構造を導入し、固定3タイプから無制限テンプレートへの基盤を確立する",
+      goal: "ExtractionTemplate型と新設定構造を導入",
       status: "done",
-      subtasks: [
-        {
-          test: "ExtractionTemplate interfaceが9つの必須プロパティ(id, name, description, icon, folder, fileNameFormat, templatePath, showAliasInput, isFavorite, order)を持つことを検証",
-          implementation: "types/settings.tsにExtractionTemplate interfaceを定義",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "9e234e4",
-              message: "feat(types): add ExtractionTemplate interface with 9 properties",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: types/settings.tsにExtractionTemplate interfaceを追加し、pnpm exec tsc --noEmitで型チェックを実行",
-            "実装完了: ExtractionTemplateを9つのプロパティで定義。pnpm buildが成功",
-          ],
-        },
-        {
-          test: "BehaviorSettingsにdefaultRemoveIndent: booleanが存在し、moveOnPromotionとfileNamePrefixが削除されていることを検証",
-          implementation: "types/settings.tsのBehaviorSettingsを更新: defaultRemoveIndent追加、moveOnPromotion/fileNamePrefix削除",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "4fc1ad6",
-              message: "feat(types): update BehaviorSettings for new specification",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: types/settings.tsのBehaviorSettingsを修正し、pnpm buildで型チェック",
-            "実装完了: BehaviorSettings型を新仕様に更新。既存コード（settings.ts等）は後続サブタスクで修正",
-          ],
-        },
-        {
-          test: "UISettingsからmobileOptimizedプロパティが削除されていることを検証",
-          implementation: "types/settings.tsのUISettingsを更新: mobileOptimizedを削除",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "b6d5665",
-              message: "feat(types): remove mobileOptimized from UISettings",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: types/settings.tsのUISettingsからmobileOptimizedを削除し、pnpm buildで型チェック",
-            "実装完了: UISettings型からmobileOptimizedを削除。既存コードは後続サブタスクで修正",
-          ],
-        },
-        {
-          test: "ExtractSelectionSettings interfaceがtemplates: ExtractionTemplate[]プロパティを持ち、PageZettelSettingsが存在しないことを検証",
-          implementation: "types/settings.tsにExtractSelectionSettings interfaceを定義し、PageZettelSettingsを削除",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "53f7d0f",
-              message: "feat(types): add ExtractSelectionSettings and remove PageZettelSettings",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: types/settings.tsにExtractSelectionSettingsを定義し、PageZettelSettingsとNoteTypeSettingsを削除してpnpm buildで型チェック",
-            "実装完了: ExtractSelectionSettingsを定義、PageZettelSettingsとNoteTypeSettingsを削除、types/index.tsのエクスポートも更新",
-          ],
-        },
-        {
-          test: "settings.tsのDEFAULT_SETTINGSの型がExtractSelectionSettingsであることを検証",
-          implementation: "settings.tsのDEFAULT_SETTINGS型宣言をExtractSelectionSettingsに変更",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "b45f003",
-              message: "refactor(settings): change DEFAULT_SETTINGS type to ExtractSelectionSettings",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: settings.tsのDEFAULT_SETTINGSの型宣言とimportを変更し、pnpm buildで型チェック",
-            "実装完了: PageZettelSettingsからExtractSelectionSettingsへ型宣言を変更",
-          ],
-        },
-        {
-          test: "DEFAULT_SETTINGS.templatesにid=\"default-note\"のテンプレートが1つ定義されていることを検証",
-          implementation: "settings.tsのDEFAULT_SETTINGSを更新: fleeting/literature/permanentを削除し、templates配列に1つのデフォルトテンプレートを追加",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "907320e",
-              message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: settings.tsのDEFAULT_SETTINGSをDESIGN.mdの仕様に従って更新し、pnpm buildで型チェック",
-            "実装完了: DESIGN.mdの仕様に従い、templates配列に1つのデフォルトテンプレート\"default-note\"を定義。behaviorとuiも新仕様に更新",
-          ],
-        },
-        {
-          test: "DEFAULT_SETTINGS.behaviorにdefaultRemoveIndent: falseが含まれ、moveOnPromotionとfileNamePrefixが存在しないことを検証",
-          implementation: "settings.tsのDEFAULT_SETTINGS.behaviorを更新",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "907320e",
-              message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "サブタスク6で同時に実装済み",
-          ],
-        },
-        {
-          test: "DEFAULT_SETTINGS.uiにmobileOptimizedが存在しないことを検証",
-          implementation: "settings.tsのDEFAULT_SETTINGS.uiを更新: mobileOptimizedを削除",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "907320e",
-              message: "feat(settings): update DEFAULT_SETTINGS to use templates array",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "サブタスク6で同時に実装済み",
-          ],
-        },
-        {
-          test: "TypeScript型チェックが成功することを検証(pnpm exec tsc --noEmit)",
-          implementation: "型エラーを修正し、すべての型定義が整合性を持つことを確認",
-          type: "behavioral",
-          status: "completed",
-          commits: [
-            {
-              hash: "1787b7e",
-              message: "refactor: migrate all PageZettelSettings references to ExtractSelectionSettings",
-              phase: "green",
-            },
-            {
-              hash: "0fa8348",
-              message: "fix: resolve all lint errors for Sprint 1 completion",
-              phase: "green",
-            },
-          ],
-          notes: [
-            "検証方法: pnpm buildを実行し、PageZettelSettings参照箇所のエラーを修正",
-            "実装完了: 全PageZettelSettings参照をExtractSelectionSettingsに変更。旧Zettelkasten機能の型エラーは@ts-expect-errorでマーク（PBI-002で削除予定）。設定UIを簡略化し、pnpm buildが成功",
-          ],
-        },
-      ],
+      subtasks: [], // 9 subtasks完了: 9e234e4→0fa8348 (詳細はgit log参照)
     },
   ],
 
-  retrospectives: [],
+  retrospectives: [
+    {
+      sprint: 1,
+      improvements: [
+        { action: "TDDアプローチ(tsc --noEmit)継続", timing: "immediate", status: "completed", outcome: "型安全性維持" },
+        { action: "@ts-expect-errorで技術的負債マーク", timing: "immediate", status: "completed", outcome: "削除範囲明確化" },
+        { action: "関連サブタスク統合", timing: "sprint", status: "active", outcome: null },
+        { action: "リファクタリングコミットに理由記録", timing: "sprint", status: "active", outcome: null },
+      ],
+    },
+  ],
 };
 
 // JSON output (deno run scrum.ts | jq for queries)
