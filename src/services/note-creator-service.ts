@@ -71,6 +71,11 @@ export class NoteCreatorService {
 			tags: [template.name.toLowerCase()],
 		};
 
+		// エイリアスが指定されている場合、aliasesフィールドに追加
+		if (alias) {
+			defaultMetadata.aliases = [alias];
+		}
+
 		if (sourceFile) {
 			defaultMetadata.source_notes = [`[[${sourceFile.basename}]]`];
 		}
