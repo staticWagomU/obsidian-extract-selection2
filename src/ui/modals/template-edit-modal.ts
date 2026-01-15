@@ -1,5 +1,6 @@
 import { App, Modal, Setting, moment } from "obsidian";
 import type { ExtractionTemplate } from "../../types/settings";
+import { FileSuggest } from "../suggesters/file-suggest";
 import { FolderSuggest } from "../suggesters/folder-suggest";
 import { t } from "../../i18n";
 
@@ -114,6 +115,9 @@ export class TemplateEditModal extends Modal {
 					.onChange((value) => {
 						this.template.templatePath = value;
 					});
+
+				// Add file suggester for template files
+				new FileSuggest(this.app, text.inputEl);
 			});
 
 		// Show alias input toggle
