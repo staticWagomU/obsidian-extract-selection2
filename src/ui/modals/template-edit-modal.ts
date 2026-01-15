@@ -1,5 +1,6 @@
 import { App, Modal, Setting, moment } from "obsidian";
 import type { ExtractionTemplate } from "../../types/settings";
+import { EmojiSuggest } from "../suggesters/emoji-suggest";
 import { FileSuggest } from "../suggesters/file-suggest";
 import { FolderSuggest } from "../suggesters/folder-suggest";
 import { t } from "../../i18n";
@@ -59,7 +60,7 @@ export class TemplateEditModal extends Modal {
 					});
 			});
 
-		// Icon field (optional)
+		// Icon field (optional) with emoji suggester
 		new Setting(contentEl)
 			.setName(t("modals.templateEdit.icon.label"))
 			.setDesc(t("modals.templateEdit.icon.desc"))
@@ -69,6 +70,9 @@ export class TemplateEditModal extends Modal {
 					.onChange((value) => {
 						this.template.icon = value;
 					});
+
+				// Add emoji suggester
+				new EmojiSuggest(this.app, text.inputEl);
 			});
 
 		// Folder field (required)
