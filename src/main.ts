@@ -37,6 +37,7 @@ export default class PageZettelPlugin extends Plugin {
 			name: this.settings.ui.showEmojiInCommands
 				? `📝 ${t("commands.extractToNote")}`
 				: t("commands.extractToNote"),
+			icon: "file-plus",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				void extractSelection(this, editor, view);
 			},
