@@ -197,7 +197,12 @@
 				"label": "File name format",
 				"desc": "Format for the new file name",
 				"placeholder": "{{zettel-id}}",
-				"preview": "Preview: {preview}.md"
+				"preview": "Preview: {preview}"
+			},
+			"fileExtension": {
+				"label": "File extension",
+				"desc": "File extension for the new note (e.g., .md, .canvas, .txt)",
+				"placeholder": ".md"
 			},
 			"templatePath": {
 				"label": "Template file (optional)",

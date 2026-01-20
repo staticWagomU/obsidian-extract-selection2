@@ -197,7 +197,12 @@
 				"label": "ファイル名形式",
 				"desc": "新しいファイル名の形式",
 				"placeholder": "{{zettel-id}}",
-				"preview": "プレビュー: {preview}.md"
+				"preview": "プレビュー: {preview}"
+			},
+			"fileExtension": {
+				"label": "ファイル拡張子",
+				"desc": "新しいノートのファイル拡張子（例: .md, .canvas, .txt）",
+				"placeholder": ".md"
 			},
 			"templatePath": {
 				"label": "テンプレートファイル（任意）",

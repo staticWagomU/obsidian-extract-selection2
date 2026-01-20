@@ -127,6 +127,7 @@ export class NoteCreatorService {
 		fileName = fileName.replace(/\{\{title\}\}/g, sanitizedTitle);
 		fileName = fileName.replace(/\{\{alias\}\}/g, alias || sanitizedTitle);
 
-		return `${fileName}.md`;
+		const fileExtension = template.fileExtension || ".md";
+		return `${fileName}${fileExtension}`;
 	}
 }

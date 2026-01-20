@@ -14,6 +14,8 @@ export interface ExtractionTemplate {
 	folder: string;
 	/** ファイル名フォーマット */
 	fileNameFormat: string;
+	/** ファイル拡張子（デフォルト: '.md'） */
+	fileExtension: string;
 	/** テンプレートファイルパス（Vault内の.mdファイル） */
 	templatePath: string;
 	/** エイリアス入力モーダルを表示するか */

@@ -109,6 +109,19 @@ export class TemplateEditModal extends Modal {
 		});
 		this.updatePreview();
 
+		// File extension field
+		new Setting(contentEl)
+			.setName(t("modals.templateEdit.fileExtension.label"))
+			.setDesc(t("modals.templateEdit.fileExtension.desc"))
+			.addText((text) => {
+				text.setValue(this.template.fileExtension || ".md")
+					.setPlaceholder(t("modals.templateEdit.fileExtension.placeholder"))
+					.onChange((value) => {
+						this.template.fileExtension = value;
+						this.updatePreview();
+					});
+			});
+
 		// Template file field (optional)
 		new Setting(contentEl)
 			.setName(t("modals.templateEdit.templatePath.label"))
@@ -207,7 +220,8 @@ export class TemplateEditModal extends Modal {
 		}
 
 		const format = this.template.fileNameFormat || "";
-		const preview = this.expandPlaceholders(format);
+		const extension = this.template.fileExtension || ".md";
+		const preview = this.expandPlaceholders(format) + extension;
 		this.previewEl.setText(t("modals.templateEdit.fileNameFormat.preview", { preview }));
 	}
 
