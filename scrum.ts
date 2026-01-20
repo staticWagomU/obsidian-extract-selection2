@@ -209,7 +209,7 @@ const scrum: ScrumDashboard = {
         { criterion: "デフォルト値.mdへのマイグレーション", verification: "settings.ts" },
         { criterion: "DoD全チェック成功", verification: "tsc/lint/build" },
       ],
-      status: "draft",
+      status: "ready",
     },
   ],
 
