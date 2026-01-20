@@ -195,6 +195,22 @@ const scrum: ScrumDashboard = {
       ],
       status: "done",
     },
+    {
+      id: "PBI-008",
+      story: {
+        role: "Obsidianユーザー",
+        capability: "コピー時にテンプレートごとに拡張子を変更できるオプション",
+        benefit: ".md以外の形式（.canvas, .txt等）でノートを作成可能",
+      },
+      acceptance_criteria: [
+        { criterion: "ExtractionTemplateにfileExtensionフィールド追加", verification: "types/settings.ts" },
+        { criterion: "設定画面でテンプレートごとの拡張子設定UI", verification: "template-edit-modal.ts" },
+        { criterion: "NoteCreatorServiceで拡張子を適用", verification: "note-creator-service.ts" },
+        { criterion: "デフォルト値.mdへのマイグレーション", verification: "settings.ts" },
+        { criterion: "DoD全チェック成功", verification: "tsc/lint/build" },
+      ],
+      status: "draft",
+    },
   ],
 
   sprint: null,
