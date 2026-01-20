@@ -213,7 +213,70 @@ const scrum: ScrumDashboard = {
     },
   ],
 
-  sprint: null,
+  sprint: {
+    number: 8,
+    pbi_id: "PBI-008",
+    goal: "テンプレートごとにファイル拡張子を設定可能にし、.md以外の形式でノート作成をサポートする",
+    status: "planning",
+    subtasks: [
+      {
+        test: "ExtractionTemplate型にfileExtension: stringフィールドが存在することを確認",
+        implementation: "types/settings.tsのExtractionTemplate interfaceにfileExtensionフィールドを追加（デフォルト: '.md'）",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "DEFAULT_SETTINGSのテンプレートにfileExtension: '.md'が設定されていることを確認",
+        implementation: "settings.tsのDEFAULT_SETTINGS内の各テンプレートにfileExtension: '.md'を追加",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "既存設定のマイグレーションでfileExtensionが未定義の場合'.md'が設定されることを確認",
+        implementation: "settings.tsのloadSettings()にマイグレーションロジックを追加",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "TemplateEditModalに拡張子入力フィールドが表示されることを確認",
+        implementation: "template-edit-modal.tsにfileExtension用のTextコンポーネントを追加",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "i18n翻訳キー（fileExtension関連）が存在することを確認",
+        implementation: "en.json/ja.jsonにfileExtension設定用の翻訳キーを追加",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "NoteCreatorServiceがテンプレートのfileExtensionを使用してファイルを作成することを確認",
+        implementation: "note-creator-service.tsのファイルパス生成ロジックでfileExtensionを適用",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+      {
+        test: "DoD全チェック（tsc/lint/build）が成功することを確認",
+        implementation: "pnpm exec tsc --noEmit && pnpm lint && pnpm build を実行",
+        type: "behavioral",
+        status: "pending",
+        commits: [],
+        notes: [],
+      },
+    ],
+  },
 
   definition_of_done: {
     checks: [
