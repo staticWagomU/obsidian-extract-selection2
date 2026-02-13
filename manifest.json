@@ -1,7 +1,7 @@
 {
 	"id": "extract-selection",
 	"name": "Extract Selection",
-	"version": "1.0.0",
+	"version": "2.4.0",
 	"minAppVersion": "0.15.0",
 	"description": "Extract selected text into new notes with customizable templates and folder organization.",
 	"author": "staticWagomU",
