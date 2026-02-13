@@ -24,6 +24,8 @@ export interface ExtractionTemplate {
 	isFavorite: boolean;
 	/** 表示順序 */
 	order: number;
+	/** 見出しレベルを正規化するか */
+	normalizeHeadings: boolean;
 }
 
 /**

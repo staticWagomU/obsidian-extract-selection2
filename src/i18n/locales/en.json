@@ -213,6 +213,10 @@
 				"label": "Show alias input",
 				"desc": "Show alias input modal when extracting"
 			},
+			"normalizeHeadings": {
+				"label": "Normalize heading levels",
+				"desc": "Adjust heading levels so the smallest heading becomes H1 (e.g., H3/H4 → H1/H2)"
+			},
 			"isFavorite": {
 				"label": "Favorite",
 				"desc": "Show directly in context menu"

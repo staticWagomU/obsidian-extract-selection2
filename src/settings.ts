@@ -18,6 +18,7 @@ export const DEFAULT_SETTINGS: ExtractSelectionSettings = {
 			showAliasInput: true,
 			isFavorite: false,
 			order: 0,
+			normalizeHeadings: false,
 		},
 	],
 	behavior: {
@@ -242,6 +243,7 @@ export class PageZettelSettingTab extends PluginSettingTab {
 					templatePath: "",
 					showAliasInput: true,
 					isFavorite: false,
+					normalizeHeadings: false,
 				};
 
 		new TemplateEditModal(this.app, template, (savedTemplate) => {
@@ -268,6 +270,7 @@ export class PageZettelSettingTab extends PluginSettingTab {
 				showAliasInput: savedTemplate.showAliasInput ?? true,
 				isFavorite: savedTemplate.isFavorite ?? false,
 				order: this.plugin.settings.templates.length,
+				normalizeHeadings: savedTemplate.normalizeHeadings ?? false,
 			};
 			this.plugin.settings.templates.push(newTemplate);
 		} else if (existingTemplate) {

@@ -149,6 +149,18 @@ export class TemplateEditModal extends Modal {
 					});
 			});
 
+		// Normalize headings toggle
+		new Setting(contentEl)
+			.setName(t("modals.templateEdit.normalizeHeadings.label"))
+			.setDesc(t("modals.templateEdit.normalizeHeadings.desc"))
+			.addToggle((toggle) => {
+				toggle
+					.setValue(this.template.normalizeHeadings ?? false)
+					.onChange((value) => {
+						this.template.normalizeHeadings = value;
+					});
+			});
+
 		// Favorite toggle
 		new Setting(contentEl)
 			.setName(t("modals.templateEdit.isFavorite.label"))

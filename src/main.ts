@@ -108,11 +108,15 @@ export default class PageZettelPlugin extends Plugin {
 			(await this.loadData()) as Partial<ExtractSelectionSettings>,
 		);
 
-		// Migration: Add fileExtension to templates that don't have it
+		// Migration: Add missing fields to templates
 		let needsSave = false;
 		for (const template of this.settings.templates) {
 			if (!template.fileExtension) {
 				template.fileExtension = ".md";
+				needsSave = true;
+			}
+			if (template.normalizeHeadings === undefined) {
+				template.normalizeHeadings = false;
 				needsSave = true;
 			}
 		}

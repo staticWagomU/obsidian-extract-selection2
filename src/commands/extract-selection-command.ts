@@ -4,6 +4,7 @@ import type { ExtractionTemplate } from "../types/settings";
 import { t } from "../i18n";
 import { TemplateSelectModal } from "../ui/modals/template-select-modal";
 import { AliasInputModal } from "../ui/modals/alias-input-modal";
+import { normalizeHeadingLevels } from "../utils/heading-normalizer";
 
 /**
  * Extract selection command - Opens TemplateSelectModal and creates note using NoteCreatorService
@@ -122,6 +123,11 @@ async function createNoteAndHandlePostActions(
 	let processedContent = selection;
 	if (removeIndent) {
 		processedContent = removeCommonIndent(selection);
+	}
+
+	// Normalize heading levels if enabled in template
+	if (template.normalizeHeadings) {
+		processedContent = normalizeHeadingLevels(processedContent);
 	}
 
 	// Get source file
