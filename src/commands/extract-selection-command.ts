@@ -1,4 +1,4 @@
-import { Editor, MarkdownView, Notice, TFile } from "obsidian";
+import { Editor, EditorPosition, MarkdownView, Notice, TFile } from "obsidian";
 import type PageZettelPlugin from "../main";
 import type { ExtractionTemplate } from "../types/settings";
 import { t } from "../i18n";
@@ -14,6 +14,9 @@ export async function extractSelection(
 	view: MarkdownView,
 ): Promise<void> {
 	const selection = editor.getSelection();
+	// 選択位置をキャプチャ（非同期処理前に保存）
+	const selectionFrom = editor.getCursor("from");
+	const selectionTo = editor.getCursor("to");
 
 	if (!selection || selection.trim() === "") {
 		new Notice(t("notices.selectText"));
@@ -26,7 +29,7 @@ export async function extractSelection(
 		plugin.app,
 		templates,
 		(template) => {
-			void handleTemplateSelection(plugin, editor, view, template, selection);
+			void handleTemplateSelection(plugin, editor, view, template, selection, selectionFrom, selectionTo);
 		},
 	).open();
 }
@@ -41,13 +44,15 @@ export async function extractSelectionWithTemplate(
 	template: ExtractionTemplate,
 ): Promise<void> {
 	const selection = editor.getSelection();
+	const selectionFrom = editor.getCursor("from");
+	const selectionTo = editor.getCursor("to");
 
 	if (!selection || selection.trim() === "") {
 		new Notice(t("notices.selectText"));
 		return;
 	}
 
-	await handleTemplateSelection(plugin, editor, view, template, selection);
+	await handleTemplateSelection(plugin, editor, view, template, selection, selectionFrom, selectionTo);
 }
 
 /**
@@ -59,6 +64,8 @@ async function handleTemplateSelection(
 	view: MarkdownView,
 	template: ExtractionTemplate,
 	selection: string,
+	selectionFrom: EditorPosition,
+	selectionTo: EditorPosition,
 ): Promise<void> {
 	// If showAliasInput is true, show AliasInputModal
 	if (template.showAliasInput) {
@@ -74,6 +81,8 @@ async function handleTemplateSelection(
 					selection,
 					result.alias,
 					result.removeIndent,
+					selectionFrom,
+					selectionTo,
 				);
 			},
 			true, // showRemoveIndent
@@ -89,6 +98,8 @@ async function handleTemplateSelection(
 			selection,
 			"",
 			removeIndent,
+			selectionFrom,
+			selectionTo,
 		);
 	}
 }
@@ -104,6 +115,8 @@ async function createNoteAndHandlePostActions(
 	selection: string,
 	alias: string,
 	removeIndent: boolean,
+	selectionFrom: EditorPosition,
+	selectionTo: EditorPosition,
 ): Promise<void> {
 	// Remove common indent if requested
 	let processedContent = selection;
@@ -127,7 +140,8 @@ async function createNoteAndHandlePostActions(
 		const linkText = alias || createdFile.basename;
 		const relativePath = getRelativePath(sourceFile, createdFile);
 		const link = `[${linkText}](${relativePath})`;
-		editor.replaceSelection(link);
+		// キャプチャした位置を使用して置換（選択位置のドリフトを防止）
+		editor.replaceRange(link, selectionFrom, selectionTo);
 	}
 
 	// Handle openAfterExtract
