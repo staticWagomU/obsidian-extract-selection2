@@ -2,9 +2,11 @@ import { AbstractInputSuggest, App, TFile } from "obsidian";
 
 export class FileSuggest extends AbstractInputSuggest<TFile> {
 	private extension: string;
+	private readonly textInputEl: HTMLInputElement;
 
 	constructor(app: App, inputEl: HTMLInputElement, extension = "md") {
 		super(app, inputEl);
+		this.textInputEl = inputEl;
 		this.extension = extension;
 	}
 
@@ -21,6 +23,7 @@ export class FileSuggest extends AbstractInputSuggest<TFile> {
 
 	selectSuggestion(file: TFile, _evt: MouseEvent | KeyboardEvent): void {
 		this.setValue(file.path);
+		this.textInputEl.dispatchEvent(new Event("input"));
 		this.close();
 	}
 }

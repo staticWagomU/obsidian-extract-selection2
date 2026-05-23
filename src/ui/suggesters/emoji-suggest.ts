@@ -6,8 +6,11 @@ import { type EmojiItem, EMOJI_CATALOG } from "../../data/emoji-catalog";
  * AbstractInputSuggestパターンを使用して入力補完を提供
  */
 export class EmojiSuggest extends AbstractInputSuggest<EmojiItem> {
+	private readonly textInputEl: HTMLInputElement;
+
 	constructor(app: App, inputEl: HTMLInputElement) {
 		super(app, inputEl);
+		this.textInputEl = inputEl;
 	}
 
 	/**
@@ -75,6 +78,7 @@ export class EmojiSuggest extends AbstractInputSuggest<EmojiItem> {
 	 */
 	selectSuggestion(item: EmojiItem, _evt: MouseEvent | KeyboardEvent): void {
 		this.setValue(item.emoji);
+		this.textInputEl.dispatchEvent(new Event("input"));
 		this.close();
 	}
 }
