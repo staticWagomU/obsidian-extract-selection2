@@ -14,7 +14,7 @@ export function normalizeHeadingLevels(text: string): string {
 	let minLevel = 7; // Markdown headings are H1-H6
 	for (const line of lines) {
 		const match = line.match(/^(#{1,6})\s/);
-		if (match) {
+		if (match?.[1]) {
 			minLevel = Math.min(minLevel, match[1].length);
 		}
 	}
@@ -29,7 +29,7 @@ export function normalizeHeadingLevels(text: string): string {
 	return lines
 		.map((line) => {
 			const match = line.match(/^(#{1,6})(\s.*)/);
-			if (!match) {
+			if (!match?.[1] || !match[2]) {
 				return line;
 			}
 			const currentLevel = match[1].length;
