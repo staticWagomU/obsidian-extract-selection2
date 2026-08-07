@@ -1,17 +1,35 @@
 import { readFileSync, writeFileSync } from "fs";
+import { join } from "path";
+import { fileURLToPath } from "url";
 
-const targetVersion = process.env.npm_package_version;
+export function bumpReleaseMetadata(targetVersion, manifest, versions) {
+	if (!targetVersion) {
+		throw new Error("npm_package_version is required");
+	}
 
-// read minAppVersion from manifest.json and bump version to target version
-const manifest = JSON.parse(readFileSync("manifest.json", "utf8"));
-const { minAppVersion } = manifest;
-manifest.version = targetVersion;
-writeFileSync("manifest.json", JSON.stringify(manifest, null, "\t"));
+	const updatedManifest = { ...manifest, version: targetVersion };
+	const updatedVersions = {
+		...versions,
+		[targetVersion]: manifest.minAppVersion,
+	};
 
-// update versions.json with target version and minAppVersion from manifest.json
-// but only if the target version is not already in versions.json
-const versions = JSON.parse(readFileSync('versions.json', 'utf8'));
-if (!Object.values(versions).includes(minAppVersion)) {
-    versions[targetVersion] = minAppVersion;
-    writeFileSync('versions.json', JSON.stringify(versions, null, '\t'));
+	return { manifest: updatedManifest, versions: updatedVersions };
+}
+
+export function bumpVersionFiles({
+	cwd = process.cwd(),
+	targetVersion = process.env.npm_package_version,
+} = {}) {
+	const manifestPath = join(cwd, "manifest.json");
+	const versionsPath = join(cwd, "versions.json");
+	const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+	const versions = JSON.parse(readFileSync(versionsPath, "utf8"));
+	const updated = bumpReleaseMetadata(targetVersion, manifest, versions);
+
+	writeFileSync(manifestPath, `${JSON.stringify(updated.manifest, null, "\t")}\n`);
+	writeFileSync(versionsPath, `${JSON.stringify(updated.versions, null, "\t")}\n`);
+}
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+	bumpVersionFiles();
 }
