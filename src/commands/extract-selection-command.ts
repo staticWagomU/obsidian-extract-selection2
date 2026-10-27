@@ -5,6 +5,7 @@ import { t } from "../i18n";
 import { TemplateSelectModal } from "../ui/modals/template-select-modal";
 import { AliasInputModal } from "../ui/modals/alias-input-modal";
 import { normalizeHeadingLevels } from "../utils/heading-normalizer";
+import { buildMarkdownLink } from "../utils/markdown-link";
 
 /**
  * Extract selection command - Opens TemplateSelectModal and creates note using NoteCreatorService
@@ -145,7 +146,7 @@ async function createNoteAndHandlePostActions(
 	if (plugin.settings.behavior.insertLinkAfterExtract) {
 		const linkText = alias || createdFile.basename;
 		const relativePath = getRelativePath(sourceFile, createdFile);
-		const link = `[${linkText}](${relativePath})`;
+		const link = buildMarkdownLink(linkText, relativePath);
 		// キャプチャした位置を使用して置換（選択位置のドリフトを防止）
 		editor.replaceRange(link, selectionFrom, selectionTo);
 	}
