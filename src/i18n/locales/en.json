@@ -246,5 +246,14 @@
 	},
 	"ribbon": {
 		"orphanView": "Orphan permanent notes"
+	},
+	"append": {
+		"command": "Append selection to existing note",
+		"note": "Select a destination note",
+		"heading": "Select a heading or end of note",
+		"end": "End of note",
+		"changed": "Source changed. Try again.",
+		"failed": "Could not append. The note may have changed. Try again.",
+		"done": "Selection appended."
 	}
 }

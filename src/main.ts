@@ -1,3 +1,4 @@
+import { appendSelection } from "./commands/append-selection-command";
 import { Editor, MarkdownView, Plugin, Menu } from "obsidian";
 import { DEFAULT_SETTINGS, PageZettelSettingTab } from "./settings";
 import type { ExtractSelectionSettings } from "./types/settings";
@@ -29,6 +30,12 @@ export default class PageZettelPlugin extends Plugin {
 			templateService,
 			frontmatterService,
 		);
+
+		this.addCommand({
+			id: "append-selection-to-note",
+			name: t("append.command"),
+			editorCallback: (editor: Editor, view: MarkdownView) => appendSelection(this, editor, view),
+		});
 
 		// Register commands
 		this.addCommand({
