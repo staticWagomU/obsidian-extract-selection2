@@ -134,6 +134,8 @@ async function createNoteAndHandlePostActions(
 	// Get source file
 	const sourceFile = view.file;
 
+	const before = editor.getValue();
+
 	// Create note using NoteCreatorService
 	const createdFile = await plugin.noteCreatorService.createNote(
 		template,
@@ -151,9 +153,15 @@ async function createNoteAndHandlePostActions(
 		editor.replaceRange(link, selectionFrom, selectionTo);
 	}
 
+	const after = editor.getValue();
+	const content = await plugin.app.vault.read(createdFile);
+
 	// Handle openAfterExtract
 	if (plugin.settings.behavior.openAfterExtract) {
 		await plugin.app.workspace.getLeaf(false).openFile(createdFile);
+	}
+	if (sourceFile) {
+		plugin.extractionHistory.record({ source: sourceFile, created: createdFile, editor, before, after, content });
 	}
 }
 

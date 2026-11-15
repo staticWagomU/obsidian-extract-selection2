@@ -6,7 +6,8 @@
 		"extractToPermanent": "Permanent Noteに切り出す",
 		"promoteNote": "ノートを昇格",
 		"quickFleeting": "Quick fleeting note",
-		"createNewNote": "新規ノートを作成"
+		"createNewNote": "新規ノートを作成",
+		"undoLastExtraction": "直近の抽出を取り消す"
 	},
 	"settings": {
 		"templates": {
@@ -242,7 +243,11 @@
 		"noteTypeNotSet": "⚠️ ノートタイプが設定されていません",
 		"cannotPromote": "⚠️ {type} ノートは昇格できません",
 		"promoteSuccess": "✅ {from} → {to} に昇格しました",
-		"noteCreated": "✅ Created {icon} {title}"
+		"noteCreated": "✅ Created {icon} {title}",
+		"noExtraction": "このセッションに取り消せる抽出がありません。",
+		"undoChanged": "ノートが変更されたか未保存のため取り消せません。",
+		"undoDone": "抽出を取り消しました。",
+		"undoFailed": "取り消しを完了できませんでした。両方のノートを保持しました。元のノートを確認してください。"
 	},
 	"ribbon": {
 		"orphanView": "Orphan permanent notes"
