@@ -1,3 +1,4 @@
+import { normalizeExtractionMode } from "../../utils/extraction-mode";
 import { App, Modal, Setting, moment } from "obsidian";
 import type { ExtractionTemplate } from "../../types/settings";
 import { EmojiSuggest } from "../suggesters/emoji-suggest";
@@ -29,6 +30,17 @@ export class TemplateEditModal extends Modal {
 
 		// Modal title
 		contentEl.createEl("h2", { text: t("modals.templateEdit.title") });
+
+		new Setting(contentEl)
+			.setName(t("modals.templateEdit.extractionMode.label"))
+			.setDesc(t("modals.templateEdit.extractionMode.desc"))
+			.addDropdown((dropdown) => {
+				for (const mode of ["inherit", "link", "copy", "embed"]) {
+					dropdown.addOption(mode, t("modals.templateEdit.extractionMode." + mode));
+				}
+				dropdown.setValue(normalizeExtractionMode(this.template.extractionMode))
+					.onChange((value) => { this.template.extractionMode = normalizeExtractionMode(value); });
+			});
 
 		// Name field (required)
 		new Setting(contentEl)

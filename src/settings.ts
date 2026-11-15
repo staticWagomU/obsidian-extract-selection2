@@ -260,6 +260,7 @@ export class PageZettelSettingTab extends PluginSettingTab {
 			// 新規テンプレートを追加
 			const newTemplate: ExtractionTemplate = {
 				id: crypto.randomUUID(),
+				extractionMode: savedTemplate.extractionMode ?? "inherit",
 				name: savedTemplate.name || "",
 				description: savedTemplate.description || "",
 				icon: savedTemplate.icon || "",

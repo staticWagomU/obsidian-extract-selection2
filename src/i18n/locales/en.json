@@ -222,7 +222,15 @@
 				"desc": "Show directly in context menu"
 			},
 			"cancelButton": "Cancel",
-			"saveButton": "Save"
+			"saveButton": "Save",
+			"extractionMode": {
+				"label": "Source text after extraction",
+				"desc": "Choose how this template handles the selected source text.",
+				"inherit": "Follow global setting",
+				"link": "Replace with link",
+				"copy": "Keep text and copy",
+				"embed": "Replace with embed"
+			}
 		}
 	},
 	"contextMenu": {

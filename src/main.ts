@@ -1,3 +1,4 @@
+import { normalizeExtractionMode } from "./utils/extraction-mode";
 import { Editor, MarkdownView, Plugin, Menu } from "obsidian";
 import { DEFAULT_SETTINGS, PageZettelSettingTab } from "./settings";
 import type { ExtractSelectionSettings } from "./types/settings";
@@ -111,6 +112,11 @@ export default class PageZettelPlugin extends Plugin {
 		// Migration: Add missing fields to templates
 		let needsSave = false;
 		for (const template of this.settings.templates) {
+			const mode = normalizeExtractionMode(template.extractionMode);
+			if (template.extractionMode !== mode) {
+				template.extractionMode = mode;
+				needsSave = true;
+			}
 			if (!template.fileExtension) {
 				template.fileExtension = ".md";
 				needsSave = true;
