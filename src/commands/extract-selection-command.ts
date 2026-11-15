@@ -1,3 +1,4 @@
+import { resolveExtractionMode } from "../utils/extraction-mode";
 import { Editor, EditorPosition, MarkdownView, Notice, TFile } from "obsidian";
 import type PageZettelPlugin from "../main";
 import type { ExtractionTemplate } from "../types/settings";
@@ -143,12 +144,13 @@ async function createNoteAndHandlePostActions(
 	);
 
 	// Handle insertLinkAfterExtract
-	if (plugin.settings.behavior.insertLinkAfterExtract) {
+	const mode = resolveExtractionMode(template.extractionMode, plugin.settings.behavior.insertLinkAfterExtract);
+	if (mode !== "copy") {
 		const linkText = alias || createdFile.basename;
 		const relativePath = getRelativePath(sourceFile, createdFile);
 		const link = buildMarkdownLink(linkText, relativePath);
 		// キャプチャした位置を使用して置換（選択位置のドリフトを防止）
-		editor.replaceRange(link, selectionFrom, selectionTo);
+		editor.replaceRange(mode === "embed" ? "!" + link : link, selectionFrom, selectionTo);
 	}
 
 	// Handle openAfterExtract

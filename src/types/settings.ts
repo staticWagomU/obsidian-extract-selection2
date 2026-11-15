@@ -1,7 +1,11 @@
 /**
  * 抽出テンプレート
  */
+export type ExtractionMode = "inherit" | "link" | "copy" | "embed";
+
 export interface ExtractionTemplate {
+	/** Source text handling; absent legacy values follow the global setting. */
+	extractionMode?: ExtractionMode;
 	/** 一意識別子（UUID） */
 	id: string;
 	/** 表示名（モーダル・メニューに表示） */

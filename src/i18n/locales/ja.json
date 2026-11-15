@@ -222,7 +222,15 @@
 				"desc": "コンテキストメニューに直接表示されます"
 			},
 			"cancelButton": "キャンセル",
-			"saveButton": "保存"
+			"saveButton": "保存",
+			"extractionMode": {
+				"label": "抽出後の元テキスト",
+				"desc": "このテンプレートで選択した元テキストをどう扱うか選択します。",
+				"inherit": "全体設定に従う",
+				"link": "リンクに置換",
+				"copy": "本文を残してコピー",
+				"embed": "埋め込みに置換"
+			}
 		}
 	},
 	"contextMenu": {
