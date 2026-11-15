@@ -1,5 +1,6 @@
 {
 	"commands": {
+		"extractHeadingSection": "見出しセクションをノートに切り出す",
 		"extractToNote": "ノートに切り出す",
 		"extractToFleeting": "Fleeting Noteに切り出す",
 		"extractToLiterature": "Literature Noteに切り出す",
@@ -237,6 +238,7 @@
 		}
 	},
 	"notices": {
+		"noHeadingSection": "カーソル位置に属する見出しがありません",
 		"selectText": "⚠️ テキストを選択してください",
 		"openNote": "⚠️ ノートを開いてください",
 		"noteTypeNotSet": "⚠️ ノートタイプが設定されていません",

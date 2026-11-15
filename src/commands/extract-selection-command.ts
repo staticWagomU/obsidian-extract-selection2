@@ -25,6 +25,17 @@ export async function extractSelection(
 		return;
 	}
 
+	openExtractionFlow(plugin, editor, view, selection, selectionFrom, selectionTo);
+}
+
+export function openExtractionFlow(
+	plugin: PageZettelPlugin,
+	editor: Editor,
+	view: MarkdownView,
+	selection: string,
+	selectionFrom: EditorPosition,
+	selectionTo: EditorPosition,
+): void {
 	// Open TemplateSelectModal
 	const templates = plugin.settings.templates;
 	new TemplateSelectModal(

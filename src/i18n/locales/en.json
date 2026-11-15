@@ -1,5 +1,6 @@
 {
 	"commands": {
+		"extractHeadingSection": "Extract heading section to note",
 		"extractToNote": "Extract to note",
 		"extractToFleeting": "Extract to Fleeting Note",
 		"extractToLiterature": "Extract to Literature Note",
@@ -237,6 +238,7 @@
 		}
 	},
 	"notices": {
+		"noHeadingSection": "No heading at the cursor position",
 		"selectText": "⚠️ Please select text",
 		"openNote": "⚠️ Please open a note",
 		"noteTypeNotSet": "⚠️ Note type is not set",
