@@ -5,6 +5,7 @@ import { t } from "../i18n";
 import { TemplateSelectModal } from "../ui/modals/template-select-modal";
 import { AliasInputModal } from "../ui/modals/alias-input-modal";
 import { normalizeHeadingLevels } from "../utils/heading-normalizer";
+import { sourceAnchor } from "../utils/source-link";
 import { buildMarkdownLink } from "../utils/markdown-link";
 
 /**
@@ -134,12 +135,15 @@ async function createNoteAndHandlePostActions(
 	// Get source file
 	const sourceFile = view.file;
 
+	const blockId = sourceFile ? sourceAnchor(editor.getValue()) : undefined;
+
 	// Create note using NoteCreatorService
 	const createdFile = await plugin.noteCreatorService.createNote(
 		template,
 		processedContent,
 		alias,
 		sourceFile || undefined,
+		blockId,
 	);
 
 	// Handle insertLinkAfterExtract
@@ -148,7 +152,11 @@ async function createNoteAndHandlePostActions(
 		const relativePath = getRelativePath(sourceFile, createdFile);
 		const link = buildMarkdownLink(linkText, relativePath);
 		// キャプチャした位置を使用して置換（選択位置のドリフトを防止）
-		editor.replaceRange(link, selectionFrom, selectionTo);
+		editor.replaceRange(`\n\n${link}\n\n${blockId ? `^${blockId}\n\n` : ""}`, selectionFrom, selectionTo);
+	}
+
+	if (blockId && !plugin.settings.behavior.insertLinkAfterExtract) {
+		editor.replaceRange(`\n\n^${blockId}\n\n`, selectionTo);
 	}
 
 	// Handle openAfterExtract
