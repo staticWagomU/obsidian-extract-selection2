@@ -5,6 +5,7 @@ import { t } from "../i18n";
 import { TemplateSelectModal } from "../ui/modals/template-select-modal";
 import { AliasInputModal } from "../ui/modals/alias-input-modal";
 import { normalizeHeadingLevels } from "../utils/heading-normalizer";
+import { canPlaceSourceAnchor, sourceAnchor } from "../utils/source-link";
 import { buildMarkdownLink } from "../utils/markdown-link";
 
 /**
@@ -120,6 +121,11 @@ async function createNoteAndHandlePostActions(
 	selectionFrom: EditorPosition,
 	selectionTo: EditorPosition,
 ): Promise<void> {
+	if (!canPlaceSourceAnchor(editor.getValue(), editor.posToOffset(selectionFrom), editor.posToOffset(selectionTo)) || editor.getRange(selectionFrom, selectionTo) !== selection) {
+		new Notice("Extract complete paragraphs from a plain-text note. Structured notes (frontmatter, code, lists, quotes) are not supported safely. / 通常の文章だけのノートで段落全体を選択してください。frontmatter・コード・リスト・引用を含むノートは安全に処理できません。");
+		return;
+	}
+
 	// Remove common indent if requested
 	let processedContent = selection;
 	if (removeIndent) {
@@ -134,12 +140,15 @@ async function createNoteAndHandlePostActions(
 	// Get source file
 	const sourceFile = view.file;
 
+	const blockId = sourceFile ? sourceAnchor(editor.getValue()) : undefined;
+
 	// Create note using NoteCreatorService
 	const createdFile = await plugin.noteCreatorService.createNote(
 		template,
 		processedContent,
 		alias,
 		sourceFile || undefined,
+		blockId,
 	);
 
 	// Handle insertLinkAfterExtract
@@ -148,7 +157,11 @@ async function createNoteAndHandlePostActions(
 		const relativePath = getRelativePath(sourceFile, createdFile);
 		const link = buildMarkdownLink(linkText, relativePath);
 		// キャプチャした位置を使用して置換（選択位置のドリフトを防止）
-		editor.replaceRange(link, selectionFrom, selectionTo);
+		editor.replaceRange(`\n\n${link}\n\n${blockId ? `^${blockId}\n\n` : ""}`, selectionFrom, selectionTo);
+	}
+
+	if (blockId && !plugin.settings.behavior.insertLinkAfterExtract) {
+		editor.replaceRange(`\n\n^${blockId}\n\n`, selectionTo);
 	}
 
 	// Handle openAfterExtract

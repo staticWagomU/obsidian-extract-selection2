@@ -3,6 +3,7 @@ import type { ExtractSelectionSettings, ExtractionTemplate } from "../types/sett
 import { FrontmatterService } from "./frontmatter-service";
 import { TemplateService } from "./template-service";
 import { FolderService } from "./folder-service";
+import { sourceNoteLink } from "../utils/source-link";
 import { mergeFrontmatter } from "../utils/frontmatter-parser";
 
 /**
@@ -47,6 +48,7 @@ export class NoteCreatorService {
 		content?: string,
 		alias?: string,
 		sourceFile?: TFile,
+		sourceBlockId?: string,
 	): Promise<TFile> {
 		const title = alias || moment().format("YYYYMMDDHHmmss");
 		const folderPath = template.folder || "";
@@ -77,10 +79,13 @@ export class NoteCreatorService {
 		}
 
 		if (sourceFile) {
-			defaultMetadata.source_notes = [`[[${sourceFile.basename}]]`];
+			defaultMetadata.source_notes = [sourceNoteLink(sourceFile.path, sourceBlockId)];
 		}
 
 		const mergedMetadata = mergeFrontmatter(defaultMetadata, templateResult.frontmatter);
+		if (sourceFile) {
+			mergedMetadata.source_notes = defaultMetadata.source_notes;
+		}
 
 		const finalContent = this.frontmatterService.addFrontmatter(
 			templateResult.body || content || "",
