@@ -8,7 +8,10 @@ import { NoteCreatorService } from "./services/note-creator-service";
 import { extractSelection, extractSelectionWithTemplate } from "./commands/extract-selection-command";
 import { t } from "./i18n";
 
+import { ExtractionHistory } from "./services/extraction-history";
+
 export default class PageZettelPlugin extends Plugin {
+	extractionHistory = new ExtractionHistory();
 	settings: ExtractSelectionSettings;
 	noteCreatorService: NoteCreatorService;
 
@@ -29,6 +32,12 @@ export default class PageZettelPlugin extends Plugin {
 			templateService,
 			frontmatterService,
 		);
+
+		this.addCommand({
+			id: "undo-last-extraction",
+			name: t("commands.undoLastExtraction"),
+			callback: () => { void this.extractionHistory.undo(this.app); },
+		});
 
 		// Register commands
 		this.addCommand({

@@ -6,7 +6,8 @@
 		"extractToPermanent": "Extract to Permanent Note",
 		"promoteNote": "Promote note",
 		"quickFleeting": "Quick fleeting note",
-		"createNewNote": "Create new note"
+		"createNewNote": "Create new note",
+		"undoLastExtraction": "Undo last extraction"
 	},
 	"settings": {
 		"templates": {
@@ -242,7 +243,11 @@
 		"noteTypeNotSet": "⚠️ Note type is not set",
 		"cannotPromote": "⚠️ {type} notes cannot be promoted",
 		"promoteSuccess": "✅ Promoted from {from} to {to}",
-		"noteCreated": "✅ Created {icon} {title}"
+		"noteCreated": "✅ Created {icon} {title}",
+		"noExtraction": "No extraction to undo in this session.",
+		"undoChanged": "Cannot undo: notes changed or are not saved yet.",
+		"undoDone": "Extraction undone.",
+		"undoFailed": "Undo could not finish. Both notes were kept; check the source note."
 	},
 	"ribbon": {
 		"orphanView": "Orphan permanent notes"
