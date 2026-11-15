@@ -10,3 +10,15 @@ export function sourceAnchor(content: string): string {
 	while (content.includes(`^page-zettel-${index}`)) index++;
 	return `page-zettel-${index}`;
 }
+
+/** Conservative admission: only complete paragraphs in unstructured notes. */
+export function canPlaceSourceAnchor(content: string, from: number, to: number): boolean {
+	if (from < 0 || to <= from || to > content.length) return false;
+	// Reject structured notes rather than guess Markdown container boundaries.
+	if (/^(?:\uFEFF)?---\s*(?:\r?\n|$)/.test(content)) return false;
+	if (/^(?:[ \t]*(?:`{3,}|~{3,}|>|[-+*]\s|\d+[.)]\s)| {4}|\t)/m.test(content)) return false;
+	const before = content.slice(0, from);
+	const after = content.slice(to);
+	return (before === "" || /\n\s*\n$/.test(before)) &&
+		(after === "" || /^\r?\n\s*\n/.test(after));
+}

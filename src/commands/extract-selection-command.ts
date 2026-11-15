@@ -5,7 +5,7 @@ import { t } from "../i18n";
 import { TemplateSelectModal } from "../ui/modals/template-select-modal";
 import { AliasInputModal } from "../ui/modals/alias-input-modal";
 import { normalizeHeadingLevels } from "../utils/heading-normalizer";
-import { sourceAnchor } from "../utils/source-link";
+import { canPlaceSourceAnchor, sourceAnchor } from "../utils/source-link";
 import { buildMarkdownLink } from "../utils/markdown-link";
 
 /**
@@ -121,6 +121,11 @@ async function createNoteAndHandlePostActions(
 	selectionFrom: EditorPosition,
 	selectionTo: EditorPosition,
 ): Promise<void> {
+	if (!canPlaceSourceAnchor(editor.getValue(), editor.posToOffset(selectionFrom), editor.posToOffset(selectionTo)) || editor.getRange(selectionFrom, selectionTo) !== selection) {
+		new Notice("Extract complete paragraphs from a plain-text note. Structured notes (frontmatter, code, lists, quotes) are not supported safely. / 通常の文章だけのノートで段落全体を選択してください。frontmatter・コード・リスト・引用を含むノートは安全に処理できません。");
+		return;
+	}
+
 	// Remove common indent if requested
 	let processedContent = selection;
 	if (removeIndent) {
