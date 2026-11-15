@@ -6,6 +6,7 @@ import { TemplateService } from "./services/template-service";
 import { FrontmatterService } from "./services/frontmatter-service";
 import { NoteCreatorService } from "./services/note-creator-service";
 import { extractSelection, extractSelectionWithTemplate } from "./commands/extract-selection-command";
+import { extractHeadingSection } from "./commands/extract-heading-section-command";
 import { t } from "./i18n";
 
 export default class PageZettelPlugin extends Plugin {
@@ -40,6 +41,15 @@ export default class PageZettelPlugin extends Plugin {
 			icon: "file-plus",
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				void extractSelection(this, editor, view);
+			},
+		});
+
+		this.addCommand({
+			id: "extract-heading-section",
+			name: t("commands.extractHeadingSection"),
+			icon: "file-plus",
+			editorCallback: (editor: Editor, view: MarkdownView) => {
+				extractHeadingSection(this, editor, view);
 			},
 		});
 
